@@ -871,36 +871,6 @@ for subName, sub in pairs(combine_subclasses) do
         local contextPhrasesJSON = file.Read(path, "GAME")
         local contextPhrases = util.JSONToTable(contextPhrasesJSON)
         sub.context_phrases = contextPhrases
- 
-        --[[
-        local phrases = {}
-        local files,_ = file.Find("sound/" .. sub.phrases .. "idle*.wav", "[RCVR] HL:A Combine voicepack/replacement for combine soldiers")
-        for k,v in ipairs(files) do
-            phrases[k] = sub.phrases .. v
-        end
-        
-        local tab = util.TableToJSON(phrases, true)
-        local fileName = "cvr/" .. subName .. "_phrases.json"
-        print(fileName)
-        local test = file.Write(fileName, tab)
-        print(test)
-
-        sub.phrases = phrases
-
-        if subName == "ordinal" then 
-            continue
-        end
-
-        local context_phrases = AssignContextPhrases(hla_contexts, sub.context_phrases)
-
-        tab = util.TableToJSON(context_phrases, true)
-        fileName = "cvr/" .. subName .. "_context_phrases.json"
-        print(fileName)
-        test = file.Write(fileName, tab)
-        print(test)
-
-        sub.context_phrases = context_phrases
-        ]]
 
     else 
     
