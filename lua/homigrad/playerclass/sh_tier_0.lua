@@ -38,6 +38,7 @@ net.Receive("setupclass", function()
 
 	ply.PlayerClassName = net.ReadString()
 	ply.PlayerClassNameOld = net.ReadString()
+	ply.subClass = net.ReadString()
 	local data = net.ReadTable()
 	old = classList[ply.PlayerClassNameOld]
 	if old and old.Off then old.Off(ply) end

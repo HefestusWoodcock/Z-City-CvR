@@ -212,6 +212,8 @@ local swat_phrases = {
 	}
 }
 
+
+
 local laugh = {
 	"zbattle/laugh/laugh1.ogg",
 	"zbattle/laugh/laugh2.ogg",
@@ -337,6 +339,9 @@ net.Receive("hg_phrase", function(len, ply)
 	local pitch = nil
 
 	-- overrides
+	if ply.PlayerClassName == "Combine" then 
+		phrase = net.ReadString()
+	end
 	local override_ply, override_phrase, override_muffed, override_pitch = hook.Run("HG_ReplacePhrase", ply, phrase, muffed, pitch) -- pitch means pitched effect, not exact sound pitch
 	if override_ply ~= nil then
 		phrase, muffed, pitch = override_phrase, override_muffed, override_pitch
@@ -456,9 +461,13 @@ concommand.Add("hg_phrase_context",function(ply, cmd, args)
 	if result then return end
 
 	local phrase = contextPhrases[ThatPlyIsFemale(ply) and 2 or 1][args[1]]
+	if ply.PlayerClassName == "Combine" then
+		text, phrase = args[1], args[2]
+		ply:Say(args[1])
+	end
 	if !phrase then return end
 
-	phrase = args[2] and phrase[tonumber(args[2])] or table.Random(phrase)
+	if type(phrase) == "table" then phrase = table.Random(phrase) end
 	if SoundDuration(phrase) == 0 then return end
 	ply:EmitSound(phrase, nil, ply.VoicePitch or 100)
 	ply.phrCld = CurTime() + (SoundDuration(phrase) or 0)

@@ -2,47 +2,46 @@ phrases = {
 	[1] = {
 		{"vo/npc/male01/question", ".wav", 3, 31},
 		{"vo/npc/male01/answer", ".wav", 1, 40},
-		{"vo/npc/male01/sorry", ".wav", 1, 3},
+		//{"vo/npc/male01/sorry", ".wav", 1, 3},
 		{"vo/npc/male01/squad_affirm", ".wav", 1, 9},
 		{"vo/episode_1/npc/male01/cit_remarks", ".wav", 1, 21},
 		{"vo/trainyard/male01/cit_bench", ".wav", 1, 4},
 		{"vo/trainyard/male01/cit_hit", ".wav", 1, 5},
 		{"vo/trainyard/male01/cit_pedestrian", ".wav", 1, 5},
 		{"vo/outland_11a/silo/reb1_idles", ".wav", 1, 7},
-		{"vo/npc/male01/hi", ".wav", 1, 2},
 		//{"vo/npc/male01/startle", ".wav", 1, 2},
-		{"vo/npc/male01/vanswer", ".wav", 1, 14},
+		//{"vo/npc/male01/vanswer", ".wav", 1, 14},
 		//{"vo/npc/male01/wetrustedyou", ".wav", 1, 2},
 		//{"vo/npc/male01/whoops", ".wav", 1, 1},
 		//{"vo/npc/male01/yeah", ".wav", 2, 2},
 		//{"vo/npc/male01/gordead_ans", ".wav", 1, 20},
 		//{"vo/npc/male01/heretohelp", ".wav", 1, 2},
-		{"vo/npc/male01/holddownspot", ".wav", 1, 2},
-		{"vo/npc/male01/imstickinghere", ".wav", 1, 1},
+		//{"vo/npc/male01/holddownspot", ".wav", 1, 2},
+		//{"vo/npc/male01/imstickinghere01", ".wav", 1, 1},
+		//{"vo/npc/male01/imstickinghere01", ".wav", 1, 1},
 	},
 	[2] = {
 		{"vo/npc/female01/question", ".wav", 3, 30},
 		{"vo/npc/female01/answer", ".wav", 1, 40},
-		{"vo/npc/female01/sorry", ".wav", 1, 3},
+		//{"vo/npc/female01/sorry", ".wav", 1, 3},
 		{"vo/npc/female01/squad_affirm", ".wav", 1, 9},
 		{"vo/episode_1/npc/female01/cit_remarks", ".wav", 1, 21},
 		{"vo/trainyard/female01/cit_bench", ".wav", 1, 4},
 		{"vo/trainyard/female01/cit_hit", ".wav", 1, 5},
 		{"vo/trainyard/female01/cit_pedestrian", ".wav", 1, 5},
-		{"vo/npc/female01/hi", ".wav", 1, 2},
 		//{"vo/npc/female01/startle", ".wav", 1, 2},
-		{"vo/npc/female01/vanswer", ".wav", 1, 14},
+		//{"vo/npc/female01/vanswer", ".wav", 1, 14},
 		//{"vo/npc/female01/wetrustedyou", ".wav", 1, 2},
 		//{"vo/npc/female01/whoops", ".wav", 1, 1},
 		//{"vo/npc/female01/yeah", ".wav", 2, 2},
 		//{"vo/npc/female01/gordead_ans", ".wav", 1, 20},
 		//{"vo/npc/female01/heretohelp", ".wav", 1, 2},
-		{"vo/npc/female01/holddownspot", ".wav", 1, 2}
+		//{"vo/npc/female01/holddownspot", ".wav", 1, 2}
 	}
 }
 
 contextPhrases = {
-	[1] = { -- male phrases
+	[1] = {
 		["Scared"] = {
 			"vo/npc/male01/gordead_ques06.wav",
 			"vo/npc/male01/gordead_ques10.wav",
@@ -57,6 +56,7 @@ contextPhrases = {
 			"vo/npc/male01/no01.wav",
 			"vo/npc/male01/gordead_ans04.wav",
 			"vo/npc/male01/gordead_ques13.wav",
+			"vo/npc/male01/gordead_ques10.wav",
 			"vo/episode_1/npc/male01/cit_alert_head06.wav",
 			"vo/episode_1/npc/male01/cit_alert_head07.wav",
 			"vo/episode_1/npc/male01/cit_alert_zombie03.wav",
@@ -68,9 +68,6 @@ contextPhrases = {
 			"vo/trainyard/male01/cit_window_use03.wav",
 			"vo/outland_12/reb1_lastwaveannounced05.wav",
 			"vo/outland_02/griggs_cantholdout.wav",
-			"vo/npc/male01/gordead_ans06.wav",
-			"vo/npc/male01/gordead_ans14.wav",
-
 		},
 		["Yell"] = {
 			"vo/episode_1/npc/male01/cit_pain06.wav",
@@ -81,9 +78,6 @@ contextPhrases = {
 			"vo/episode_1/npc/male01/cit_shock04.wav",
 			"vo/outland_02/griggs_fightlion_01.wav",
 			"vo/npc/male01/no02.wav",
-			--"vo/npc/male01/cit_dropper04.wav",
-			"vo/npc/male01/headsup02.wav"
-
 		},
 		["Cheer"] = {
 			"vo/coast/odessa/male01/nlo_cheer01.wav",
@@ -158,7 +152,6 @@ contextPhrases = {
 			"vo/outland_12/reb1_buildingexplo06.wav", --
 			"vo/outland_12/reb1_lastwaveannounced03.wav", --
 			"vo/outland_12/reb1_prepare_battle_08.wav", --
-			"vo/npc/male01/gordead_ques06.wav",
 		},
 		["Die!"] = {
 			"vo/episode_1/npc/male01/cit_kill01.wav",
@@ -181,7 +174,7 @@ contextPhrases = {
 			"vo/outland_12/reb1_striderdown12.wav", --
 		},
 	},
-	[2] = { -- female phrases
+	[2] = {
 		["Scared"] = {
 			"vo/npc/female01/gordead_ques06.wav",
 			"vo/npc/female01/gordead_ques10.wav",
@@ -289,6 +282,103 @@ contextPhrases = {
 }
 
 if CLIENT then
+
+	local function SendRandomPhrase(phrases) 
+	
+		return table.Random(phrases)
+
+	end
+
+	local function MemberAssign(context, phrases) 
+	
+		local tbl = {}
+
+		local targeted = {}
+		local all = {}
+		for phrase, bool in pairs(phrases) do 
+		
+			if bool then 
+				table.ForceInsert(targeted, phrase) 
+			else 
+				table.ForceInsert(all, phrase) 
+			end
+
+		end 
+
+		if not table.IsEmpty(all) then 
+			tbl[1] = {
+			[1] = function() 
+				RunConsoleCommand("hg_phrase_context", "Order: " .. context, SendRandomPhrase(all))
+			end,
+			[2] = "Order all."
+		}
+		end
+		if not table.IsEmpty(targeted) then 
+			net.Start("SquadInfoRequest"); net.SendToServer()
+			net.Receive("SquadInfoSent", function()
+				local members = net.ReadTable(true)
+				for _, member in ipairs(members) do
+					tbl[#tbl + 1] = {
+						[1] = function() 
+							RunConsoleCommand("hg_phrase_context", member:GetNWString("PlayerName") .. ", " .. context, SendRandomPhrase(targeted))
+						end,
+						[2] = member:GetNWString("PlayerName")
+					}
+				end
+			end)
+		end
+
+		hg.CreateRadialMenu(tbl)
+		return tbl
+	
+	end
+
+	local function RecursiveAssign(tbl) 
+		
+		local new_tbl = {}
+		for key, value in pairs(tbl) do	
+			
+			local sub_val = table.Random(value)
+			local check = value["Order."] or value["Normal."] or nil
+			if type(sub_val) == "table" and not check then
+
+				new_tbl[#new_tbl + 1] = {
+					[1] = function(mouseClick)
+						RecursiveAssign(value)
+					end,
+					[2] = key
+				}
+				
+			else 
+				if check then 
+					new_tbl[#new_tbl + 1] = {
+						[1] = function(mouseClick)
+							if mouseClick == 1 then
+								RunConsoleCommand("hg_phrase_context", key, SendRandomPhrase(value["Normal."]))
+							else 
+								MemberAssign(key, value["Order."])
+							end
+						end,
+						[2] = key .. "\nRMB - Order Menu"
+					}
+					continue
+				end
+
+				new_tbl[#new_tbl + 1] = {
+					[1] = function()
+						RunConsoleCommand("hg_phrase_context", key, SendRandomPhrase(value))
+					end,
+					[2] = key
+				}
+
+			end
+		end
+		
+		hg.CreateRadialMenu(new_tbl)
+		return new_tbl
+
+    end
+
 	local function randomPhrase()
 		RunConsoleCommand("hg_phrase")
 	end
@@ -303,6 +393,9 @@ if CLIENT then
 		net.Start("hg_phrase")
 		net.WriteInt(i, 8)
 		net.WriteInt(num, 8)
+		if lply.PlayerClassName == "Combine" then
+			net.WriteString(lply.subClass)
+		end
 		net.SendToServer()
 	end)
 
@@ -310,13 +403,11 @@ if CLIENT then
 		local organism = lply.organism or {}
 
 		if lply:Alive() and not organism.otrub and lply.PlayerClassName ~= "Gordon" then
-			--hg.radialOptions[#hg.radialOptions + 1] = {randomPhrase, (LocalPlayer().PlayerClassName == "Slugcat" and "Wáaaaǎa\nWāaaàaâ") or (LocalPlayer().PlayerClassName == "Gordon" and "...") or "Say something"}
 			hg.radialOptions[#hg.radialOptions + 1] = {
 				[1] = function(mouseClick)
 					if mouseClick == 1 or organism.pain > 60 then
 						randomPhrase()
 					else
-						--print(lply:GetPlayerClass())
 						if lply.PlayerClassName and lply:GetPlayerClass() and !lply:GetPlayerClass().CanUseDefaultPhrase then return end
 						local tbl = {}
 						for context, phrases in pairs(contextPhrases[1]) do
@@ -329,12 +420,20 @@ if CLIENT then
 								[2] = context
 							}
 						end
+						if lply.PlayerClassName == "Combine" then
+							tbl = {}
+
+							local cfgContextPhrases = lply:PlayerClassEvent("GetContextPhrases")
+							tbl = RecursiveAssign(cfgContextPhrases)
+							
+						end
 						hg.CreateRadialMenu(tbl)
 					end
 				end,
 				[2] = organism.pain > 60 and (organism.pain <= 100 and "Yell in pain" or "Moan in pain") or (lply.PlayerClassName == "furry" and "Meow") or "Do Phrase\nRMB - Menu"
 			}
 		end
+
 	end)
 end
 

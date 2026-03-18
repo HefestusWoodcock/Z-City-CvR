@@ -1,19 +1,22 @@
 local classList = player.classList
 local Player = FindMetaTable("Player")
-function Player:SetPlayerClass(value, data)
+function Player:SetPlayerClass(value, subclass, data)
 	data = data or {}
 
 	value = value or "none"
+	subclass = subclass or "default"
 	local old = self.PlayerClassName
 	self.PlayerClassNameOld = old
 	old = classList[old]
 	if old and old.Off then old.Off(self) end
 	self.PlayerClassName = value
+	self.subClass = subclass
 	self:PlayerClassEvent("On", data) -- WHO WRITE THIS SHIT
 	net.Start("setupclass")
 		net.WriteEntity(self)
 		net.WriteString(value)
 		net.WriteString(self.PlayerClassNameOld or "")
+		net.WriteString(subclass)
 		net.WriteTable(data)
 	net.Broadcast()
 	--if self:Alive() then
@@ -36,9 +39,9 @@ hook.Add("PlayerInitializeSpawn", "PlayerClass", function(plySend)
 	for i, ply in player.Iterator() do
 		if not ply:GetPlayerClass() then continue end
 		net.Start("setupclass")
-		net.WriteEntity(ply)
-		net.WriteString(ply:GetNWString("Class"))
-		net.WriteString(ply:GetNWString("ClassOld"))
+			net.WriteEntity(ply)
+			net.WriteString(ply:GetNWString("Class"))
+			net.WriteString(ply:GetNWString("ClassOld"))
 		net.Send(plySend)
 	end
 end)
@@ -54,19 +57,21 @@ end)
 
 COMMANDS.playerclass = {
 	function(ply, args)
-		if not ply:IsAdmin() then return end
-		local plya = #args > 1 and args[1] or ply:Name()
-		local class = #args > 1 and args[2] or args[1]
 
-		if #args < 2 then
-			ply:SetPlayerClass(class)
+		if not ply:IsAdmin() then return end
+		if #args == 1 then
+			ply:SetPlayerClass(args[1])
 			ply:ChatPrint(ply:Name())
-		else
-			for i, ply2 in pairs(player.GetListByName(plya)) do
-				ply2:SetPlayerClass(class)
+		elseif #args == 3 then
+			for i, ply2 in pairs(player.GetListByName(args[1])) do
+				ply2:SetPlayerClass(args[1], args[3])
 				ply:ChatPrint(ply2:Name())
 			end
+		else 
+			ply:SetPlayerClass(args[1], args[2])
+			ply:ChatPrint(ply:Name())
 		end
+
 	end,
 	0
 }

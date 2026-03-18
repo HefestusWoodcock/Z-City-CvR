@@ -1,68 +1,188 @@
 local CLASS = player.RegClass("Combine")
 
-local callsigns = {
-    "Alfa","Bravo","Charlie","Delta","Echo",
-    "Foxtrot","Tango","Sierra","Uniform","Kilo","Yankee","Regent",
-    "Zulu","Omega","Nova","Viper","Ghost","Raven",
+-- Squad Stuff
+local squad_callsigns = { 
+    "Apex", "Helix", "Ice", "Ion", "Mace", 
+    "Payback", "Quicksand", "Sundown", "Uniform"
 }
 
-local leader_callsigns = {"Leader", "Obliterator", "Overlord", "Director", "Control"}
+local leader_callsign = "Leader"
+
+local unit_callsigns = {
+    "Blade","Dagger","Fist","Delta","Hammer",
+    "Hunter","Ranger","Razor","Savage","Slash","Spear","Stab",
+    "Striker","Sweeper","Swift","Sword","Tracker",
+}
 
 local CombineSquads = {squads = {}, playerSquad = {}, usedCallsigns = {}, squadSize = 4}
 
-local function GetSquadForCombine(ply)
+concommand.Add( "testsquads", function( ply, cmd, args, str )
+    for member, squad in pairs(CombineSquads.playerSquad) do 
+        print("Player: " .. member:GetNWString("PlayerName") .. " | Squad: " .. squad)
+    end
+end )
+
+
+-- Squad Functions
+
+if SERVER then 
+
+    util.AddNetworkString("SquadNameRequest")
+    util.AddNetworkString("SquadNameSent")
+    net.Receive("SquadNameRequest", function(len, ply) 
+        
+        local squad = CombineSquads.playerSquad[ply]
+        net.Start("SquadNameSent")
+            net.WriteString(squad)
+        net.Send(ply)
+    
+    end)
+
+    util.AddNetworkString("SquadInfoRequest")
+    util.AddNetworkString("SquadInfoSent")
+    net.Receive("SquadInfoRequest", function(len, ply) 
+        
+        local squad_name = CombineSquads.playerSquad[ply]
+        local squad = CombineSquads.squads[squad_name]
+        local members = squad.members
+        net.Start("SquadInfoSent")
+            net.WriteTable(members, true)
+        net.Send(ply)
+    
+    end)
+
+end
+
+local function CreateNewCombineSquad(leader) 
+
+    local found_squad = false
+    local number = 0
+    repeat
+
+        number = math.random(9)
+        local available = {}
+        for _, cs in ipairs(squad_callsigns) do
+            if not CombineSquads.usedCallsigns[number] then table.insert(available, cs) end
+        end
+        if #available != 0 then 
+            found_squad = available[math.random(#available)]
+        end
+
+    until found_squad
+
+    local squad_name = found_squad .. "-0" .. number
+    
+    CombineSquads.usedCallsigns[found_squad] = true
+    CombineSquads.squads[squad_name] = { leader = leader, members = {}, used_callsigns = {} }
+    CombineSquads.playerSquad[leader] = squad_name
+    leader:SetNWString("PlayerRole", "Leader")
+
+
+    local deployed = {
+        "npc/combine_soldier/vo/helix.wav",
+        "npc/combine_soldier/vo/two.wav",
+        "npc/combine_soldier/vo/fullactive.wav"
+    }
+
+    local accumulator = 0
+    for _, phrase in ipairs(deployed) do
+        
+        timer.Simple(accumulator, function ()
+            EmitSound(phrase, leader:GetPos(), nil, nil, nil, nil, nil, nil, nil, nil)
+        end)
+        accumulator = accumulator + SoundDuration(phrase) * 1.1
+
+    end
+
+    return squad_name
+end
+
+local function CombineFieldPromotion(ply) 
+
+    local squad_name = CombineSquads.playerSquad[ply]
+    local squad = CombineSquads.squads[squad_name]
+    squad.leader = ply
+    ply:SetNWString("PlayerRole", "Leader")
+
+    local promotion = {
+        "npc/combine_soldier/vo/echo.wav",
+        "npc/combine_soldier/vo/one.wav",
+        "npc/combine_soldier/vo/isfieldpromoted.wav"
+    }
+
+   local accumulator = 0
+    for _, phrase in ipairs(promotion) do
+        
+        timer.Simple(accumulator, function ()
+            EmitSound(phrase, leader:GetPos(), nil, nil, nil, nil, nil, nil, nil, nil)
+        end)
+        accumulator = accumulator + SoundDuration(phrase) * 1.1
+
+    end
+    table.remove(squad.members, ply)
+
+end
+
+local function SetSquadForCombine(ply)
     for name, data in pairs(CombineSquads.squads) do
         for i = #data.members, 1, -1 do
             local m = data.members[i]
             if not IsValid(m) or m.PlayerClassName ~= "Combine" then table.remove(data.members, i) end
         end
-        if #data.members < CombineSquads.squadSize then return name end
+        if #data.members < CombineSquads.squadSize then 
+            table.insert(data.members, ply)
+            CombineSquads.playerSquad[ply] = name 
+            ply:SetNWString("PlayerSquad", name)
+            return name
+        end
     end
     
-    local available = {}
-    for _, cs in ipairs(callsigns) do
-        if not CombineSquads.usedCallsigns[cs] then table.insert(available, cs) end
-    end
-    if #available == 0 then return callsigns[math.random(#callsigns)] end
-    
-    local newName = available[math.random(#available)]
-    CombineSquads.usedCallsigns[newName] = true
-    CombineSquads.squads[newName] = {members = {}, usedNumbers = {}}
-    return newName
-end
-
-local function AssignCombineCallsign(ply, isLeader)
-    if math.random(1, 1000) <= 1 then return "Scug" end
-    
-    if isLeader then return leader_callsigns[math.random(#leader_callsigns)] .. "-1" end
-    
-    local squadName = GetSquadForCombine(ply)
-    local squad = CombineSquads.squads[squadName]
-    if not squad then return callsigns[math.random(#callsigns)] .. "-" .. math.random(10, 99) end
-    
-    local num
-    repeat num = math.random(10, 99) until not squad.usedNumbers[num]
-    squad.usedNumbers[num] = true
-    table.insert(squad.members, ply)
-    CombineSquads.playerSquad[ply] = squadName
-    
-    return squadName .. "-" .. num
+    local squad_name = CreateNewCombineSquad(ply)
+    return squad_name
 end
 
 local function RemoveCombineFromSquad(ply)
-    local name = CombineSquads.playerSquad[ply]
-    if not name then return end
-    local squad = CombineSquads.squads[name]
+    local squad_name = CombineSquads.playerSquad[ply]
+    if not squad_name then return end
+    local squad = CombineSquads.squads[squad_name]
+
     if squad then
-        for i, m in ipairs(squad.members) do
-            if m == ply then table.remove(squad.members, i) break end
+        if ply == squad.leader then 
+            squad.leader = nil
+            new_leader = table.Random(squad.members)
+
+            if new_leader then CombineFieldPromotion(new_leader) end
+        else 
+            for i, m in ipairs(squad.members) do
+                if m == ply then table.remove(squad.members, i) break end
+            end
         end
-        if #squad.members == 0 then
-            CombineSquads.squads[name] = nil
-            CombineSquads.usedCallsigns[name] = nil
+        if #squad.members == 0 and squad.leader == nil then
+            CombineSquads.squads[squad_name] = nil
+            CombineSquads.usedCallsigns[squad_name] = nil
         end
     end
     CombineSquads.playerSquad[ply] = nil
+    ply:SetNWString("PlayerSquad", nil)
+
+    return squad
+end
+
+local function AssignCombineCallsign(ply, isLeader)
+    if isLeader then
+        CreateNewCombineSquad(ply)
+        return leader_callsign .. "-01"
+    end
+    
+    local squad_name = SetSquadForCombine(ply)
+    local squad = CombineSquads.squads[squad_name]
+    
+    local callsign
+    repeat callsign = table.Random(unit_callsigns) until not squad.used_callsigns[callsign]
+    squad.used_callsigns[callsign] = true
+    CombineSquads.playerSquad[ply] = squad_name
+    
+    return callsign .. "-" .. math.random(99)
 end
 
 hook.Add("PostCleanupMap", "CombineSquads_Reset", function()
@@ -74,8 +194,15 @@ end)
 
 local primary_weapons = {
     "weapon_osipr",
-    "weapon_mp7",
     "weapon_mp7"
+}
+
+local primary_attachments = {
+    ["weapon_mp7"] = function(ply, wep)
+        if IsValid(wep) then
+            hg.AddAttachmentForce(ply,wep,"holo1")
+        end
+    end,
 }
 
 --;; Реврайт сабклассов (бай дека)
@@ -104,6 +231,38 @@ local combine_subclasses = {
                 ammo_mult = 3
             }
         },
+    },
+
+    watchdog = {
+        color = Color(70, 100, 0),
+        models = Model("yes"),
+        loadout = {
+            {weapon = "weapon_melee"},
+            {
+                weapon = "weapon_hg_slam",
+                count = 2
+
+            },
+            {
+                weapon = "weapon_hg_hl2nade_tpik",
+                count = 2
+            },
+            {
+                weapon = "weapon_hg_flashbang_tpik",
+                count = 1
+            },
+            {
+                weapon = "weapon_hk_usp",
+                ammo_mult = 5
+            },
+            {
+                weapon = "weapon_combinesniper",
+                ammo_mult = 5
+            },
+        },
+        phrases = "ordinal_phrases.json",
+        context_phrases = "ordinal_context_phrases.json"
+
     },
 
     elite = {
@@ -177,7 +336,185 @@ local combine_subclasses = {
                 ammo_mult = 3
             }
         }
+    },
+
+    ordinal = {
+        color = Color(10, 0, 110),
+        models = Model("models/jq/hlvr/characters/combine/combine_captain/combine_captain_hlvr_player.mdl"),
+        bodyGroups = "00",
+        loadout = {
+            {weapon = "weapon_melee"},
+            {
+                weapon = "weapon_hg_hl2nade_tpik",
+                count = 1
+            },
+            {
+                weapon = "weapon_hk_usp",
+                ammo_mult = 3
+            },
+            {
+                weapon = "weapon_osipr",
+                ammo_mult = 3
+            },
+            {
+                weapon = "weapon_bigbandage_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_medkit_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_morphine",
+                count = 1
+            },
+            {
+                weapon = "weapon_mannitol",
+                count = 1
+            },
+            {
+                weapon = "weapon_adrenaline",
+                count = 1
+            }
+        },
+        phrases = "ordinal_phrases.json",
+        context_phrases = "ordinal_context_phrases.json"
+
+    },
+
+    grunt = {
+
+        color = Color(210, 180, 140),
+        models = Model("models/jq/hlvr/characters/combine/grunt/combine_grunt_hlvr_player.mdl"),
+        bodyGroups = "0002000",
+        loadout = {
+            {weapon = "weapon_melee"},
+            {
+                weapon = "weapon_hg_hl2nade_tpik",
+                count = 1
+            },
+            {
+                weapon = "weapon_hk_usp",
+                ammo_mult = 4
+            },
+
+            {
+                weapon = "weapon_mp5",
+                ammo_mult = 4
+            },
+            {
+                weapon = "weapon_bigbandage_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_medkit_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_morphine",
+                count = 1
+            },
+            {
+                weapon = "weapon_mannitol",
+                count = 1
+            },
+            {
+                weapon = "weapon_adrenaline",
+                count = 1
+            }
+        },
+        phrases = "grunt_phrases.json",
+        context_phrases = "grunt_context_phrases.json"
+
+    },
+
+    wallhammer = {
+        color = Color(0,220,220),
+        models = Model("models/jq/hlvr/characters/combine/heavy/combine_heavy_hlvr_player.mdl"),
+        bodyGroups = "00",
+        loadout = {
+            {weapon = "weapon_melee"},
+            {
+                weapon = "weapon_hg_hl2nade_tpik",
+                count = 1
+            },
+            {
+                weapon = "weapon_hk_usp",
+                ammo_mult = 4
+            },
+            {
+                weapon = "weapon_ks23",
+                ammo_type = 2,
+                ammo_mult = 10
+            },
+            {
+                weapon = "weapon_bigbandage_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_medkit_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_morphine",
+                count = 1
+            },
+            {
+                weapon = "weapon_mannitol",
+                count = 1
+            },
+            {
+                weapon = "weapon_adrenaline",
+                count = 1
+            }
+        },
+        phrases = "wallhammer_phrases.json",
+        context_phrases = "wallhammer_context_phrases.json"
+
+    },
+
+    suppressor = {
+        color = Color(220,150,0),
+        models = Model("models/jq/hlvr/characters/combine/suppressor/combine_suppressor_hlvr_player.mdl"),
+        loadout = {
+            {weapon = "weapon_melee"},
+            {
+                weapon = "weapon_hg_flashbang_tpik",
+                count = 1
+            },
+            {
+                weapon = "weapon_hk_usp",
+                ammo_mult = 4
+            },
+            {
+                weapon = "weapon_m60",
+                ammo_mult = 1
+            },
+            {
+                weapon = "weapon_bigbandage_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_medkit_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_morphine",
+                count = 1
+            },
+            {
+                weapon = "weapon_mannitol",
+                count = 1
+            },
+            {
+                weapon = "weapon_adrenaline",
+                count = 1
+            }
+        },
+        phrases = "suppressor_phrases.json",
+        context_phrases = "suppressor_context_phrases.json"
     }
+
 }
 
 local combines = {
@@ -218,7 +555,7 @@ function CLASS.Off(self)
 		eightbit.EnableEffect(self:UserID(), 0)
 	end
 
-    RemoveCombineFromSquad(self)
+    local squad = RemoveCombineFromSquad(self)
 
     for k,v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(combines,v:GetClass()) then
@@ -233,6 +570,14 @@ function CLASS.Off(self)
     self.organism.CantCheckPulse = nil
     self.leader = nil
 	hook.Remove("OnEntityCreated", "relation_shipdo"..self:EntIndex())
+
+    if squad then
+        local leader = squad.leader
+        local members = squad.members
+        net.Start("SquadInfoSent")
+            net.WriteTable(members)
+        net.Send(leader)
+    end
 end
 
 
@@ -247,6 +592,9 @@ local function giveSubClassLoadout(ply, subclass)
         if item.weapon_random_pool then
             local randWep = item.weapon_random_pool[math.random(#item.weapon_random_pool)]
             local wep = ply:Give(randWep)
+            if isfunction(primary_attachments[wep:GetClass()]) then
+                primary_attachments[wep:GetClass()](ply, wep)
+            end
             if wep and item.ammo_mult then
                 ply:GiveAmmo(wep:GetMaxClip1() * item.ammo_mult, wep:GetPrimaryAmmoType(), true)
             end
@@ -254,6 +602,9 @@ local function giveSubClassLoadout(ply, subclass)
             local wep = ply:Give(item.weapon)
             if IsValid(wep) then
                 --;; патрончики
+                if item.ammo_type then
+                    wep:ApplyAmmoChanges(item.ammo_type)
+                end
                 if item.ammo_mult then
                     ply:GiveAmmo(wep:GetMaxClip1() * item.ammo_mult, wep:GetPrimaryAmmoType(), true)
                 end
@@ -297,6 +648,10 @@ function CLASS.On(self, data)
         self:SetSkin(cfg.skin)
     end
 
+    if cfg.bodyGroups then
+        self:SetBodyGroups(cfg.bodyGroups)
+    end
+
     if cfg.mat then
 		for k, v in pairs(cfg.mat) do
         	self:SetSubMaterial(self:GetSubMaterialIdByName(k), v)
@@ -305,9 +660,10 @@ function CLASS.On(self, data)
 
     self.organism.CantCheckPulse = true
 
-    --;; Армор
+    --;; Armor
     self.armors = {}
     self.armors["torso"] = "cmb_armor"
+    -- if sub == "wallhammer" then self.armors["torso"] = "wallhammer_armor" end
     self.armors["head"] = "cmb_helmet"
     self:SyncArmor()
 
@@ -317,9 +673,24 @@ function CLASS.On(self, data)
 
     self.subClass = nil
     self.organism.recoilmul = 0.6
+    self.organism.shockmul = 10
+    self.organism.immobilizationmul = 0.25
 
-    local isLeader = self.leader or (sub == "elite")
+    local isLeader = self.leader or (sub == "elite" or sub == "ordinal")
     local callsign = AssignCombineCallsign(self, isLeader)
+
+    local squad_name = CombineSquads.playerSquad[self]
+    net.Start("SquadNameSent")
+        net.WriteString(squad_name)
+    net.Send(self)
+
+    local squad = CombineSquads.squads[squad_name]
+    local leader = squad.leader
+    local members = squad.members
+    net.Start("SquadInfoSent")
+        net.WriteTable(members)
+    net.Send(leader)
+
 
     self.oldname_cmb = self:GetNWString("PlayerName")
     if zb.GiveRole then zb.GiveRole(self, self.leader and "Leader" or "Soldier", Color(89,230,255)) end
@@ -374,40 +745,190 @@ function CLASS.PlayerDeath(self)
     hook.Remove( "OnEntityCreated", "relation_shipdo"..self:EntIndex())
 end
 
-if SERVER then
-	local cmb_phrases = {
-		"npc/combine_soldier/vo/reportingclear.wav",
-		"npc/combine_soldier/vo/ripcordripcord.wav",
-		"npc/combine_soldier/vo/reportallpositionsclear.wav",
-		"npc/combine_soldier/vo/readyweaponshostilesinbound.wav",
-		"npc/combine_soldier/vo/overwatchrequestreserveactivation.wav",
-		"npc/combine_soldier/vo/overwatchconfirmhvtcontained.wav",
-		"npc/combine_soldier/vo/onedown.wav",
-		"npc/combine_soldier/vo/heavyresistance.wav",
-		"npc/combine_soldier/vo/containmentproceeding.wav",
-		"npc/combine_soldier/vo/contactconfirmprosecuting.wav",
-		"npc/combine_soldier/vo/movein.wav",
-		"npc/combine_soldier/vo/overwatchteamisdown.wav",
-		"npc/combine_soldier/vo/prosecuting.wav",
-		"npc/combine_soldier/vo/stayalertreportsightlines.wav",
-		"npc/combine_soldier/vo/teamdeployedandscanning.wav",
-		"npc/combine_soldier/vo/copythat.wav",
-		"npc/combine_soldier/vo/engagedincleanup.wav",
-		"npc/combine_soldier/vo/executingfullresponse.wav",
-		"npc/combine_soldier/vo/goactiveintercept.wav",
-		"npc/combine_soldier/vo/necroticsinbound.wav",
-		"npc/combine_soldier/vo/standingby].wav",
-		"npc/combine_soldier/vo/stayalert.wav",
-		"npc/combine_soldier/vo/targetmyradial.wav",
-		"npc/combine_soldier/vo/weareinaninfestationzone.wav",
-		"npc/combine_soldier/vo/wehavenontaggedviromes.wav"
-	}
+-- Voice Lines
 
-	hook.Add("HG_ReplacePhrase", "combine_phrase", function(ply, phrase, muffed, pitch)
+local cmb_phrases = {
+    "npc/combine_soldier/vo/prison_soldier_activatecentral.wav",
+    "npc/combine_soldier/vo/prison_soldier_boomersinbound.wav",
+    "npc/combine_soldier/vo/prison_soldier_bunker1.wav",
+    "npc/combine_soldier/vo/prison_soldier_bunker2.wav",
+    "npc/combine_soldier/vo/prison_soldier_bunker3.wav",
+    "npc/combine_soldier/vo/prison_soldier_containD8.wav",
+    "npc/combine_soldier/vo/prison_soldier_fallback_b4.wav",
+    "npc/combine_soldier/vo/prison_soldier_freeman_antlions.wav",
+    "npc/combine_soldier/vo/prison_soldier_fullbioticoverrun.wav",
+    "npc/combine_soldier/vo/prison_soldier_leader9dead.wav",
+    "npc/combine_soldier/vo/prison_soldier_negativecontainment.wav",
+    "npc/combine_soldier/vo/prison_soldier_prosecuteD7.wav",
+    "npc/combine_soldier/vo/prison_soldier_sundown3dead.wav",
+    "npc/combine_soldier/vo/prison_soldier_tohighpoints.wav",
+    "npc/combine_soldier/vo/prison_soldier_visceratorsA5.wav"
+}
+
+local cmb_context_phrases = {
+
+    ["Affirmative."] = {
+        "npc/combine_soldier/vo/affirmative.wav",
+        "npc/combine_soldier/vo/affirmative2.wav",
+        "npc/combine_soldier/vo/copy.wav",
+        "npc/combine_soldier/vo/copythat.wav"
+    },
+    ["Moving."] = {
+        "npc/combine_soldier/vo/unitisinbound.wav",
+        "npc/combine_soldier/vo/unitisclosing.wav",
+        "npc/combine_soldier/vo/unitismovingin.wav"
+    },
+    ["Retreat!"] = {
+        "npc/combine_soldier/vo/ripcord.wav",
+        "npc/combine_soldier/vo/ripcordripcord.wav",
+        "npc/combine_soldier/vo/displace.wav",
+        "npc/combine_soldier/vo/displace2.wav"
+    },
+    ["Target sighted."] = {
+        "npc/combine_soldier/vo/contactconfirmprosecuting.wav",
+        "npc/combine_soldier/vo/contactconfim.wav"
+    },
+    ["Medic."] = {
+        "npc/combine_soldier/vo/requestmedical.wav",
+        "npc/combine_soldier/vo/requeststimdose.wav"
+    },
+    ["Negative."] = {
+        "voice_replacement/hla_ordinal/vo/unabletocommence_01.wav"
+    },
+    ["Laugh."] = {
+        "npc/metropolice/vo/chuckle.wav"
+    }
+
+}
+
+local radio_off = {
+    "voice_replacement/hla_grunt/vo/off1.wav",
+    "voice_replacement/hla_grunt/vo/off2.wav",
+    "voice_replacement/hla_grunt/vo/off3.wav",
+    "voice_replacement/hla_grunt/vo/off4.wav",
+    "voice_replacement/hla_grunt/vo/off5.wav",
+    "voice_replacement/hla_grunt/vo/off6.wav",
+    "voice_replacement/hla_grunt/vo/off7.wav"
+}
+
+local radio_on = {
+    "voice_replacement/hla_grunt/vo/on1.wav",
+    "voice_replacement/hla_grunt/vo/on2.wav",
+    "voice_replacement/hla_grunt/vo/on3.wav",
+    "voice_replacement/hla_grunt/vo/on4.wav",
+    "voice_replacement/hla_grunt/vo/on5.wav"
+}
+
+CLASS.CanUseDefaultPhrase = true
+function CLASS.GetContextPhrases(self)
+    local sub = self.subClass or "default"
+    local contexts = combine_subclasses[sub].context_phrases or cmb_context_phrases
+
+    return contexts
+end
+
+function CLASS:GetContextPhrasesBySubclass(sub) 
+    local sub = sub or "default"
+    local contexts = combine_subclasses[sub].context_phrases or cmb_context_phrases
+
+    return contexts
+end
+
+local function AssignContextPhrases(tbl, fileName) 
+
+    local new_tbl = {}
+    for key, value in pairs(tbl) do 
+        if type(value) == "table" then
+            new_tbl[key] = AssignContextPhrases(value, fileName)
+        else
+            local phrases = {}
+            
+            local files,_ = file.Find("sound/" .. fileName .. value, "[RCVR] HL:A Combine voicepack/replacement for combine soldiers")
+            for i, v in ipairs(files) do
+                if key == "Order." then 
+                    phrases[fileName .. v] = 0
+                else 
+                    phrases[i] = fileName .. v
+                end
+            end
+
+            new_tbl[key] = phrases
+        end
+    end
+    return new_tbl
+
+end
+
+for subName, sub in pairs(combine_subclasses) do
+    if sub.phrases then
+
+        local path = "data_static/phrases/combine/" .. sub.phrases
+        local phrasesJSON = file.Read(path, "GAME")
+        local phrases = util.JSONToTable(phrasesJSON)
+        sub.phrases = phrases
+
+        path = "data_static/phrases/combine/" .. sub.context_phrases
+        local contextPhrasesJSON = file.Read(path, "GAME")
+        local contextPhrases = util.JSONToTable(contextPhrasesJSON)
+        sub.context_phrases = contextPhrases
+ 
+        --[[
+        local phrases = {}
+        local files,_ = file.Find("sound/" .. sub.phrases .. "idle*.wav", "[RCVR] HL:A Combine voicepack/replacement for combine soldiers")
+        for k,v in ipairs(files) do
+            phrases[k] = sub.phrases .. v
+        end
+        
+        local tab = util.TableToJSON(phrases, true)
+        local fileName = "cvr/" .. subName .. "_phrases.json"
+        print(fileName)
+        local test = file.Write(fileName, tab)
+        print(test)
+
+        sub.phrases = phrases
+
+        if subName == "ordinal" then 
+            continue
+        end
+
+        local context_phrases = AssignContextPhrases(hla_contexts, sub.context_phrases)
+
+        tab = util.TableToJSON(context_phrases, true)
+        fileName = "cvr/" .. subName .. "_context_phrases.json"
+        print(fileName)
+        test = file.Write(fileName, tab)
+        print(test)
+
+        sub.context_phrases = context_phrases
+        ]]
+
+    else 
+    
+        sub.phrases = cmb_phrases
+        sub.context_phrases = cmb_context_phrases
+    
+    end
+end
+
+
+if SERVER then
+
+	hook.Add("HG_ReplacePhrase", "combine_phrase", function(ply, sub, muffed, pitch)
 		if IsValid(ply) and ply.PlayerClassName == "Combine" then
-			return ply, cmb_phrases[math.random(#cmb_phrases)], muffed, pitch
+            local phrases = combine_subclasses[sub].phrases or cmb_phrases
+
+			return ply, phrases[math.random(#phrases)], muffed, pitch
 		end
 	end)
+
+    hook.Add("HG_ReplaceContextPhrase", "combine_context_phrase", function(ply, context, sub)
+        if IsValid(ply) and ply.PlayerClassName == "Combine" then
+            local phrases = combine_subclasses[sub].context_phrases or cmb_context_phrases
+
+			return phrases[context]
+		end
+    end)
+    
 end
 
 if CLIENT then
@@ -433,6 +954,17 @@ if CLIENT then
     local pos_sight = Vector(ScrW(),ScrH(),0)
     local bg_color = Color(0,0,0,150)
     local armorlerp = 0
+
+    local squad_name = "none"
+    net.Receive("SquadNameSent", function() 
+        squad_name = net.ReadString()
+    end)
+    local members = {}
+    net.Receive("SquadInfoSent", function() 
+        for i, member in ipairs(net.ReadTable()) do 
+            members[i] = member
+        end
+    end)
 
     surface.CreateFont("CMBFontDefault",{
         font = "Roboto Light",
@@ -488,13 +1020,68 @@ if CLIENT then
 
     local silentlerp = 0
     local silentclr = Color(0,255,255,220)
-    
+    local posSight = Vector(ScrW(),ScrH(),0)
     function CLASS.HUDPaint(self)
         if not self:Alive() then return end
         local lply = LocalPlayer()
         local frt = FrameTime() * 5
         local role = self:GetNWString("PlayerRole")
-        local is_red = (role == "Leader" or role == "Shotgunner" or role == "Elite")
+        -- local is_red = (role == "Leader" or role == "Shotgunner" or role == "Elite")
+        local is_lead = role == "Leader"
+
+        --;; Squad Designation
+        do
+            local pos, size = drawBGPanel(0.5, 0.9)
+            surface.SetFont("CMBFontDefault")
+            local player_name = lply:GetNWString("PlayerName")
+            local col_bg = bg_color
+
+            draw.DrawText(player_name .. " | " .. squad_name, "CMBFontSmall",
+                pos[1],
+                pos[2]+(size[2]/2),
+                col_bg,
+                TEXT_ALIGN_CENTER
+            )
+            draw.DrawText(player_name .. " | " .. squad_name, "CMBFontSmall",
+                pos[1],
+                pos[2]+(size[2]/2),
+                is_red and color_hp2 or color_hp,
+                TEXT_ALIGN_CENTER
+            )
+        end
+
+        -- Squad Info
+        if is_lead then 
+            do 
+
+                local pos, size = drawBGPanel(0.9, 0.2, 100)
+                surface.SetFont("CMBFontDefault")
+                local col_bg = bg_color
+                for i, member in ipairs(members) do 
+
+                    local name = member:GetNWString("PlayerName")
+                    local org = member.organism
+                    if not org or not org.pulse then return end
+                    local pulse = org.heartbeat
+                    local member_pulse = math.Round(pulse)
+
+                    draw.DrawText( name .. " |  " .. member_pulse .. " BPM", "CMBFontSmall",
+                        pos[1],
+                        pos[2] + (size[2] * i),
+                        col_bg,
+                        TEXT_ALIGN_CENTER
+                    )
+                    draw.DrawText( name .. " |  " .. member_pulse .. " BPM", "CMBFontSmall",
+                        pos[1],
+                        pos[2]+(size[2] * i),
+                        is_red and color_hp2 or color_hp,
+                        TEXT_ALIGN_CENTER
+                    )
+
+                end
+
+            end
+        end
 
         --;; HP
         do
@@ -630,6 +1217,22 @@ if CLIENT then
                 silentclr,
                 TEXT_ALIGN_CENTER
             )
+        end
+
+        --;; Sights
+        if self.subClass == "wallhammer" then
+            local wep = self:GetActiveWeapon()
+            if IsValid(wep) then
+                if not IsValid(wep) or not wep.GetTrace then return end
+                local tr = wep:GetTrace(true)
+                posSight = LerpVector(frt*5, posSight, Vector(tr.HitPos:ToScreen().x,tr.HitPos:ToScreen().y,0) )
+                color_sight.a = Lerp(frt*5,color_sight.a, lply:KeyDown(IN_ATTACK2) and 0 or 255)
+                local space = 5
+                draw.RoundedBox(0, posSight.x - 1, posSight.y + 2 + space, 2, 6, color_sight)
+                draw.RoundedBox(0, posSight.x - 1, posSight.y - 8 - space, 2, 6, color_sight)
+                draw.RoundedBox(0, posSight.x + 2 + space, posSight.y - 1, 6, 2, color_sight)
+                draw.RoundedBox(0, posSight.x - 8 - space, posSight.y - 1, 6, 2, color_sight)
+            end
         end
 
         --;; Ammunition
@@ -770,9 +1373,9 @@ if SERVER then
     util.AddNetworkString("CombineRadioEnd")
     util.AddNetworkString("CombineChatMessage")
 
-    hook.Add("HG_PlayerCanHearPlayersVoice","CombineRadio",function(listener,talker)
+    hook.Add("HG_PlayerCanHearPlayersVoice", "CombineRadio",function(listener, talker)
         if talker.PlayerClassName == "Combine" and listener.PlayerClassName == "Combine" and talker:Alive() then
-            return true,false
+            return true, false
         end
     end)
 
@@ -887,12 +1490,12 @@ if CLIENT then
         end
     end)
 
-    hook.Add("ZC_DisableShootTinnitus","NoCombineTinnitus",function(lply)
+    hook.Add("ZC_DisableShootTinnitus", "NoCombineTinnitus", function(lply)
         if lply.PlayerClassName ~= "Combine" then return end
         return true
     end)
 
-    hook.Add("ZC_BodyTemperature","CombineSuitWarming",function(ply, org, timeValue, changeRate, MaxWarmMul, warmLoseMul)
+    hook.Add("ZC_BodyTemperature", "CombineSuitWarming", function(ply, org, timeValue, changeRate, MaxWarmMul, warmLoseMul)
         if ply.PlayerClassName ~= "Combine" then return end
         return changeRate, MaxWarmMul + 0.5, warmLoseMul - 0.4
     end)
