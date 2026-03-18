@@ -131,3 +131,11 @@ function CLASS.On(self, data)
         end
     end )
 end
+
+function CLASS.GiveEquipment(self, subClass)
+    local ply = self
+    local flashlight = self:Give("hg_flashlight")
+    flashlight:Use(self)
+
+    giveSubClassLoadout(ply, subClass or "default")
+end
