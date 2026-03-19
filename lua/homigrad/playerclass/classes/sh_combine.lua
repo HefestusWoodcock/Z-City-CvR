@@ -673,8 +673,6 @@ function CLASS.On(self, data)
 
     self.subClass = nil
     self.organism.recoilmul = 0.6
-    self.organism.shockmul = 10
-    self.organism.immobilizationmul = 0.25
 
     local isLeader = self.leader or (sub == "elite" or sub == "ordinal")
     local callsign = AssignCombineCallsign(self, isLeader)

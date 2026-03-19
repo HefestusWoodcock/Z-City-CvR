@@ -85,7 +85,14 @@ if CLIENT then
         ["models/1000shells/hl2rp/rebels/rebels_standart/erdim.mdl"] = true,
 
 		["models/romka/player/combine_super_soldier.mdl"] = true,
-		["models/romka/player/combine_soldier.mdl"] = true
+		["models/romka/player/combine_soldier.mdl"] = true,
+
+		["models/chri/chechen/player/boevik_male_02_pm.mdl"] = true,
+		["models/chri/chechen/player/boevik_male_04_pm.mdl"] = true,
+		["models/chri/chechen/player/boevik_male_06_pm.mdl"] = true,
+		["models/chri/chechen/player/boevik_male_07_pm.mdl"] = true,
+		["models/chri/chechen/player/boevik_male_08_pm.mdl"] = true,
+		["models/chri/chechen/player/boevik_male_09_pm.mdl"] = true
 	}
 
 	function RenderArmors(ply, armors, ent)
