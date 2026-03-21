@@ -1,5 +1,5 @@
 
-local CLASS = player.RegClass("Metrocop")
+local CLASS = player.RegClass("CivPro")
 
 
 local combine_models = {
@@ -8,7 +8,9 @@ local combine_models = {
 
 
 local callsigns = {
-    "Officer Alpha","Officer Bravo","Officer Charlie","Officer Delta"
+    "Defender", "Hero", "Jury", "Line", "Patrol", "Quick", 
+    "Roller", "Stick", "Tap", "Union", "Victor", "Xray", 
+    "Yellow", "Vice"
 }
 
 
@@ -16,11 +18,19 @@ local primary_weapons = {
     "weapon_mp7"
 }
 
+local primary_attachments = {
+    ["weapon_mp7"] = function(ply, wep)
+        if IsValid(wep) then
+            hg.AddAttachmentForce(ply,wep,"holo1")
+        end
+    end,
+}
 
 local combine_subclasses = {
     default = {
-        color = Color(24,24,24),
-        models = combine_models,
+        color = Color(0,140,155),
+        models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
+        body_groups = "000010000",
         loadout = {
             {weapon = "weapon_medkit_sh"},
             {weapon = "weapon_naloxone"},
@@ -107,6 +117,9 @@ local function giveSubClassLoadout(ply, subclass)
         if item.weapon_random_pool then
             local randWep = item.weapon_random_pool[math.random(#item.weapon_random_pool)]
             local wep = ply:Give(randWep)
+            if isfunction(primary_attachments[wep:GetClass()]) then
+                primary_attachments[wep:GetClass()](ply, wep)
+            end
             if wep and item.ammo_mult then
                 ply:GiveAmmo(wep:GetMaxClip1() * item.ammo_mult, wep:GetPrimaryAmmoType(), true)
             end
@@ -147,14 +160,14 @@ function CLASS.On(self, data)
 
     local sub = self.subClass or "default"
     local cfg = combine_subclasses[sub] or combine_subclasses["default"]
-    local useModel = cfg.models[math.random(#cfg.models)]
+    local useModel = istable(cfg.models) and cfg.models[math.random(#cfg.models)] or cfg.models
     self:SetModel(useModel)
     self:SetSubMaterial()
     self:SetNetVar("Accessories", "")
     self:SetPlayerColor(cfg.color:ToVector())
 
-    if cfg.skin then
-        self:SetSkin(cfg.skin)
+    if cfg.body_groups then
+        self:SetBodyGroups(cfg.body_groups)
     end
 
     self.organism.CantCheckPulse = true
@@ -173,11 +186,7 @@ function CLASS.On(self, data)
     self.organism.recoilmul = 0.85
 
     local callsign
-    if math.random(1,1000) <= 1 then
-        callsign = "Scug"
-    else
-        callsign = table.Random(callsigns) .. "-" .. math.random(1,25)
-    end
+    callsign = "i4:" .. table.Random(callsigns) .. "-" .. math.random(1,25)
 
     if zb.GiveRole then zb.GiveRole(self, "Officer", Color(89,230,255)) end
     self:SetNWString("PlayerName", callsign)
@@ -241,7 +250,7 @@ if SERVER then
 	end
 
 	hook.Add("HG_ReplacePhrase", "metropolice_phrase", function(ply, phrase, muffed, pitch)
-		if IsValid(ply) and ply.PlayerClassName == "Metrocop" then
+		if IsValid(ply) and ply.PlayerClassName == "CivPro" then
 			return ply, mtcop_phrases[math.random(#mtcop_phrases)], muffed, pitch
 		end
 	end)
