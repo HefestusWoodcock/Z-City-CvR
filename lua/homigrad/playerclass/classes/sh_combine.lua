@@ -113,14 +113,13 @@ local function CombineFieldPromotion(ply)
    local accumulator = 0
     for _, phrase in ipairs(promotion) do
         
-        --[[
         timer.Simple(accumulator, function ()
-            EmitSound(phrase, leader:GetPos(), nil, nil, nil, nil, nil, nil, nil, nil)
+            EmitSound(phrase, ply:GetPos(), nil, nil, nil, nil, nil, nil, nil, nil)
         end)
         accumulator = accumulator + SoundDuration(phrase) * 1.1
-        ]]
+
     end
-    table.remove(squad.members, ply)
+    table.RemoveByValue(squad.members, ply)
 
 end
 
@@ -150,9 +149,9 @@ local function RemoveCombineFromSquad(ply)
     if squad then
         if ply == squad.leader then 
             squad.leader = nil
-            new_leader = table.Random(squad.members)
+            // new_leader = table.Random(squad.members)
 
-            if new_leader then CombineFieldPromotion(new_leader) end
+            // if new_leader then CombineFieldPromotion(new_leader) end
         else 
             for i, m in ipairs(squad.members) do
                 if m == ply then table.remove(squad.members, i) break end
