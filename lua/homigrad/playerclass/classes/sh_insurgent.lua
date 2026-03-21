@@ -36,9 +36,9 @@ function CLASS.Off(self)
     if CLIENT then return end
     
     for k,v in ipairs(ents.FindByClass("npc_*")) do
-        if table.HasValue(npc_rebel, v:GetClass()) then
+        if table.HasValue(npc_combine, v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
-        elseif table.HasValue(npc_combine, v:GetClass()) then
+        elseif table.HasValue(npc_rebel, v:GetClass()) then
             v:AddEntityRelationship( self, D_LI, 0 )
         end
     end
@@ -314,7 +314,7 @@ function CLASS.On(self, data)
     
     for k,v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(npc_rebel, v:GetClass()) then
-            v:AddEntityRelationship( self, D_LI, 0 )
+            v:AddEntityRelationship( self, D_NU, 0 )
             v:ClearEnemyMemory()
         elseif table.HasValue(npc_combine, v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
@@ -327,7 +327,7 @@ function CLASS.On(self, data)
         if not IsValid(self) then hook.Remove("OnEntityCreated","rebel_relation_ship"..index) return end
         if ( ent:IsNPC() ) then
             if table.HasValue(npc_rebel, ent:GetClass()) then
-                ent:AddEntityRelationship( self, D_LI, 0 )
+                ent:AddEntityRelationship( self, D_NU, 0 )
             end
 
             if table.HasValue(npc_combine,ent:GetClass()) then

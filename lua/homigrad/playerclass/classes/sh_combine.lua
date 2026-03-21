@@ -676,7 +676,9 @@ local function SetTranshumanOrganism(org)
     org.shockMul = 0.4
 	org.painMul = 0.6
 	org.hurtMul = 0.8
-	org.immobilizationMax = 15
+	org.immobilizationMax = 10
+
+    org.adrenalineStorage = 8
 
 end
 

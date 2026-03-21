@@ -22,7 +22,7 @@ module[1] = function(org)
 	org.shockMul = 1
 	org.painMul = 1
 	org.hurtMul = 1
-	org.immobilizationMax = 25
+	org.immobilizationMax = 20
 
 	org.stun = 0
 	org.lightstun = 0
