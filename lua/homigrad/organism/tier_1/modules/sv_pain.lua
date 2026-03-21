@@ -19,6 +19,11 @@ module[1] = function(org)
 	org.tranquilizer = 0
 	org.shock_turn = 0
 
+	org.shockMul = 1
+	org.painMul = 1
+	org.hurtMul = 1
+	org.immobilizationMax = 25
+
 	org.stun = 0
 	org.lightstun = 0
 end

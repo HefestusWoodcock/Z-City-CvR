@@ -363,8 +363,18 @@ players : 1 humans, 0 bots (20 max)
 		hg.ConVars.potatopc = hg_potatopc
 
 		local vignetteMat = Material( "effects/shaders/zb_vignette" )
-		hook.Add("RenderScreenspaceEffects","SIB_Suppresss",function()
-			if not LocalPlayer():Alive() then return end
+
+		
+		hook.Add("RenderScreenspaceEffects", "SIB_Suppresss", function()
+			lply = LocalPlayer()
+			if not lply:Alive() then return end
+
+			local vignette_mult = 1
+			local color_mult = 1
+			if lply.PlayerClassName == "Combine" then 
+				vignette_mult = 0.2
+				color_mult = 0.3
+			end
 
 			local fraction = math.Clamp(SIB_suppress.Force / 5, 0, 1)
 
@@ -374,8 +384,8 @@ players : 1 humans, 0 bots (20 max)
 				render.UpdateScreenEffectTexture()
 
 				vignetteMat:SetFloat("$c2_x", CurTime() + 10000) //Time
-				vignetteMat:SetFloat("$c0_z", force / 3 ) //ColorIntensity
-				vignetteMat:SetFloat("$c1_y", force / 12 ) //Vignette
+				vignetteMat:SetFloat("$c0_z", force / 4 * color_mult) //ColorIntensity
+				vignetteMat:SetFloat("$c1_y", force / 12 * vignette_mult) //Vignette
 
 				render.SetMaterial(vignetteMat)
 				render.DrawScreenQuad()
@@ -397,6 +407,7 @@ players : 1 humans, 0 bots (20 max)
 		hook.Add("PlayerDeath","huyDeathRemoveSuppression",function()
 			SIB_suppress.Force = 0
 		end)
+
 	end
 --//
 

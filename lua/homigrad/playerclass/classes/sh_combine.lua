@@ -113,11 +113,12 @@ local function CombineFieldPromotion(ply)
    local accumulator = 0
     for _, phrase in ipairs(promotion) do
         
+        --[[
         timer.Simple(accumulator, function ()
             EmitSound(phrase, leader:GetPos(), nil, nil, nil, nil, nil, nil, nil, nil)
         end)
         accumulator = accumulator + SoundDuration(phrase) * 1.1
-
+        ]]
     end
     table.remove(squad.members, ply)
 
@@ -211,31 +212,47 @@ local primary_attachments = {
 local combine_subclasses = {
     default = {
         color = Color(0,220,220),
-        models = Model("models/player/combine_soldier.mdl"),
-		mat = {
-			["models/combine_soldier/combinesoldiersheet_player"] = "models/combine_soldier/combinesoldiersheet"
-		},
+        models = Model("models/nemez/combine_soldiers/combine_soldier_pm.mdl"),
+        bodyGroups = "00000000",
         loadout = {
             {weapon = "weapon_melee"}, --;; ближний бой мясо кишки
             {
                 weapon = "weapon_hg_hl2nade_tpik",
-                count = 1
+                count = 3
             },
             {
                 weapon = "weapon_hk_usp",
                 ammo_mult = 3
             },
-
             {
                 weapon_random_pool = primary_weapons,
-                ammo_mult = 3
+                ammo_mult = 4
+            },
+            {
+                weapon = "weapon_bigbandage_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_medkit_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_morphine",
+                count = 1
             }
         },
     },
 
     watchdog = {
         color = Color(70, 100, 0),
-        models = Model("yes"),
+        models = Model("models/player/beta_elite.mdl"),
+        mat = {
+            ["models/beta_elite/sd_sniper_regular_armor"] = "models/shadertest/predator",
+            ["models/beta_elite/sd_conscript_regular_alice_laat"] = "models/shadertest/predator",
+            ["models/beta_elite/sd_conscript_regular_harness_belt"] = "models/shadertest/predator",
+            ["models/beta_elite/sd_conscript_regular_pouch_frag"] = "models/shadertest/predator",
+            ["models/beta_elite/sd_conscript_regular_loadout_c"] = "models/shadertest/predator"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -260,23 +277,20 @@ local combine_subclasses = {
                 ammo_mult = 5
             },
         },
-        phrases = "ordinal_phrases.json",
-        context_phrases = "ordinal_context_phrases.json"
+        phrases = "grunt_phrases.json",
+        context_phrases = "grunt_context_phrases.json"
 
     },
 
     elite = {
         color = Color(246,13,13),
-        models = Model("models/player/combine_super_soldier.mdl"),
-		mat = {
-			["models/combine_soldier/combine_elite_player"] = "models/combine_soldier/combine_elite",
-			["models/combine_soldier/combine_elite_player_head"] = "models/combine_soldier/combine_elite"
-		},
+        models = Model("models/nemez/combine_soldiers/combine_soldier_elite_pm.mdl"),
+        bodyGroups = "00000000",
         loadout = {
             {weapon = "weapon_melee"},
             {
                 weapon = "weapon_hg_hl2nade_tpik",
-                count = 1
+                count = 2
             },
             {
                 weapon = "weapon_hk_usp",
@@ -286,19 +300,32 @@ local combine_subclasses = {
                 weapon = "weapon_osipr",
                 ammo_mult = 3,
                 extra_balls = 3 
+            },
+            {
+                weapon = "weapon_bigbandage_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_medkit_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_morphine",
+                count = 1
             }
         }
     },
 
     sniper = {
         color = Color(0,220,220),
-        models = Model("models/player/combine_soldier.mdl"),
+        models = Model("models/skipp/snipers/combine_urban_sniper.mdl"),
+        bodyGroups = "000000123",
+        mat = {
+            ["skipp/models/sniper/poncho"] = "models/props_combine/com_shield001a",
+            ["skipp/models/sniper/hood"] = "models/props_combine/com_shield001a"
+        },
         loadout = {
             {weapon = "weapon_melee"},
-            {
-                weapon = "weapon_hg_hl2nade_tpik",
-                count = 1
-            },
             {
                 weapon = "weapon_hk_usp",
                 ammo_mult = 3
@@ -312,11 +339,8 @@ local combine_subclasses = {
 
     shotgunner = {
         color = Color(220,0,0),
-        models = Model("models/player/combine_soldier.mdl"),
-        skin = 1,
-		mat = {
-			["models/combine_soldier/combinesoldiersheet_player_shotgun"] = "models/combine_soldier/combinesoldiersheet_shotgun"
-		},
+        models = Model("models/nemez/combine_soldiers/combine_soldier_shotgunner_pm.mdl"),
+        bodyGroups = "00000000",
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -334,6 +358,18 @@ local combine_subclasses = {
             {
                 weapon = "weapon_spas12",
                 ammo_mult = 3
+            },
+            {
+                weapon = "weapon_bigbandage_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_medkit_sh",
+                count = 1
+            },
+            {
+                weapon = "weapon_morphine",
+                count = 1
             }
         }
     },
@@ -387,6 +423,10 @@ local combine_subclasses = {
         color = Color(210, 180, 140),
         models = Model("models/jq/hlvr/characters/combine/grunt/combine_grunt_hlvr_player.mdl"),
         bodyGroups = "0002000",
+        armor = {
+            ["head"] = "metrocop_helmet",
+            ["torso"] = "metrocop_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -432,6 +472,9 @@ local combine_subclasses = {
         color = Color(0,220,220),
         models = Model("models/jq/hlvr/characters/combine/heavy/combine_heavy_hlvr_player.mdl"),
         bodyGroups = "00",
+        armor = {
+            ["torso"] = "wallhammer_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -571,7 +614,7 @@ function CLASS.Off(self)
     self.leader = nil
 	hook.Remove("OnEntityCreated", "relation_shipdo"..self:EntIndex())
 
-    if squad then
+    if squad and squad.leader then
         local leader = squad.leader
         local members = squad.members
         net.Start("SquadInfoSent")
@@ -620,6 +663,23 @@ local function giveSubClassLoadout(ply, subclass)
     end
 end
 
+local function SetTranshumanOrganism(org) 
+
+    org.CantCheckPulse = true
+    org.bleedingmul = 0.75
+    org.recoilmul = 0.6
+    org.legstrength = 1.5
+    org.stamina.range = 60 * 4
+    org.stamina.max = 60 * 4
+    org.stamina[1] = org.stamina.range
+
+    org.shockMul = 0.4
+	org.painMul = 0.6
+	org.hurtMul = 0.8
+	org.immobilizationMax = 15
+
+end
+
 function CLASS.On(self, data)
     if CLIENT then return end
 
@@ -658,13 +718,13 @@ function CLASS.On(self, data)
 		end
     end
 
-    self.organism.CantCheckPulse = true
+    -- Organism
+    SetTranshumanOrganism(self.organism)
 
     --;; Armor
     self.armors = {}
-    self.armors["torso"] = "cmb_armor"
-    -- if sub == "wallhammer" then self.armors["torso"] = "wallhammer_armor" end
-    self.armors["head"] = "cmb_helmet"
+    self.armors["torso"] = cfg.armor["torso"] or "cmb_armor"
+    self.armors["head"] = cfg.armor["head"] or "cmb_helmet"
     self:SyncArmor()
 
     if not data.bNoEquipment then
@@ -672,7 +732,6 @@ function CLASS.On(self, data)
     end
 
     self.subClass = nil
-    self.organism.recoilmul = 0.6
 
     local isLeader = self.leader or (sub == "elite" or sub == "ordinal")
     local callsign = AssignCombineCallsign(self, isLeader)
@@ -735,8 +794,10 @@ function CLASS.PlayerDeath(self)
     for k,v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(combines,v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
+            v:ClearEnemyMemory()
         elseif table.HasValue(rebels,v:GetClass()) then
             v:AddEntityRelationship( self, D_LI, 0 )
+            v:ClearEnemyMemory()
         end
     end
 
@@ -830,31 +891,6 @@ function CLASS:GetContextPhrasesBySubclass(sub)
     local contexts = combine_subclasses[sub].context_phrases or cmb_context_phrases
 
     return contexts
-end
-
-local function AssignContextPhrases(tbl, fileName) 
-
-    local new_tbl = {}
-    for key, value in pairs(tbl) do 
-        if type(value) == "table" then
-            new_tbl[key] = AssignContextPhrases(value, fileName)
-        else
-            local phrases = {}
-            
-            local files,_ = file.Find("sound/" .. fileName .. value, "[RCVR] HL:A Combine voicepack/replacement for combine soldiers")
-            for i, v in ipairs(files) do
-                if key == "Order." then 
-                    phrases[fileName .. v] = 0
-                else 
-                    phrases[i] = fileName .. v
-                end
-            end
-
-            new_tbl[key] = phrases
-        end
-    end
-    return new_tbl
-
 end
 
 for subName, sub in pairs(combine_subclasses) do
@@ -1493,7 +1529,7 @@ if CLIENT then
     hook.Add("Think","PNV_Think",function()
         local ply = LocalPlayer()
         if ply:Alive() and ply.PlayerClassName == "Combine" then
-            if input.IsKeyDown(KEY_F) and not gui.IsGameUIVisible() and not IsValid(vgui.GetKeyboardFocus()) and (CurTime() > next_toggle_time) then
+            if input.IsKeyDown(KEY_N) and not gui.IsGameUIVisible() and not IsValid(vgui.GetKeyboardFocus()) and (CurTime() > next_toggle_time) then
                 togglePNV()
                 next_toggle_time = CurTime() + toggle_cooldown
             end

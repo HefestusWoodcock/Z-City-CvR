@@ -538,20 +538,20 @@ hook.Add("EntityTakeDamage", "homigrad-damage", function(ent, dmgInfo)
 		MaxPenLenGlobal = nil
 	end
 
-	local shockMul = 	( bullet ~= nil and bullet.ShockMultiplier ) or
-						( IsValid(inf) and inf.ShockMultiplier ) or 1
+	local shockMul = 	( ( bullet ~= nil and bullet.ShockMultiplier ) or
+						( IsValid(inf) and inf.ShockMultiplier ) or 1 ) * org.shockMul
 
 	local bleedMul = 	( bullet ~= nil and bullet.BleedMultiplier ) or
 						( IsValid(inf) and inf.BleedMultiplier ) or 1
 
-	local painMul = 	( bullet ~= nil and bullet.PainMultiplier ) or 
-						( IsValid(inf) and inf.PainMultiplier ) or 1
+	local painMul = 	( ( bullet ~= nil and bullet.PainMultiplier ) or 
+						( IsValid(inf) and inf.PainMultiplier ) or 1 ) * org.painMul
 
 	local immobilizationMul = 	( bullet ~= nil and bullet.ImmobilizationMul) or 
 								( IsValid(inf) and inf.ImmobilizationMul ) or 1
 
-	local hurtMul = 	( bullet ~= nil and bullet.HurtMultiplier) or 
-						( IsValid(inf) and inf.HurtMultiplier ) or 1
+	local hurtMul = 	( ( bullet ~= nil and bullet.HurtMultiplier) or 
+						( IsValid(inf) and inf.HurtMultiplier ) or 1 ) * org.hurtMul
 
 	if bullet and bullet.dmgtype then
 		dmgInfo:SetDamageType( bullet.dmgtype )
@@ -805,13 +805,13 @@ hook.Add("EntityTakeDamage", "homigrad-damage", function(ent, dmgInfo)
 		local instantPainMul = 0.2
 		local instant_pain = (instantPainMul or 0) * painadd
 		local slow_pain = (1 - (instantPainMul or 0)) * painadd
-		
+
 		local instant_pain = instantPainMul * painadd
 		local slow_pain = (1 - instantPainMul) * painadd
 		org.painadd = org.painadd + slow_pain
 		//org.avgpain = org.avgpain + instant_pain
 		org.shock = math.min(org.shock + instaPain * shockMul * 4.5 * math.Clamp(pen / 5,1,2), 70)
-		org.immobilization = math.min(org.immobilization + immobilization * immobilizationMul, 30)
+		org.immobilization = math.min(org.immobilization + immobilization * immobilizationMul, org.immobilizationMax)
 		org.lasthit = CurTime()
 		
 		local adrenalineMul = math.min(math.max(1 + org.adrenaline, 1), 1.2)
