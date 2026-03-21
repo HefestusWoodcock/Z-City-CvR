@@ -214,6 +214,10 @@ local combine_subclasses = {
         color = Color(0,220,220),
         models = Model("models/nemez/combine_soldiers/combine_soldier_pm.mdl"),
         bodyGroups = "00000000",
+        armor = {
+            ["head"] = "cmb_helmet",
+            ["torso"] = "cmb_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"}, --;; ближний бой мясо кишки
             {
@@ -253,6 +257,10 @@ local combine_subclasses = {
             ["models/beta_elite/sd_conscript_regular_pouch_frag"] = "models/shadertest/predator",
             ["models/beta_elite/sd_conscript_regular_loadout_c"] = "models/shadertest/predator"
         },
+        armor = {
+            ["head"] = "cmb_helmet",
+            ["torso"] = "cmb_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -286,6 +294,10 @@ local combine_subclasses = {
         color = Color(246,13,13),
         models = Model("models/nemez/combine_soldiers/combine_soldier_elite_pm.mdl"),
         bodyGroups = "00000000",
+        armor = {
+            ["head"] = "cmb_helmet",
+            ["torso"] = "cmb_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -324,6 +336,10 @@ local combine_subclasses = {
             ["skipp/models/sniper/poncho"] = "models/props_combine/com_shield001a",
             ["skipp/models/sniper/hood"] = "models/props_combine/com_shield001a"
         },
+        armor = {
+            ["head"] = "cmb_helmet",
+            ["torso"] = "cmb_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -341,6 +357,10 @@ local combine_subclasses = {
         color = Color(220,0,0),
         models = Model("models/nemez/combine_soldiers/combine_soldier_shotgunner_pm.mdl"),
         bodyGroups = "00000000",
+        armor = {
+            ["head"] = "cmb_helmet",
+            ["torso"] = "cmb_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -378,6 +398,10 @@ local combine_subclasses = {
         color = Color(10, 0, 110),
         models = Model("models/jq/hlvr/characters/combine/combine_captain/combine_captain_hlvr_player.mdl"),
         bodyGroups = "00",
+        armor = {
+            ["head"] = "cmb_helmet",
+            ["torso"] = "cmb_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
@@ -473,6 +497,7 @@ local combine_subclasses = {
         models = Model("models/jq/hlvr/characters/combine/heavy/combine_heavy_hlvr_player.mdl"),
         bodyGroups = "00",
         armor = {
+            ["head"] = "cmb_helmet",
             ["torso"] = "wallhammer_armor"
         },
         loadout = {
@@ -519,6 +544,10 @@ local combine_subclasses = {
     suppressor = {
         color = Color(220,150,0),
         models = Model("models/jq/hlvr/characters/combine/suppressor/combine_suppressor_hlvr_player.mdl"),
+        armor = {
+            ["head"] = "cmb_helmet",
+            ["torso"] = "cmb_armor"
+        },
         loadout = {
             {weapon = "weapon_melee"},
             {
