@@ -15,7 +15,8 @@ local callsigns = {
 
 
 local primary_weapons = {
-    "weapon_mp7"
+    "weapon_mp7", 
+    "weapon_remington870"
 }
 
 local primary_attachments = {
@@ -24,6 +25,17 @@ local primary_attachments = {
             hg.AddAttachmentForce(ply,wep,"holo1")
         end
     end,
+    ["weapon_remington870"] = function(ply, wep)
+        if IsValid(wep) then
+            hg.AddAttachmentForce(ply, wep, "holo2")
+        end
+    end,
+    ["weapon_sr25"] = function(ply, wep)
+        if IsValid(wep) then
+            hg.AddAttachmentForce(ply, wep, "holo8")
+            hg.AddAttachmentForce(ply, wep, "grip3")
+        end
+    end
 }
 
 local combine_subclasses = {
@@ -32,22 +44,78 @@ local combine_subclasses = {
         models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
         body_groups = "000010000",
         loadout = {
-            {weapon = "weapon_medkit_sh"},
-            {weapon = "weapon_naloxone"},
-            {weapon = "weapon_bigbandage_sh"},
+            {weapon = "weapon_painkillers"},
+            {weapon = "weapon_bandage_sh"},
             {weapon = "weapon_tourniquet"},
             {weapon = "weapon_hg_stunstick"},
             {weapon = "weapon_handcuffs"},
             {weapon = "weapon_handcuffs_key"},
             {weapon = "weapon_walkie_talkie"},
             {
-                weapon = "weapon_hk_usp",
-                ammo_mult = 3
-            },
-
+                weapon = "weapon_glock26",
+                ammo_mult = 1
+            }
+        },
+    },
+    i3 = {
+        color = Color(0,140,155),
+        models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
+        body_groups = "000010000",
+        loadout = {
+            {weapon = "weapon_medkit_sh"},
+            {weapon = "weapon_bigbandage_sh"},
+            {weapon = "weapon_morphine"},
+            {weapon = "weapon_hg_stunstick"},
+            {weapon = "weapon_handcuffs"},
+            {weapon = "weapon_handcuffs_key"},
+            {weapon = "weapon_walkie_talkie"},
             {
-                weapon_random_pool = primary_weapons,
-                ammo_mult = 3
+                weapon = "weapon_fn45",
+                ammo_mult = 2
+            }
+        },
+    },
+    i2 = {
+        color = Color(0,140,155),
+        models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
+        body_groups = "000010000",
+        loadout = {
+            {weapon = "weapon_medkit_sh"},
+            {weapon = "weapon_bigbandage_sh"},
+            {weapon = "weapon_morphine"},
+            {weapon = "weapon_hg_stunstick"},
+            {weapon = "weapon_handcuffs"},
+            {weapon = "weapon_handcuffs_key"},
+            {weapon = "weapon_walkie_talkie"},
+            {
+                weapon = "weapon_hk_usp",
+                ammo_mult = 2
+            },
+            {
+                weapon = primary_weapons,
+                ammo_mult = 2
+            }
+        },
+    },
+    i1 = {
+        color = Color(0,140,155),
+        models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
+        body_groups = "000010000",
+        loadout = {
+            {weapon = "weapon_medkit_sh"},
+            {weapon = "weapon_bigbandage_sh"},
+            {weapon = "weapon_morphine"},
+            {weapon = "weapon_hg_stunstick"},
+            {weapon = "weapon_handcuffs"},
+            {weapon = "weapon_handcuffs_key"},
+            {weapon = "weapon_walkie_talkie"},
+            {
+                weapon = "weapon_hk_usp",
+                ammo_mult = 2
+            },
+            {
+                weapon = "weapon_sr25",
+                ammo_mult = 2
             }
         },
     }
@@ -114,8 +182,8 @@ local function giveSubClassLoadout(ply, subclass)
     ply:StripWeapons()
     ply:Give("weapon_hands_sh")
     for _, item in ipairs(config.loadout or {}) do
-        if item.weapon_random_pool then
-            local randWep = item.weapon_random_pool[math.random(#item.weapon_random_pool)]
+        if type(item.weapon) == "table" then
+            local randWep = item.weapon[math.random(#item.weapon)]
             local wep = ply:Give(randWep)
             if isfunction(primary_attachments[wep:GetClass()]) then
                 primary_attachments[wep:GetClass()](ply, wep)
@@ -125,6 +193,9 @@ local function giveSubClassLoadout(ply, subclass)
             end
         else
             local wep = ply:Give(item.weapon)
+             if isfunction(primary_attachments[wep:GetClass()]) then
+                primary_attachments[wep:GetClass()](ply, wep)
+            end
             if IsValid(wep) then
                 --;; патрончики
                 if item.ammo_mult then
@@ -185,8 +256,8 @@ function CLASS.On(self, data)
     self.subClass = nil
     self.organism.recoilmul = 0.85
 
-    local callsign
-    callsign = "i4:" .. table.Random(callsigns) .. "-" .. math.random(1,25)
+    local callsign = sub ~= "default" and sub or "i4"
+    callsign = callsign .. ":" .. table.Random(callsigns) .. "-" .. math.random(1,25)
 
     if zb.GiveRole then zb.GiveRole(self, "Officer", Color(89,230,255)) end
     self:SetNWString("PlayerName", callsign)
@@ -232,8 +303,12 @@ function CLASS.PlayerDeath(self)
     for k,v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(combines,v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
+            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            v:ClearEnemyMemory()
         elseif table.HasValue(rebels,v:GetClass()) then
             v:AddEntityRelationship( self, D_LI, 0 )
+            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            v:ClearEnemyMemory()
         end
     end
 

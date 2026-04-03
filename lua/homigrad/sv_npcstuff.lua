@@ -5,15 +5,15 @@ local math_random, math_Rand = math.random, math.Rand
 	local lootNPCs = { --// Loot goes here (you need to add npc here to enable NPC organism functionality)
 		["npc_metropolice"] = {
 			"weapon_hg_stunstick",
-			"weapon_medkit_sh",
-			"weapon_bandage_sh",
+			-- "weapon_medkit_sh",
+			-- "weapon_bandage_sh",
 			"weapon_handcuffs",
 			"weapon_walkie_talkie"
 		},
 		["npc_combine_s"] = {
 			"weapon_melee",
-			"weapon_hg_hl2nade_tpik",
-			"weapon_bandage_sh",
+			-- "weapon_hg_hl2nade_tpik",
+			-- "weapon_bandage_sh",
 			"weapon_handcuffs"
 		},
 		["npc_citizen"] = {
@@ -106,7 +106,7 @@ local math_random, math_Rand = math.random, math.Rand
 			end
 
 			rag.armors = ent.armors
-			
+
 			for k, wep in pairs(loot) do
 				local weapon = weapons.Get(wep)
 				if rag.inventory.Weapons and rag.inventory.Weapons[wep] then return end

@@ -16,13 +16,6 @@ local unit_callsigns = {
 
 local CombineSquads = {squads = {}, playerSquad = {}, usedCallsigns = {}, squadSize = 4}
 
-concommand.Add( "testsquads", function( ply, cmd, args, str )
-    for member, squad in pairs(CombineSquads.playerSquad) do 
-        print("Player: " .. member:GetNWString("PlayerName") .. " | Squad: " .. squad)
-    end
-end )
-
-
 -- Squad Functions
 
 if SERVER then 
@@ -46,6 +39,22 @@ if SERVER then
         local squad = CombineSquads.squads[squad_name]
         local members = squad.members
         net.Start("SquadInfoSent")
+            net.WriteTable(members, true)
+        net.Send(ply)
+    
+    end)
+
+    util.AddNetworkString("OW_SquadInfoRequest")
+    util.AddNetworkString("OW_SquadInfoSent")
+    net.Receive("OW_SquadInfoRequest", function(len, ply) 
+        
+        local leader = net.ReadEntity()
+
+        local squad_name = CombineSquads.playerSquad[leader]
+        local squad = CombineSquads.squads[squad_name]
+        local members = squad.members
+        net.Start("OW_SquadInfoSent")
+            net.WriteString(squad_name)
             net.WriteTable(members, true)
         net.Send(ply)
     
@@ -131,8 +140,7 @@ local function SetSquadForCombine(ply)
         end
         if #data.members < CombineSquads.squadSize then 
             table.insert(data.members, ply)
-            CombineSquads.playerSquad[ply] = name 
-            ply:SetNWString("PlayerSquad", name)
+            CombineSquads.playerSquad[ply] = name
             return name
         end
     end
@@ -149,26 +157,31 @@ local function RemoveCombineFromSquad(ply)
     if squad then
         if ply == squad.leader then 
             squad.leader = nil
-            // new_leader = table.Random(squad.members)
+            new_leader = squad.members[math.random(#squad.members)] or nil
 
-            // if new_leader then CombineFieldPromotion(new_leader) end
+            if new_leader then CombineFieldPromotion(new_leader) end
         else 
             for i, m in ipairs(squad.members) do
-                if m == ply then table.remove(squad.members, i) break end
+                if m == ply then 
+                    table.remove(squad.members, i) 
+                    break 
+                end
             end
         end
+        
         if #squad.members == 0 and squad.leader == nil then
             CombineSquads.squads[squad_name] = nil
             CombineSquads.usedCallsigns[squad_name] = nil
         end
     end
+
     CombineSquads.playerSquad[ply] = nil
-    ply:SetNWString("PlayerSquad", nil)
 
     return squad
 end
 
 local function AssignCombineCallsign(ply, isLeader)
+
     if isLeader then
         CreateNewCombineSquad(ply)
         return leader_callsign .. "-01"
@@ -786,9 +799,11 @@ function CLASS.On(self, data)
     for k,v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(combines,v:GetClass()) then
             v:AddEntityRelationship( self, D_LI, 0 )
+            v:AddEntityRelationship( self.bull, v:Disposition(self) )
             v:ClearEnemyMemory()
         elseif table.HasValue(rebels,v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
+            v:AddEntityRelationship( self.bull, v:Disposition(self) )
             v:ClearEnemyMemory()
         end
     end
@@ -797,7 +812,6 @@ function CLASS.On(self, data)
     hook.Add( "OnEntityCreated", "relation_shipdo"..index, function( ent )
         if not IsValid(self) then hook.Remove("OnEntityCreated","relation_shipdo"..index) return end
         if ( ent:IsNPC() ) then
-            --print(ent:GetClass())
             if table.HasValue(combines,ent:GetClass()) then
                 ent:AddEntityRelationship( self, D_LI, 0 )
             end

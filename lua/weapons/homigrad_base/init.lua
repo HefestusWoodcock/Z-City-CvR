@@ -42,22 +42,25 @@ else
 end
 
 -- NPC SHIT
+--[[
 function SWEP:GetNPCBulletSpread()
 	return 10
 end
-
+]]
 function SWEP:GetNPCBurstSettings()
-	return (self.Primary.Automatic and 3) or 1, (self.Primary.Automatic and (1 - self.Primary.Wait ) * 20) or 2,self.Primary.Wait
+	return (self.Primary.Automatic and 3) or 1, 
+			(self.Primary.Automatic and (1 - self.Primary.Wait ) * 10) or 2, 
+			(self.Primary.Automatic and self.Primary.Wait) or self.Primary.Wait * 2.5
 end
-
+--[[
 function SWEP:GetNPCRestTimes()
-	return self.Primary.Wait*2, self.Primary.Wait*2
+	return self.Primary.Wait*2, self.Primary.Wait*4
 end
 
 function SWEP:GetCapabilities()
 	return bit.bor( CAP_WEAPON_RANGE_ATTACK1, CAP_MOVE_SHOOT )
 end
-
+]]
 function SWEP:CanBePickedUpByNPCs()
 	return true
 end

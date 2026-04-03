@@ -159,6 +159,7 @@ hook.Add("HG_ReplacePhrase", "BraindeadPhrase", function(ply, phrase, muffed, pi
 	end
 end)
 
+--[[
 hook.Add("PlayerCanHearPlayersVoice", "RealisticVoice", function(listener,speaker)
 	local result,is3D = ChatLogic(speaker,listener,false,false)
 	local speak = speaker:IsSpeaking()
@@ -177,3 +178,4 @@ hook.Add("PlayerCanHearPlayersVoice", "RealisticVoice", function(listener,speake
 
 	return result,is3D
 end)
+]]
