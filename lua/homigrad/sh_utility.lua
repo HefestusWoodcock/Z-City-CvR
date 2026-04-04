@@ -1375,6 +1375,8 @@ local IsValid = IsValid
 		["npc_sniper"] = {multi = 3, AmmoType = "14.5x114mm BZTM", PenetrationMul = 4},
 		["npc_hunter"] = {multi = 4, AmmoType = "12/70 RIP", PenetrationMul = 1}, --;; не работает( потому что прожектайлами стреляет
 		["npc_turret_ceiling"] = {multi = 1.25, AmmoType = "9x19 mm QuakeMaker"},
+		["ent_mannable_ar3"] = {multi = 1.25, AmmoType = "Pulse", noricochet = true},
+		["func_tank"] = {multi = 1.25, AmmoType = "Pulse", noricochet = true}
 	}
 
 	hook.Add("EntityFireBullets", "NPC_Boolets", function(ent, bullet)
