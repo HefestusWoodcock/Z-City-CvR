@@ -496,7 +496,10 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 
 	--view.fov = view.fov - 10 * fixVal
 	
-	result = hook_Run("Camera", ply, eyePos, angles, view, velLen * 200)
+	if !(ply:InVehicle() and hg.NoCameraInCar(ply:GetVehicle())) then
+		result = hook_Run("Camera", ply, eyePos, angles, view, velLen * 200)
+	end
+
 	--if not RENDERSCENE then
 	view.origin, view.angles = HGAddView(ply, view.origin, view.angles, velLen)
 	--end
@@ -504,7 +507,7 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 	realangle = realangle or lply:EyeAngles()
 
 	if GetCoolCameraBool() then
-		view.angles = realangle + GetViewPunchAngles() * 0.2 + vpang
+		view.angles = realangle + GetViewPunchAngles() * 0.4 + vpang
 		view.angles[3] = view.angles[3] - GetViewPunchAngles4()[3]
 		angles = view.angles
 	end
@@ -547,6 +550,10 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 
 	wep = ply:GetActiveWeapon()
 	if IsValid(wep) and whitelist[wep:GetClass()] then return end
+	result = hook_Run("PostPostHGCalcView", ply, view)
+	if result then
+		return result
+	end
 
 	return view
 end

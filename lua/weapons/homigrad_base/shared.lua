@@ -37,12 +37,43 @@ SWEP.AmmoTypes2 = {
 	["9x19 mm Parabellum"] = {
 		[1] = {"9x19 mm Parabellum"},
 		[2] = {"9x19 mm Green Tracer"},
-		[3] = {"9x19 mm QuakeMaker"}
+		[3] = {"9x19 mm QuakeMaker"},
+		[4] = {"9x19 mm PBP gzh"}
+	}, 
+	["9x18 mm"] = {
+		[1] = {"9x18 mm"},
+		[2] = {"9x18 mm PBM"}
+	}, 
+	[".366 TKM"] = {
+		[1] = {".366 TKM"},
+		[2] = {".366 TKM 'Geksa'"}
+	}, 
+	["7.62x54 mm"] = {
+		[1] = {"7.62x54 mm"},
+		[2] = {"7.62x54 mm 7N26"}
+	}, 
+	["4.6x30 mm"] = {
+		[1] = {"4.6x30 mm"},
+		[2] = {"4.6x30 mm AP SX"}
+	}, 
+	["5.7x28 mm"] = {
+		[1] = {"5.7x28 mm"},
+		[2] = {"5.7x28 mm SS190"}
+	}, 
+	["5.45x39 mm"] = {
+		[1] = {"5.45x39 mm"},
+		[2] = {"5.45x39 mm BP 7N22"},
+		[3] = {"5.45x39 mm PPBS 7N39"}
+	}, 
+	["9x39 mm"] = {
+		[1] = {"9x39 mm"},
+		[2] = {"9x39 mm SP-6"}
 	}, 
 	["5.56x45 mm"] = {
 		[1] = {"5.56x45 mm"},
-		[2] = {"5.56x45 mm M856"},
-		[3] = {"5.56x45 mm AP"}
+		[2] = {"5.56x45 mm M855"},
+		[3] = {"5.56x45 mm M855A1"},
+		[4] = {"5.56x45 mm M995"}	
 	},
 	["7.62x39 mm"] = {
 		[1] = {"7.62x39 mm"},
@@ -60,6 +91,7 @@ SWEP.AmmoTypes2 = {
 	[".45 ACP"] = {
 		[1] = {".45 ACP"},
 		[2] = {".45 ACP Hydro Shock"},
+		[3] = {".45 ACP +P"}
 	},
 	[".50 Action Express"] = {
 		[1] = {".50 Action Express"},
@@ -68,11 +100,11 @@ SWEP.AmmoTypes2 = {
 	},
 	["9mm PAK Blank"] = {
 		[1] = {"9mm PAK Blank"},
-		[2] = {"9mm PAK Flash Defense"},
+		[2] = {"9mm PAK Flash Defense"}
 	},
 	["18x45mm Traumatic"] = {
 		[1] = {"18x45mm Traumatic"}, -- T
-		[2] = {"18x45mm Flash Defense"}, -- LAS
+		[2] = {"18x45mm Flash Defense"} -- LAS
 	},
 	["23x75 SH10"] = {
 		[1] = {"23x75 SH10"},
@@ -84,7 +116,7 @@ SWEP.AmmoTypes2 = {
 	["20/70 gauge"] = {
 		[1] = {"20/70 gauge"},
 		[2] = {"20/70 Slug"},
-		[3] = {"20/70 Flechette"},
+		[3] = {"20/70 Flechette"}
 	},
 }
 
@@ -953,7 +985,7 @@ if CLIENT then
 
 	function SWEP:DrawHUD()
 		if not IsValid(self:GetOwner()) then return end
-		local ammotype = (hg.ammotypeshuy[self.Primary.Ammo].BulletSettings and hg.ammotypeshuy[self.Primary.Ammo].BulletSettings.Icon) or matPistolAmmo
+		local ammotype = (hg.ammotypeshuy[self.Primary.Ammo] and hg.ammotypeshuy[self.Primary.Ammo].BulletSettings and hg.ammotypeshuy[self.Primary.Ammo].BulletSettings.Icon) or matPistolAmmo
 		self.DrawAmmoMetods[self.AmmoDrawMetod](self,ammotype)
 		
 		self.isscoping = false
@@ -1735,8 +1767,9 @@ function SWEP:GetAdditionalValues()
 	self.AdditionalPosPreLerp[1] = self.AdditionalPosPreLerp[1] + animpos * -10
 	self.AdditionalPosPreLerp[2] = self.AdditionalPosPreLerp[2] + animpos * -20
 
-	if self:IsClient() and self:IsZoom() then
-		self.ZoomAnimLerp = LerpFT(0.05,self.ZoomAnimLerp or 0,self.k > 0.2 and self.k < 0.6 and 1 or 0)
+	if self:IsLocal2() and self:IsZoom() then
+		self.k = self.k or 0
+		self.ZoomAnimLerp = LerpFT(0.05, self.ZoomAnimLerp or 0, self.k > 0.2 and self.k < 0.6 and 1 or 0)
 		self.AdditionalPosPreLerp[1] = self.AdditionalPosPreLerp[1] + math.ease.InOutBack(self.ZoomAnimLerp) * 3
 		self.AdditionalAngPreLerp[3] = self.AdditionalAngPreLerp[3] + math.ease.InOutBack(self.ZoomAnimLerp) * 2
 		if self.k > 0.7 and self.k < 0.75 then
@@ -1755,8 +1788,8 @@ function SWEP:GetAdditionalValues()
 
 	local posture = ((animpos < 0.2 and self:IsSprinting()) or animpos > (self:IsPistolHoldType() and 0.5 or 0.2)) and (self:IsPistolHoldType() and 3 or 4) or ply.posture
 
-	local func = hg.postureFunctions2[ply:GetNWFloat("InLegKick", 0) > CurTime() and "legkicking" and 0 or (self:IsSprinting() or huya) and (self:GetButtstockAttack() - CurTime() < -1) and ((ply.posture == 3 and 3) or (ply.posture == 3 and 3) or (self:IsPistolHoldType() and 3 or 3)) or ply.posture] or funcNil
-
+	local func = hg.postureFunctions2[(self:IsSprinting() or huya) and (self:GetButtstockAttack() - CurTime() < -1) and ((ply.posture == 3 and 3) or (ply.posture == 3 and 3) or (self:IsPistolHoldType() and 3 or 3)) or ply.posture] or funcNil
+	func = ply:GetNWFloat("InLegKick", 0) > CurTime() and hg.postureFunctions2["legkicking"] or func
 	if not self.inspect then
 		func(self, ply, huya)
 	end
@@ -1954,11 +1987,21 @@ function SWEP:GetAdditionalValues()
 	
 	if not suiciding and !self.norecoil then
 		local mulhuy = (self:IsPistolHoldType() or self.PistolKinda) and 2 or (((ply.posture == 1 and not self:IsZoom()) or ply.posture == 7 or ply.posture == 8) and 2 or 0.75)
-		local animpos = self:GetAnimShoot2(0.09 * mulhuy / host_timescale(), true) * 0.5
-		animpos = animpos * 0.3 * mulhuy * (self:IsPistolHoldType() and 1 or 1)
+		local animpos = self:GetAnimShoot2(0.09 * mulhuy / host_timescale(), true)
+		local shit = 0.2 * mulhuy / host_timescale()
+		local animpos3 = self:GetAnimShoot2(shit, true) / shit
+		
+		animpos = animpos * 0.15 * mulhuy * (self:IsPistolHoldType() and 1 or 1)
 		animpos = animpos * math.min((self.Primary.Force2 or self.Primary.Force) / 40,3) * ((self.NumBullet or 1) * 3 or 1) * (self.animposmul or 1) // * 4
 
-		self.AdditionalPos2 = self.AdditionalPos2 - (self.AdditionalAng + self.AdditionalAng2):Forward() * animpos * 7
+		self.AdditionalPos2 = self.AdditionalPos2 - (self.AdditionalAng + self.AdditionalAng2):Forward() * animpos * 9
+		local shit2 = (1 / self.weight) * (self.NumBullet or 3) / 3 * 0.5
+		self.AdditionalPos2[2] = self.AdditionalPos2[2] + math.sin(animpos3) * 1 * shit2
+		self.AdditionalPos2[1] = self.AdditionalPos2[1] + math.sin(animpos3) * -1 * shit2
+		self.AdditionalAng2[2] = self.AdditionalAng2[2] + math.sin(animpos3) * -2 * shit2
+		
+		self.AdditionalPos2:Add(VectorRand(-0.07, 0.07) * animpos3 * shit2)
+
 		//self.AdditionalPos2[3] = self.AdditionalPos2[3] + animpos * ply.offsetView[2] * 0.2
 		
 		if self.podkid or self:IsPistolHoldType() then

@@ -925,6 +925,8 @@ hook.Add("CanPlayerEnterVehicle","fake_enterveh",function(ply, veh)
 end)
 
 hook.Add("PlayerEnteredVehicle","allowweapons",function(ply,veh,role)
+	ply:SetAllowWeaponsInVehicle(true)
+	if hg.NoFakeInCar(veh) then return end
 	ply:SetEyeAngles(angle_zero)
 	//local veh2 = veh:GetParent()
 

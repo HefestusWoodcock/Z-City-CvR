@@ -1,6 +1,8 @@
 local getBloodColor = FindMetaTable( "Entity" ).GetBloodColor
 local isBulletDamage = FindMetaTable( "CTakeDamageInfo" ).IsBulletDamage
 
+hg.ConVars = hg.ConVars or {}
+
 local hg_legacycam = ConVarExists("hg_legacycam") and GetConVar("hg_legacycam") or CreateConVar("hg_legacycam", 0, FCVAR_REPLICATED, "Toggle legacy first-person view camera", 0, 1)
 
 local host_timescale = game.GetTimeScale
@@ -721,8 +723,12 @@ function hgWreckBuildings(blaster, pos, power, range, ignoreVisChecks) -- taken 
 					end
 
 					if proceed then
-						if mass <= myDestroyThreshold then
-							SafeRemoveEntity(prop)
+                        if mass <= myDestroyThreshold then
+                            if prop:GetClass() == "prop_ragdoll" or prop:IsNPC() then
+                                physObj:EnableMotion(true)
+                            else
+                                SafeRemoveEntity(prop)
+                            end
 						elseif mass <= myLoosenThreshold then
 							physObj:EnableMotion(true)
 							constraint.RemoveAll(prop)
@@ -867,6 +873,7 @@ hook.Add( "OnEntityCreated", "VechicleChairs", function( ent )
 			
 			ent:SetModel("models/props_junk/PopCan01a.mdl")
 			ent:SetAngles(ent:LocalToWorldAngles(UwU and Angle(0, -1, 0) or Angle(0,90,0)))
+			ent:SetPos(ent:GetPos() + vector_up * 1)
 		end
 	end)
 	
@@ -1553,7 +1560,7 @@ hook.Add( "KeyPress", "snowballs_pickup", function( ply, key )
 end )
 
 local warmingEnts = {
-	["env_sprite"] = 0.1,
+	["env_sprite"] = 0.0,
 	["env_fire"] = 0.5,
 	["vfire"] = function(ent) return ent:GetFireState() end,
 }
