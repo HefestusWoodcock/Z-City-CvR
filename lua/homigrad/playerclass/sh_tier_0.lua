@@ -45,7 +45,7 @@ net.Receive("setupclass", function()
 	ply:PlayerClassEvent("On", data)
 end)
 
-hook.Add("PostDrawAppearance", "PlayerClass", function(ent,ply) end)
+hook.Add("PostDrawAppearance", "PlayerClass", function(ent, ply) end)
 
 if CLIENT then
 	hook.Add("Player Think", "ClassPlyThink", function(ply, time, dtime)
