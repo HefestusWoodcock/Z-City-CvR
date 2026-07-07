@@ -510,7 +510,7 @@ local combine_subclasses = {
         bodyGroups = "00",
         armor = {
             ["head"] = "cmb_helmet",
-            ["torso"] = "wallhammer_armor"
+            ["torso"] = "cmb_armor"
         },
         loadout = {
             {weapon = "weapon_melee"},
