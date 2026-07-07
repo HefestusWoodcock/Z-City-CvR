@@ -342,6 +342,7 @@ local function giveSubClassLoadout(ply, subClass)
     local cfg = subclasses[subClass] or subclasses["default"]
 
     ply:StripWeapons()
+    ply:RemoveAllAmmo()
     ply:Give("weapon_hands_sh")
     ply:Give("weapon_painkillers")
     ply:Give("weapon_bigbandage_sh")

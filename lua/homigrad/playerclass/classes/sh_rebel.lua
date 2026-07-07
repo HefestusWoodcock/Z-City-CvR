@@ -203,6 +203,7 @@ local rebel_subclasses = {
 local function giveSubClassLoadout(ply, subClass)
     local cfg = rebel_subclasses[subClass] or rebel_subclasses["default"]
     
+    ply:RemoveAllAmmo()
     cfg.give_fn(ply)
 
     --;; Система случайного говна

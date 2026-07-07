@@ -170,7 +170,7 @@ function CLASS.Off(self)
 	self:SetNWString("PlayerRole", nil)
     self.organism.CantCheckPulse = nil
     self.leader = nil
-	hook.Remove("OnEntityCreated", "relation_shipdo"..self:EntIndex())
+	hook.Remove("OnEntityCreated", "relation_shipdo" .. self:EntIndex())
 end
 
 
@@ -180,6 +180,7 @@ CLASS.CanEmitRNDSound = false
 local function giveSubClassLoadout(ply, subclass)
     local config = combine_subclasses[subclass] or combine_subclasses["default"]
     ply:StripWeapons()
+    ply:RemoveAllAmmo()
     ply:Give("weapon_hands_sh")
     for _, item in ipairs(config.loadout or {}) do
         if type(item.weapon) == "table" then
@@ -273,8 +274,8 @@ function CLASS.On(self, data)
     end
 
     local index = self:EntIndex()
-    hook.Add( "OnEntityCreated", "relation_shipdo"..index, function( ent )
-        if not IsValid(self) then hook.Remove("OnEntityCreated","relation_shipdo"..index) return end
+    hook.Add( "OnEntityCreated", "relation_shipdo" .. index, function( ent )
+        if not IsValid(self) then hook.Remove("OnEntityCreated", "relation_shipdo" .. index) return end
         if ( ent:IsNPC() ) then
             --print(ent:GetClass())
             if table.HasValue(combines,ent:GetClass()) then

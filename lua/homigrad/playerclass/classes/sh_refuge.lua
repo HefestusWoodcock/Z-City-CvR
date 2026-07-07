@@ -180,6 +180,7 @@ function CLASS.GiveEquipment(self, class)
     end
     
     local ply = self
+    ply:RemoveAllAmmo()
     
     local wep = ply:Give(primary[math.random(#primary)])
     ply:GiveAmmo(wep:GetMaxClip1() * 2, wep:GetPrimaryAmmoType(), true)

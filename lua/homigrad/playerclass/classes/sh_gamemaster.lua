@@ -55,6 +55,7 @@ local function GiveSubClassLoadout(ply, sub)
     local cfg = subclass[sub] or subclass["default"]
 
     ply:StripWeapons()
+    ply:RemoveAllAmmo()
     ply:Give("weapon_hands_sh")
     ply:Give("weapon_physgun")
     ply:Give("gmod_tool")

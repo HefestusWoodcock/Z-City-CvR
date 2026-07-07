@@ -671,6 +671,7 @@ CLASS.CanEmitRNDSound = false
 local function giveSubClassLoadout(ply, subclass)
     local config = combine_subclasses[subclass] or combine_subclasses["default"]
     ply:StripWeapons()
+    ply:RemoveAllAmmo()
     ply:Give("weapon_hands_sh")
     for _, item in ipairs(config.loadout or {}) do
         if item.weapon_random_pool then
