@@ -43,8 +43,8 @@ function CLASS.Off(self)
 
     end
 
-    self:SetNWString("PlayerRole", nil)
-	self:SetNWString("PlayerName", 
+    self:SetNWString("PlayerRole", "default")
+    self:SetNWString("PlayerName",
         self.oldname or self:GetNWString("PlayerName"))
 
     hook.Remove("OnEntityCreated", "relation_shipdo"..self:EntIndex())
@@ -74,8 +74,8 @@ function CLASS.On(self, data)
     Appearance.AAttachments = ""
     Appearance.AColthes = ""
 
-    if !self.cloak then COMMANDS.zc_cloak[1](self) end
-    if !self.organism.godmode then COMMANDS.zc_god[1](self) end
+    if not self.cloak then COMMANDS.zc_cloak[1](self) end
+    if not self.organism.godmode then COMMANDS.zc_god[1](self) end
 
     local sub = self.subClass or "default"
     self:SetNWString("PlayerRole", sub)
@@ -100,7 +100,7 @@ function CLASS.On(self, data)
     end
 
     local index = self:EntIndex()
-    hook.Add( "OnEntityCreated", "relation_shipdo"..index, function( ent )
+    hook.Add( "OnEntityCreated", "relation_shipdo" .. index, function( ent )
         if not IsValid(self) then hook.Remove("OnEntityCreated", "relation_shipdo" .. index) return end
         if ( ent:IsNPC() ) then
             v:AddEntityRelationship( self, D_NU, 0)
@@ -135,10 +135,12 @@ end
 if CLIENT then 
 
     local cmb_mat = Material("sprites/mat_jack_helmoverlay_r")
-    hook.Add("RenderScreenspaceEffects","Overwatch_View",function()
+    hook.Add("RenderScreenspaceEffects", "Overwatch_View", function()
         local lply = LocalPlayer()
+        local class = lply.PlayerClassName
         local role = lply:GetNWString("PlayerRole")
-        if lply:Alive() and lply.PlayerClassName == "Gamemaster" and role == "overwatch" then
+
+        if lply:Alive() and class == "Gamemaster" and role == "overwatch" then
             surface.SetDrawColor(25,190,190,255)
             surface.SetMaterial(cmb_mat)
             surface.DrawTexturedRectRotated(
@@ -279,6 +281,10 @@ if CLIENT then
 
     hook.Add("radialOptions", "Overwatch", function()
 
+        local lply = LocalPlayer()
+        local role = lply:GetNWString("PlayerRole")
+        if lply:Alive() and lply.PlayerClassName ~= "Gamemaster" and role ~= "overwatch" then return end
+
 		if lply:Alive() and lply:GetNWString("PlayerRole") == "overwatch" then
 			hg.radialOptions[#hg.radialOptions + 1] = {
 				[1] = function(mouseClick)
@@ -337,7 +343,7 @@ if CLIENT then
                                         end
                                     ) 
                                 end )
-                                
+
                                 return -1 
                             end,
                             [2] = "Assign New Objective"
@@ -361,7 +367,7 @@ else
         local ent = net.ReadEntity()
         local msg = net.ReadString()
         local color = net.ReadColor()
-        
+
         net.Start("HGNotificate")
             net.WriteString(msg)
             net.WriteColor(color)
