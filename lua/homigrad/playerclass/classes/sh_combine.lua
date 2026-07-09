@@ -31,7 +31,6 @@ if SERVER then
 
     end)
 
-    --[[
     util.AddNetworkString("SquadInfoRequest")
     util.AddNetworkString("SquadInfoSent")
     net.Receive("SquadInfoRequest", function(len, ply)
@@ -44,7 +43,7 @@ if SERVER then
         net.Send(ply)
 
     end)
-    ]]
+
     util.AddNetworkString("OW_SquadInfoRequest")
     util.AddNetworkString("OW_SquadInfoSent")
     net.Receive("OW_SquadInfoRequest", function(len, ply)
@@ -61,35 +60,6 @@ if SERVER then
 
     end)
 
-end
-
-
-local function NotifySquadLead(leader, squad)
-    if not SERVER then return end
-    util.AddNetworkString("SquadInfoSent")
-
-    local str = table.ToString(members)
-
-    net.Start("SquadInfoSent")
-        net.WriteString(str)
-    net.Send(leader)
-end
-
-local function NotifyOverwatch(squad, squad_name)
-    if not SERVER then return end
-    util.AddNetworkString("OW_SquadInfoSent")
-
-    for _, ply in ipairs(player.GetAll()) do
-        if ply.PlayerClassName ~= "Gamemaster" 
-            and ply:GetNWString("PlayerRole") ~= "overwatch" then continue end
-
-        local members = squad.members or {}
-        net.Start("OW_SquadInfoSent")
-            net.WriteString(squad_name)
-            net.WriteTable(members, true)
-        net.Send(ply)
-
-    end
 end
 
 local function CreateNewCombineSquad(leader)
@@ -142,7 +112,6 @@ local function CombineFieldPromotion(ply)
     local squad = CombineSquads.squads[squad_name]
     squad.leader = ply
     ply:SetNWString("PlayerRole", "Leader")
-    NotifySquadLead(ply, squad)
 
     local promotion = {
         "npc/combine_soldier/vo/echo.wav",
@@ -688,7 +657,10 @@ function CLASS.Off(self)
 
     if squad and squad.leader then
         local leader = squad.leader
-        NotifySquadLead(leader, squad)
+        local members = squad.members
+        net.Start("SquadInfoSent")
+            net.WriteTable(members)
+        net.Send(leader)
     end
 end
 
@@ -815,7 +787,10 @@ function CLASS.On(self, data)
 
     local squad = CombineSquads.squads[squad_name]
     local leader = squad.leader
-    NotifySquadLead(leader, squad)
+    local members = squad.members
+    net.Start("SquadInfoSent")
+        net.WriteTable(members)
+    net.Send(leader)
 
 
     self.oldname_cmb = self:GetNWString("PlayerName")
@@ -1028,12 +1003,8 @@ if CLIENT then
         squad_name = net.ReadString()
     end)
     local members = {}
-    net.Receive("SquadInfoSent", function()
-        local str = net.ReadString()
-        local tbl = string.ToTable(str)
-        for i, member in ipairs(tbl) do
-            print("In second for loop")
-            print(member)
+    net.Receive("SquadInfoSent", function() 
+        for i, member in ipairs(net.ReadTable()) do 
             members[i] = member
         end
     end)
