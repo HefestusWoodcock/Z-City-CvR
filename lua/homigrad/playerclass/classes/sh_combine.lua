@@ -1,8 +1,8 @@
 local CLASS = player.RegClass("Combine")
 
 -- Squad Stuff
-local squad_callsigns = { 
-    "Apex", "Helix", "Ice", "Ion", "Mace", 
+local squad_callsigns = {
+    "Apex", "Helix", "Ice", "Ion", "Mace",
     "Payback", "Quicksand", "Sundown", "Uniform"
 }
 
@@ -18,36 +18,37 @@ local CombineSquads = {squads = {}, playerSquad = {}, usedCallsigns = {}, squadS
 
 -- Squad Functions
 
-if SERVER then 
+if SERVER then
 
     util.AddNetworkString("SquadNameRequest")
     util.AddNetworkString("SquadNameSent")
-    net.Receive("SquadNameRequest", function(len, ply) 
-        
+    net.Receive("SquadNameRequest", function(len, ply)
+
         local squad = CombineSquads.playerSquad[ply]
         net.Start("SquadNameSent")
             net.WriteString(squad)
         net.Send(ply)
-    
+
     end)
 
+    --[[
     util.AddNetworkString("SquadInfoRequest")
     util.AddNetworkString("SquadInfoSent")
-    net.Receive("SquadInfoRequest", function(len, ply) 
-        
+    net.Receive("SquadInfoRequest", function(len, ply)
+
         local squad_name = CombineSquads.playerSquad[ply]
         local squad = CombineSquads.squads[squad_name]
         local members = squad.members
         net.Start("SquadInfoSent")
             net.WriteTable(members, true)
         net.Send(ply)
-    
-    end)
 
+    end)
+    ]]
     util.AddNetworkString("OW_SquadInfoRequest")
     util.AddNetworkString("OW_SquadInfoSent")
-    net.Receive("OW_SquadInfoRequest", function(len, ply) 
-        
+    net.Receive("OW_SquadInfoRequest", function(len, ply)
+
         local leader = net.ReadEntity()
 
         local squad_name = CombineSquads.playerSquad[leader]
@@ -57,12 +58,41 @@ if SERVER then
             net.WriteString(squad_name)
             net.WriteTable(members, true)
         net.Send(ply)
-    
+
     end)
 
 end
 
-local function CreateNewCombineSquad(leader) 
+
+local function NotifySquadLead(leader, squad)
+    if not SERVER then return end
+    util.AddNetworkString("SquadInfoSent")
+
+    local str = table.ToString(members)
+
+    net.Start("SquadInfoSent")
+        net.WriteString(str)
+    net.Send(leader)
+end
+
+local function NotifyOverwatch(squad, squad_name)
+    if not SERVER then return end
+    util.AddNetworkString("OW_SquadInfoSent")
+
+    for _, ply in ipairs(player.GetAll()) do
+        if ply.PlayerClassName ~= "Gamemaster" 
+            and ply:GetNWString("PlayerRole") ~= "overwatch" then continue end
+
+        local members = squad.members or {}
+        net.Start("OW_SquadInfoSent")
+            net.WriteString(squad_name)
+            net.WriteTable(members, true)
+        net.Send(ply)
+
+    end
+end
+
+local function CreateNewCombineSquad(leader)
 
     local found_squad = false
     local number = 0
@@ -73,14 +103,14 @@ local function CreateNewCombineSquad(leader)
         for _, cs in ipairs(squad_callsigns) do
             if not CombineSquads.usedCallsigns[number] then table.insert(available, cs) end
         end
-        if #available != 0 then 
+        if #available ~= 0 then
             found_squad = available[math.random(#available)]
         end
 
     until found_squad
 
     local squad_name = found_squad .. "-0" .. number
-    
+
     CombineSquads.usedCallsigns[found_squad] = true
     CombineSquads.squads[squad_name] = { leader = leader, members = {}, used_callsigns = {} }
     CombineSquads.playerSquad[leader] = squad_name
@@ -95,7 +125,7 @@ local function CreateNewCombineSquad(leader)
 
     local accumulator = 0
     for _, phrase in ipairs(deployed) do
-        
+
         timer.Simple(accumulator, function ()
             EmitSound(phrase, leader:GetPos(), nil, nil, nil, nil, nil, nil, nil, nil)
         end)
@@ -106,12 +136,13 @@ local function CreateNewCombineSquad(leader)
     return squad_name
 end
 
-local function CombineFieldPromotion(ply) 
+local function CombineFieldPromotion(ply)
 
     local squad_name = CombineSquads.playerSquad[ply]
     local squad = CombineSquads.squads[squad_name]
     squad.leader = ply
     ply:SetNWString("PlayerRole", "Leader")
+    NotifySquadLead(ply, squad)
 
     local promotion = {
         "npc/combine_soldier/vo/echo.wav",
@@ -121,7 +152,7 @@ local function CombineFieldPromotion(ply)
 
    local accumulator = 0
     for _, phrase in ipairs(promotion) do
-        
+
         timer.Simple(accumulator, function ()
             EmitSound(phrase, ply:GetPos(), nil, nil, nil, nil, nil, nil, nil, nil)
         end)
@@ -138,13 +169,13 @@ local function SetSquadForCombine(ply)
             local m = data.members[i]
             if not IsValid(m) or m.PlayerClassName ~= "Combine" then table.remove(data.members, i) end
         end
-        if #data.members < CombineSquads.squadSize then 
+        if #data.members < CombineSquads.squadSize then
             table.insert(data.members, ply)
             CombineSquads.playerSquad[ply] = name
             return name
         end
     end
-    
+
     local squad_name = CreateNewCombineSquad(ply)
     return squad_name
 end
@@ -155,20 +186,20 @@ local function RemoveCombineFromSquad(ply)
     local squad = CombineSquads.squads[squad_name]
 
     if squad then
-        if ply == squad.leader then 
+        if ply == squad.leader then
             squad.leader = nil
             new_leader = squad.members[math.random(#squad.members)] or nil
 
             if new_leader then CombineFieldPromotion(new_leader) end
-        else 
+        else
             for i, m in ipairs(squad.members) do
-                if m == ply then 
-                    table.remove(squad.members, i) 
-                    break 
+                if m == ply then
+                    table.remove(squad.members, i)
+                    break
                 end
             end
         end
-        
+
         if #squad.members == 0 and squad.leader == nil then
             CombineSquads.squads[squad_name] = nil
             CombineSquads.usedCallsigns[squad_name] = nil
@@ -186,15 +217,15 @@ local function AssignCombineCallsign(ply, isLeader)
         CreateNewCombineSquad(ply)
         return leader_callsign .. "-01"
     end
-    
+
     local squad_name = SetSquadForCombine(ply)
     local squad = CombineSquads.squads[squad_name]
-    
+
     local callsign
     repeat callsign = table.Random(unit_callsigns) until not squad.used_callsigns[callsign]
     squad.used_callsigns[callsign] = true
     CombineSquads.playerSquad[ply] = squad_name
-    
+
     return callsign .. "-" .. math.random(99)
 end
 
@@ -323,7 +354,7 @@ local combine_subclasses = {
             {
                 weapon = "weapon_osipr",
                 ammo_mult = 3,
-                extra_balls = 3 
+                extra_balls = 3
             },
             {
                 weapon = "weapon_bigbandage_sh",
@@ -635,9 +666,9 @@ local rebels = {
 function CLASS.Off(self)
     if CLIENT then return end
 
-	if eightbit and eightbit.EnableEffect and self.UserID then
-		eightbit.EnableEffect(self:UserID(), 0)
-	end
+    if eightbit and eightbit.EnableEffect and self.UserID then
+        eightbit.EnableEffect(self:UserID(), 0)
+    end
 
     local squad = RemoveCombineFromSquad(self)
 
@@ -649,18 +680,15 @@ function CLASS.Off(self)
         end
     end
 
-	self:SetNWString("PlayerRole", nil)
-	self:SetNWString("PlayerName", self.oldname_cmb or self:GetNWString("PlayerName"))
+    self:SetNWString("PlayerRole", "default")
+    self:SetNWString("PlayerName", self.oldname_cmb or self:GetNWString("PlayerName"))
     self.organism.CantCheckPulse = nil
     self.leader = nil
-	hook.Remove("OnEntityCreated", "relation_shipdo"..self:EntIndex())
+    hook.Remove("OnEntityCreated", "relation_shipdo" .. self:EntIndex())
 
     if squad and squad.leader then
         local leader = squad.leader
-        local members = squad.members
-        net.Start("SquadInfoSent")
-            net.WriteTable(members)
-        net.Send(leader)
+        NotifySquadLead(leader, squad)
     end
 end
 
@@ -705,7 +733,7 @@ local function giveSubClassLoadout(ply, subclass)
     end
 end
 
-local function SetTranshumanOrganism(org) 
+local function SetTranshumanOrganism(org)
 
     org.CantCheckPulse = true
     org.bleedingmul = 0.75
@@ -716,9 +744,9 @@ local function SetTranshumanOrganism(org)
     org.stamina[1] = org.stamina.range
 
     org.shockMul = 0.4
-	org.painMul = 0.6
-	org.hurtMul = 0.8
-	org.immobilizationMax = 10
+    org.painMul = 0.6
+    org.hurtMul = 0.8
+    org.immobilizationMax = 10
 
     org.adrenalineStorage = 8
 
@@ -727,9 +755,9 @@ end
 function CLASS.On(self, data)
     if CLIENT then return end
 
-	if eightbit and eightbit.EnableEffect and self.UserID then
-		eightbit.EnableEffect(self:UserID(), eightbit.EFF_PROOT) --!! placeholder
-	end
+    if eightbit and eightbit.EnableEffect and self.UserID then
+        eightbit.EnableEffect(self:UserID(), eightbit.EFF_PROOT) --!! placeholder
+    end
 
     if IsValid(self.FakeRagdoll) then
         hg.FakeUp(self, nil, nil, true)
@@ -757,9 +785,9 @@ function CLASS.On(self, data)
     end
 
     if cfg.mat then
-		for k, v in pairs(cfg.mat) do
-        	self:SetSubMaterial(self:GetSubMaterialIdByName(k), v)
-		end
+        for k, v in pairs(cfg.mat) do
+            self:SetSubMaterial(self:GetSubMaterialIdByName(k), v)
+        end
     end
 
     -- Organism
@@ -787,10 +815,7 @@ function CLASS.On(self, data)
 
     local squad = CombineSquads.squads[squad_name]
     local leader = squad.leader
-    local members = squad.members
-    net.Start("SquadInfoSent")
-        net.WriteTable(members)
-    net.Send(leader)
+    NotifySquadLead(leader, squad)
 
 
     self.oldname_cmb = self:GetNWString("PlayerName")
@@ -810,8 +835,8 @@ function CLASS.On(self, data)
     end
 
     local index = self:EntIndex()
-    hook.Add( "OnEntityCreated", "relation_shipdo"..index, function( ent )
-        if not IsValid(self) then hook.Remove("OnEntityCreated","relation_shipdo"..index) return end
+    hook.Add( "OnEntityCreated", "relation_shipdo" .. index, function( ent )
+        if not IsValid(self) then hook.Remove("OnEntityCreated", "relation_shipdo" .. index) return end
         if ( ent:IsNPC() ) then
             if table.HasValue(combines,ent:GetClass()) then
                 ent:AddEntityRelationship( self, D_LI, 0 )
@@ -846,7 +871,7 @@ function CLASS.PlayerDeath(self)
         end
     end
 
-    hook.Remove( "OnEntityCreated", "relation_shipdo"..self:EntIndex())
+    hook.Remove( "OnEntityCreated", "relation_shipdo" .. self:EntIndex())
 end
 
 -- Voice Lines
@@ -931,7 +956,7 @@ function CLASS.GetContextPhrases(self)
     return contexts
 end
 
-function CLASS:GetContextPhrasesBySubclass(sub) 
+function CLASS:GetContextPhrasesBySubclass(sub)
     local sub = sub or "default"
     local contexts = combine_subclasses[sub].context_phrases or cmb_context_phrases
 
@@ -940,7 +965,6 @@ end
 
 for subName, sub in pairs(combine_subclasses) do
     if sub.phrases then
-
         local path = "data_static/phrases/combine/" .. sub.phrases
         local phrasesJSON = file.Read(path, "GAME")
         local phrases = util.JSONToTable(phrasesJSON)
@@ -950,67 +974,66 @@ for subName, sub in pairs(combine_subclasses) do
         local contextPhrasesJSON = file.Read(path, "GAME")
         local contextPhrases = util.JSONToTable(contextPhrasesJSON)
         sub.context_phrases = contextPhrases
-
-    else 
-    
+    else
         sub.phrases = cmb_phrases
         sub.context_phrases = cmb_context_phrases
-    
     end
 end
 
 
 if SERVER then
-
-	hook.Add("HG_ReplacePhrase", "combine_phrase", function(ply, sub, muffed, pitch)
-		if IsValid(ply) and ply.PlayerClassName == "Combine" then
+    hook.Add("HG_ReplacePhrase", "combine_phrase", function(ply, sub, muffed, pitch)
+        if IsValid(ply) and ply.PlayerClassName == "Combine" then
             local phrases = combine_subclasses[sub].phrases or cmb_phrases
 
-			return ply, phrases[math.random(#phrases)], muffed, pitch
-		end
-	end)
+            return ply, phrases[math.random(#phrases)], muffed, pitch
+        end
+    end)
 
     hook.Add("HG_ReplaceContextPhrase", "combine_context_phrase", function(ply, context, sub)
         if IsValid(ply) and ply.PlayerClassName == "Combine" then
             local phrases = combine_subclasses[sub].context_phrases or cmb_context_phrases
 
-			return phrases[context]
-		end
+            return phrases[context]
+        end
     end)
-    
 end
 
 if CLIENT then
     local color_hp = Color(0,255,255,220)
     local color_ar = Color(0,255,255,220)
     local color_glow = Color(15,165,165,0)
-    local color_glow_ar = Color(15,165,165,0)
+    --local color_glow_ar = Color(15,165,165,0)
     local color_glow_ammo = Color(15,165,165,0)
     local color_sight = Color(15,165,165,220)
-    local color_pulse = Color(15,165,165,220)
+    --local color_pulse = Color(15,165,165,220)
 
     local color_hp2 = Color(165,15,15)
     local color_ar2 = Color(165,15,15)
     local color_glow2 = Color(165,15,15)
-    local color_glow_ar2 = Color(165,15,15)
+    -- local color_glow_ar2 = Color(165,15,15)
     local color_glow_ammo2 = Color(165,15,15)
-    local color_sight2 = Color(165,15,15)
-    local color_pulse2 = Color(165,15,15)
+    --local color_sight2 = Color(165,15,15)
+    --local color_pulse2 = Color(165,15,15)
 
-    local armor_txt, hp_txt, pulse_txt, stamina_txt, ammo_txt = 0,0,0,0,0
-    local bloodlerp, ammolerp = 0,0
+    --local armor_txt, hp_txt, pulse_txt, stamina_txt, ammo_txt = 0,0,0,0,0
+    --local bloodlerp, ammolerp = 0,0
     local blood_old, old_hp_txt, old_ar_txt, old_ammo_txt = 5000,0,0,0
-    local pos_sight = Vector(ScrW(),ScrH(),0)
+    --local pos_sight = Vector(ScrW(),ScrH(),0)
     local bg_color = Color(0,0,0,150)
-    local armorlerp = 0
+    --local armorlerp = 0
 
     local squad_name = "none"
-    net.Receive("SquadNameSent", function() 
+    net.Receive("SquadNameSent", function()
         squad_name = net.ReadString()
     end)
     local members = {}
-    net.Receive("SquadInfoSent", function() 
-        for i, member in ipairs(net.ReadTable()) do 
+    net.Receive("SquadInfoSent", function()
+        local str = net.ReadString()
+        local tbl = string.ToTable(str)
+        for i, member in ipairs(tbl) do
+            print("In second for loop")
+            print(member)
             members[i] = member
         end
     end)
@@ -1054,16 +1077,16 @@ if CLIENT then
     })
 
     local function drawGlowingText(txt, font, x, y, col, col_glow, col_glow2, align)
-        draw.DrawText(txt, font, x+1, y+1, col_glow, align)
+        draw.DrawText(txt, font, x + 1, y + 1, col_glow, align)
         if col_glow2 then
-            draw.DrawText(txt, font, x+2, y+2, col_glow2, align)
+            draw.DrawText(txt, font, x + 2, y + 2, col_glow2, align)
         end
         draw.DrawText(txt, font, x, y, col, align)
     end
 
     local function drawBGPanel(pos_x,pos_y,alpha)
-        local size_w, size_h = ScrW()*0.12, ScrH()*0.075
-        local pos_w, pos_h = ScrW()*pos_x, ScrH()*pos_y - size_h
+        local size_w, size_h = ScrW() * 0.12, ScrH() * 0.075
+        local pos_w, pos_h = ScrW() * pos_x, ScrH() * pos_y - size_h
         return {pos_w, pos_h}, {size_w, size_h}
     end
 
@@ -1087,26 +1110,26 @@ if CLIENT then
 
             draw.DrawText(player_name .. " | " .. squad_name, "CMBFontSmall",
                 pos[1],
-                pos[2]+(size[2]/2),
+                pos[2] + (size[2] / 2),
                 col_bg,
                 TEXT_ALIGN_CENTER
             )
             draw.DrawText(player_name .. " | " .. squad_name, "CMBFontSmall",
                 pos[1],
-                pos[2]+(size[2]/2),
+                pos[2] + (size[2] / 2),
                 is_red and color_hp2 or color_hp,
                 TEXT_ALIGN_CENTER
             )
         end
 
         -- Squad Info
-        if is_lead then 
-            do 
+        if is_lead then
+            do
 
                 local pos, size = drawBGPanel(0.9, 0.2, 100)
                 surface.SetFont("CMBFontDefault")
                 local col_bg = bg_color
-                for i, member in ipairs(members) do 
+                for i, member in ipairs(members) do
 
                     local name = member:GetNWString("PlayerName")
                     local org = member.organism
@@ -1122,7 +1145,7 @@ if CLIENT then
                     )
                     draw.DrawText( name .. " |  " .. member_pulse .. " BPM", "CMBFontSmall",
                         pos[1],
-                        pos[2]+(size[2] * i),
+                        pos[2] + (size[2] * i),
                         is_red and color_hp2 or color_hp,
                         TEXT_ALIGN_CENTER
                     )
@@ -1136,36 +1159,50 @@ if CLIENT then
         do
             local pos, size = drawBGPanel(0.065,0.98)
             surface.SetFont("CMBFontDefault")
-            local bloodcount = math.Round(100 * self.organism.blood/5000 , 0)
+            local bloodcount = math.Round(100 * self.organism.blood / 5000 , 0)
             local _,txt_size_y = surface.GetTextSize(bloodcount)
             hp_txt = math.min(hp_txt + 1, bloodcount)
             local col_bg = bg_color
             col_bg.a = 225
             draw.DrawText("000","CMBFontDefaultBG",
-                pos[1]+size[1]*0.08 + 1,
-                pos[2]+(size[2]/2) - txt_size_y/2 + 1,
+                pos[1] + size[1] * 0.08 + 1,
+                pos[2] + (size[2] / 2) - txt_size_y / 2 + 1,
                 col_bg,
                 TEXT_ALIGN_RIGHT
             )
 
             if is_red then
                 color_glow2.a = math.Round(Lerp(frt, color_glow2.a, old_hp_txt ~= hp_txt and 255 or 0))
-                drawGlowingText(hp_txt, "CMBFontDefault", pos[1]+size[1]*0.08, pos[2]+(size[2]/2) - txt_size_y/2, color_hp2, color_glow2, nil, TEXT_ALIGN_RIGHT)
+                drawGlowingText(hp_txt,
+                                "CMBFontDefault",
+                                pos[1] + size[1] * 0.08,
+                                pos[2] + (size[2] / 2) - txt_size_y / 2,
+                                color_hp2,
+                                color_glow2,
+                                nil,
+                                TEXT_ALIGN_RIGHT)
             else
                 color_glow.a = math.Round(Lerp(frt, color_glow.a, old_hp_txt ~= hp_txt and 255 or 0))
-                drawGlowingText(hp_txt, "CMBFontDefault", pos[1]+size[1]*0.08, pos[2]+(size[2]/2) - txt_size_y/2, color_hp, color_glow, nil, TEXT_ALIGN_RIGHT)
+                drawGlowingText(hp_txt,
+                                "CMBFontDefault",
+                                pos[1] + size[1] * 0.08,
+                                pos[2] + (size[2] / 2) - txt_size_y / 2,
+                                color_hp,
+                                color_glow,
+                                nil,
+                                TEXT_ALIGN_RIGHT)
             end
             old_hp_txt = hp_txt
 
             draw.DrawText("% | BLOOD","CMBFontSmall",
-                pos[1]+size[1]*0.085+1,
-                pos[2]+(size[2]/1.8)+1,
+                pos[1] + size[1] * 0.085 + 1,
+                pos[2] + (size[2] / 1.8) + 1,
                 col_bg,
                 TEXT_ALIGN_LEFT
             )
             draw.DrawText("% | BLOOD","CMBFontSmall",
-                pos[1]+size[1]*0.085,
-                pos[2]+(size[2]/1.8),
+                pos[1] + size[1] * 0.085,
+                pos[2] + (size[2] / 1.8),
                 is_red and color_hp2 or color_hp,
                 TEXT_ALIGN_LEFT
             )
@@ -1183,26 +1220,26 @@ if CLIENT then
             col_bg.a = 225
 
             draw.DrawText(pulse_txt,"CMBFontSmall",
-                pos[1]+size[1]*-0.09,
-                pos[2]+(size[2]/2),
+                pos[1] + size[1] * -0.09,
+                pos[2] + (size[2] / 2),
                 col_bg,
                 TEXT_ALIGN_LEFT
             )
             draw.DrawText(pulse_txt,"CMBFontSmall",
-                pos[1]+size[1]*-0.095,
-                pos[2]+(size[2]/2),
+                pos[1] + size[1] * -0.095,
+                pos[2] + (size[2] / 2),
                 is_red and color_hp2 or color_hp,
                 TEXT_ALIGN_LEFT
             )
             draw.DrawText("| HEART.B/MIN","CMBFontSmall",
-                pos[1]+size[1]*0.06 + 1 + 10,
-                pos[2]+(size[2]/2)+1,
+                pos[1] + size[1] * 0.06 + 1 + 10,
+                pos[2] + (size[2] / 2) + 1,
                 col_bg,
                 TEXT_ALIGN_LEFT
             )
             draw.DrawText("| HEART.B/MIN","CMBFontSmall",
-                pos[1]+size[1]*0.06 + 12,
-                pos[2]+(size[2]/2),
+                pos[1] + size[1] * 0.06 + 12,
+                pos[2] + (size[2] / 2),
                 is_red and color_hp2 or color_hp,
                 TEXT_ALIGN_LEFT
             )
@@ -1220,26 +1257,26 @@ if CLIENT then
             col_bg.a = 225
 
             draw.DrawText(stamina_txt,"CMBFontSmall",
-                pos[1]+size[1]*-0.09,
-                pos[2]+(size[2]/2),
+                pos[1] + size[1] * -0.09,
+                pos[2] + (size[2] / 2),
                 col_bg,
                 TEXT_ALIGN_LEFT
             )
             draw.DrawText(stamina_txt,"CMBFontSmall",
-                pos[1]+size[1]*-0.095,
-                pos[2]+(size[2]/2),
+                pos[1] + size[1] * -0.095,
+                pos[2] + (size[2] / 2),
                 is_red and color_hp2 or color_hp,
                 TEXT_ALIGN_LEFT
             )
             draw.DrawText("| STAMINA","CMBFontSmall",
-                pos[1]+size[1]*0.065 + 1 + 10,
-                pos[2]+(size[2]/2)+1,
+                pos[1] + size[1] * 0.065 + 1 + 10,
+                pos[2] + (size[2] / 2) + 1,
                 col_bg,
                 TEXT_ALIGN_LEFT
             )
             draw.DrawText("| STAMINA","CMBFontSmall",
-                pos[1]+size[1]*0.065 + 12,
-                pos[2]+(size[2]/2),
+                pos[1] + size[1] * 0.065 + 12,
+                pos[2] + (size[2] / 2),
                 is_red and color_hp2 or color_hp,
                 TEXT_ALIGN_LEFT
             )
@@ -1251,18 +1288,18 @@ if CLIENT then
             surface.SetFont("CMBFontSmall")
             silentlerp = LerpFT(0.1,silentlerp,(self:KeyDown(IN_DUCK) or self:KeyDown(IN_WALK)) and 1 or 0)
             local col_bg = bg_color
-            col_bg.a = 225*silentlerp
-            silentclr.a = 225*silentlerp
+            col_bg.a = 225 * silentlerp
+            silentclr.a = 225 * silentlerp
             local txt = "SNEAK MODE"
             draw.DrawText(txt,"CMBFontSmall",
                 pos[1],
-                pos[2]+(size[2]/2),
+                pos[2] + (size[2] / 2),
                 col_bg,
                 TEXT_ALIGN_CENTER
             )
             draw.DrawText(txt,"CMBFontSmall",
                 pos[1],
-                pos[2]+(size[2]/2),
+                pos[2] + (size[2] / 2),
                 silentclr,
                 TEXT_ALIGN_CENTER
             )
@@ -1274,8 +1311,8 @@ if CLIENT then
             if IsValid(wep) then
                 if not IsValid(wep) or not wep.GetTrace then return end
                 local tr = wep:GetTrace(true)
-                posSight = LerpVector(frt*5, posSight, Vector(tr.HitPos:ToScreen().x,tr.HitPos:ToScreen().y,0) )
-                color_sight.a = Lerp(frt*5,color_sight.a, lply:KeyDown(IN_ATTACK2) and 0 or 255)
+                posSight = LerpVector(frt * 5, posSight, Vector(tr.HitPos:ToScreen().x,tr.HitPos:ToScreen().y,0) )
+                color_sight.a = Lerp(frt * 5,color_sight.a, lply:KeyDown(IN_ATTACK2) and 0 or 255)
                 local space = 5
                 draw.RoundedBox(0, posSight.x - 1, posSight.y + 2 + space, 2, 6, color_sight)
                 draw.RoundedBox(0, posSight.x - 1, posSight.y - 8 - space, 2, 6, color_sight)
@@ -1292,12 +1329,12 @@ if CLIENT then
             surface.SetFont("CMBFontDefault")
             local _,txt_size_y = surface.GetTextSize(self:Armor())
             local col_bg = bg_color
-            col_bg.a = 225*ammolerp
+            col_bg.a = 225 * ammolerp
             ammo_txt = math.min(ammo_txt + 1, wep:Clip1())
 
             draw.DrawText("000","CMBFontDefaultBG",
-                pos[1]+size[1]*0.08 + 1,
-                pos[2]+(size[2]/2) - txt_size_y/2 + 1,
+                pos[1] + size[1] * 0.08 + 1,
+                pos[2] + (size[2] / 2) - txt_size_y / 2 + 1,
                 col_bg,
                 TEXT_ALIGN_RIGHT
             )
@@ -1305,29 +1342,29 @@ if CLIENT then
             if is_red then
                 color_glow_ammo2.a = math.Round(Lerp(frt, color_glow_ammo2.a, old_ammo_txt ~= ammo_txt and 255 or 0))
                 drawGlowingText(ammo_txt,"CMBFontDefault",
-                    pos[1]+size[1]*0.08,
-                    pos[2]+(size[2]/2) - txt_size_y/2,
+                    pos[1] + size[1] * 0.08,
+                    pos[2] + (size[2] / 2) - txt_size_y / 2,
                     color_ar2, color_glow_ammo2, nil, TEXT_ALIGN_RIGHT
                 )
             else
                 color_glow_ammo.a = math.Round(Lerp(frt, color_glow_ammo.a, old_ammo_txt ~= ammo_txt and 255 or 0))
                 drawGlowingText(ammo_txt,"CMBFontDefault",
-                    pos[1]+size[1]*0.08,
-                    pos[2]+(size[2]/2) - txt_size_y/2,
+                    pos[1] + size[1] * 0.08,
+                    pos[2] + (size[2] / 2) - txt_size_y / 2,
                     color_ar, color_glow_ammo, nil, TEXT_ALIGN_RIGHT
                 )
             end
             old_ammo_txt = ammo_txt
 
             draw.DrawText("AMMO","CMBFontSmall",
-                pos[1]+size[1]*0.085+1,
-                pos[2]+(size[2]/1.8)+1,
+                pos[1] + size[1] * 0.085 + 1,
+                pos[2] + (size[2] / 1.8) + 1,
                 col_bg,
                 TEXT_ALIGN_LEFT
             )
             draw.DrawText("AMMO","CMBFontSmall",
-                pos[1]+size[1]*0.085,
-                pos[2]+(size[2]/1.8),
+                pos[1] + size[1] * 0.085,
+                pos[2] + (size[2] / 1.8),
                 is_red and color_ar2 or color_ar,
                 TEXT_ALIGN_LEFT
             )
@@ -1335,7 +1372,7 @@ if CLIENT then
     end
 
     local cmb_mat = Material("sprites/mat_jack_helmoverlay_r")
-    hook.Add("RenderScreenspaceEffects","Combine_helmet",function()
+    hook.Add("RenderScreenspaceEffects","Combine_helmet", function()
         local lply = LocalPlayer()
         if lply:Alive() and lply.PlayerClassName == "Combine" then
             local role = lply:GetNWString("PlayerRole")
@@ -1346,8 +1383,8 @@ if CLIENT then
             end
             surface.SetMaterial(cmb_mat)
             surface.DrawTexturedRectRotated(
-                (ScrW()/2) - 5,
-                (ScrH()/2) - 5,
+                (ScrW() / 2) - 5,
+                (ScrH() / 2) - 5,
                 ScrW() + 10,
                 ScrH() + 450,
                 180
@@ -1362,9 +1399,9 @@ if CLIENT then
 end
 
 hook.Add("HG_CanThoughts", "CombineCantDumat", function(ply)
-	if ply.PlayerClassName == "Combine" then
-		return false
-	end
+    if ply.PlayerClassName == "Combine" then
+        return false
+    end
 end)
 
 --;; Серверные хуки и звуки шагов/смерти
@@ -1511,14 +1548,14 @@ if CLIENT then
             surface.PlaySound("items/nvg_on.wav")
             hook.Add("RenderScreenspaceEffects","PNV_ColorCorrection",function()
                 if ply.PlayerClassName ~= "Combine" then return end
-                local progress = math.min((CurTime() - transition_start)/transition_time,1)
+                local progress = math.min((CurTime() - transition_start) / transition_time, 1)
                 local class = ply:GetNWString("PlayerRole")
                 local cc = (class == "Elite" or class == "Shotgunner") and table.Copy(pnv_color_2) or table.Copy(pnv_color_1)
                 for k,v in pairs(cc) do
                     cc[k] = v * progress
                 end
                 DrawColorModify(cc)
-                DrawBloom(0.1*progress,1*progress,2*progress,2*progress,1*progress,0.4*progress,1,1,1)
+                DrawBloom(0.1 * progress, 1 * progress, 2 * progress, 2 * progress, 1 * progress, 0.4 * progress, 1, 1, 1)
                 if progress >= 1 then transitioning = false end
             end)
         else
@@ -1535,7 +1572,7 @@ if CLIENT then
             local class = ply:GetNWString("PlayerRole")
             local cc = (class == "Elite" or class == "Shotgunner") and pnv_color_2 or pnv_color_1
             DrawColorModify(cc)
-            DrawBloom(0.1,0.5,2,2,1,0.4,1,1,1)
+            DrawBloom(0.1, 0.5, 2, 2, 1, 0.4, 1, 1, 1)
         end
     end)
 
