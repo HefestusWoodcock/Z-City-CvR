@@ -366,8 +366,9 @@ if SERVER then
             return false
         end
 
-        if output.PlayerClassName == "CivPro" and input.PlayerClassName == "CivPro" and output:Alive() then
-            return true
+        if (output.PlayerClassName == "CivPro" or output:GetNWString("PlayerRole") == "overwatch")
+            and input.PlayerClassName == "CivPro" then
+                return true
         end
     end
 

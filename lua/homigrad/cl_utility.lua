@@ -713,7 +713,7 @@ players : 1 humans, 0 bots (20 max)
 			
 			if ply:VoiceVolume() != 0 then
 				if (ply.timedupdate or 0) < CurTime() then
-					UpdateVoiceDSP(lply, ply)
+					-- UpdateVoiceDSP(lply, ply)
 					
 					ply.timedupdate = CurTime() + 0.5
 				end

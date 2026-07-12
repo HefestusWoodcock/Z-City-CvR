@@ -45,9 +45,8 @@ function VoiceLogic(output, input, isChat)
 
 end
 
-hook.Add("PlayerCanHearPlayersVoice", "Maximum Range", function(listener, talker)
-	print("Hello") -- Somehow doesn't print.
-	local result, is3D = VoiceLogic(talker, listener, false) -- Throws Error
+hook.Add("PlayerCanHearPlayersVoice", "Proximity", function(listener, talker)
+	local result, is3D = Comms.Logic(talker, listener, false) -- Throws Error
 	local proximityEnabled = proxEnabled:GetInt()
 
 	if proximityEnabled == 0 then

@@ -13,7 +13,16 @@ local proxEnabled = GetConVar("hg_voice_proxmity_enabled")
 local function UpdateVoiceDSP(listener, talker)
     if not IsValid(listener) or not IsValid(talker) or listener == talker then return end
 
-    if not proxEnabled:GetBool() then
+    net.Receive("DisableVolumeProximity", function(len)
+        local ply = net.ReadPlayer()
+        local result = net.ReadBool()
+
+        if talker == ply then
+            talker.radioEnable = result
+        end
+    end)
+
+    if not proxEnabled:GetBool() or talker.radioEnable then
         talker:SetVoiceVolumeScale(1)
         return
     end

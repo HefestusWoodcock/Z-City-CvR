@@ -81,6 +81,27 @@ function COMMUNICATION.PhysMod(ply, txt)
 	return txt
 end
 
+local function BlockOverwatch(talker, listener)
+	if talker == listener then return end
+
+	local listenerClass = listener.PlayerClassName
+	if (listenerClass ~= "Combine" and listenerClass ~= "CivPro") 
+		and talker:GetNWString("PlayerRole") == "overwatch" then
+			return true
+	end
+
+	return
+end
+
+util.AddNetworkString("DisableVolumeProximity")
+local function NoVolumeChange(talker, listener, result)
+	local result = result and true or false
+	net.Start("DisableVolumeProximity")
+		net.WritePlayer(talker)
+		net.WriteBool(result)
+	net.Send(listener)
+end
+
 -- Check function that allows listening to speaker based on conditions.
 function COMMUNICATION.Logic(output, input, isChat, teamonly, text)
 	if not SERVER then return end
@@ -88,8 +109,13 @@ function COMMUNICATION.Logic(output, input, isChat, teamonly, text)
 	if not IsValid(output) then return true, true end
 	if not IsValid(input) then return false end
 
+	if BlockOverwatch(output, input) then
+		return false, false
+	end
+
 	local result, is3D = hook.Run("CanListenOthers", output, input, isChat, teamonly, text)
 	-- output.isProxOverwatch = CheckOverwatchProximity(output, input, result)
+	NoVolumeChange(output, input, result)
 	if result ~= nil then 
 		local speak = output:IsSpeaking()
 		output.IsSpeak = speak
@@ -107,18 +133,7 @@ function COMMUNICATION.Logic(output, input, isChat, teamonly, text)
 		maxDist = output.ChatWhisper and maxCDistWhisper:GetInt() or maxCDistNormal:GetInt()
 	end
 
-	if output:Alive() and input:Alive() 
-		and not output.organism.otrub and not input.organism.otrub 
-		and output.organism.o2[1] >= 15 and not output.organism.holdingbreath then
-			if input:GetPos():Distance(output:GetPos()) < maxDist then
-				return true, true
-			else
-				return false
-			end
-	else
-		return false
-	end
-	--[[
+
 	if output:Alive() and input:Alive() and not output.organism.otrub and not input.organism.otrub and output.organism.o2[1] >= 15 and not output.organism.holdingbreath and input:TestPVS( output ) then
 		if input:GetPos():Distance(output:GetPos()) < maxDist and not teamonly then
 			return true, true
@@ -139,7 +154,7 @@ function COMMUNICATION.Logic(output, input, isChat, teamonly, text)
 
 		return false
 	end
-	]]
+
 end
 
 hg = hg or {}

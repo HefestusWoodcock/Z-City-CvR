@@ -1443,8 +1443,9 @@ if SERVER then
             return false
         end
 
-        if output.PlayerClassName == "Combine" and input.PlayerClassName == "Combine" and output:Alive() then
-            return true
+        if (output.PlayerClassName == "Combine" or output:GetNWString("PlayerRole") == "overwatch")
+            and input.PlayerClassName == "Combine" then
+                return true
         end
     end
 
@@ -1498,7 +1499,7 @@ end
 if CLIENT then
     hook.Add("HG_NoSoundproof","CombineNoSoundproof",function(pPly, lply)
         if pPly.PlayerClassName == "Combine" and pPly:Alive() and lply.PlayerClassName == "Combine" and lply:Alive() then
-            return true 
+            return true
         end
     end)
 end
