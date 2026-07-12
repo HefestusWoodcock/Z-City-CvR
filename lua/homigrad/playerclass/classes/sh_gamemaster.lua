@@ -161,7 +161,15 @@ if CLIENT then
 end
 
 -- Overwatch Commands
-if CLIENT then 
+local function RadioSoundOn(ent, pitch)
+    ent:EmitSound("npc/overwatch/radiovoice/on3.wav", 70, pitch)
+end
+
+local function RadioSoundOff(ent, pitch)
+    ent:EmitSound("npc/overwatch/radiovoice/off2.wav", 70, pitch)
+end
+
+if CLIENT then
 
     local overwatch_commands = {
         ["/broadcast"] = function(msg, ply)
@@ -360,6 +368,66 @@ if CLIENT then
 
 	end)
 else
+    local function CanListen(output, input, isChat)
+        if (not IsValid(output) or not IsValid(input)) then
+            return
+        end
+
+        if (not output:Alive() or output.organism.otrub or not input:Alive() or input.organism.otrub) then
+            return false
+        end
+
+        if (output.PlayerClassName == "Combine" or output.PlayerClassName == "CivPro")
+            and (input.PlayerClassName == "Gamemaster" and input:GetNWString("PlayerRole") == "overwatch")
+            and output:Alive() then
+            return true
+        end
+    end
+
+    hook.Add("CanListenOthers", "Overwatch Radio", function(output, input, isChat, teamonly, text)
+        local result = CanListen(output, input, isChat)
+
+        if result then
+            if isChat then
+                RadioSoundOn(output, 100)
+                if output == input then return end
+
+                if input:GetPos():DistToSqr(output:GetPos()) < 600000 and not output.organism.otrub and not input.organism.otrub then
+                    return true
+                else
+                    input:ChatPrint("TAC-" .. output:GetNWString("PlayerName") .. ": " .. text)
+                    return false
+                end
+            else
+                return true, false
+            end
+        end
+    end)
+
+    hook.Add("StartVoice", "Overwatch Radio", function(output)
+        for i, input in player.Iterator() do
+            if CanListen(output, input, false) then
+                if output == input then
+                    continue
+                end
+
+                RadioSoundOn(input, 100)
+            end
+        end
+    end)
+
+    hook.Add("EndVoice", "Overwatch Radio", function(output)
+        for i, input in player.Iterator() do
+            if CanListen(output, input, false) then
+                if output == input then
+                    continue
+                end
+
+                RadioSoundOff(input, 100)
+            end
+        end
+    end)
+
     util.AddNetworkString("OW_NotifyUnit")
     net.Receive("OW_NotifyUnit", function(len, ply)
         if ply:GetNWString("PlayerRole") ~= "overwatch" then return end

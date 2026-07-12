@@ -1375,6 +1375,14 @@ hook.Add("HG_CanThoughts", "CombineCantDumat", function(ply)
     end
 end)
 
+local function RadioSoundOn(ent, pitch)
+    ent:EmitSound(radio_on[math.random(1, #radio_on)], 70, pitch)
+end
+
+local function RadioSoundOff(ent, pitch)
+    ent:EmitSound(radio_off[math.random(1, #radio_off)], 70, pitch)
+end
+
 --;; Серверные хуки и звуки шагов/смерти
 if SERVER then
     hook.Add("HG_PlayerFootstep","Combine_footsteps",function(ply)
@@ -1426,37 +1434,68 @@ if SERVER then
         end
     end)
 
-    util.AddNetworkString("CombineRadioStart")
-    util.AddNetworkString("CombineRadioEnd")
-    util.AddNetworkString("CombineChatMessage")
+    local function CanListen(output, input, isChat)
+        if (not IsValid(output) or not IsValid(input)) then
+            return
+        end
 
-    hook.Add("HG_PlayerCanHearPlayersVoice", "CombineRadio",function(listener, talker)
-        if talker.PlayerClassName == "Combine" and listener.PlayerClassName == "Combine" and talker:Alive() then
-            return true, false
+        if (not output:Alive() or output.organism.otrub or not input:Alive() or input.organism.otrub) then
+            return false
+        end
+
+        if output.PlayerClassName == "Combine" and input.PlayerClassName == "Combine" and output:Alive() then
+            return true
+        end
+    end
+
+    hook.Add("CanListenOthers", "TAC-Radio OTA", function(output, input, isChat, teamonly, text)
+        if CanListen(output, input, isChat) then
+            if isChat then
+                RadioSoundOn(output, 100)
+                if output == input then return end
+                RadioSoundOn(input, 100)
+
+                if input:GetPos():DistToSqr(output:GetPos()) < 600000 and not output.organism.otrub and not input.organism.otrub then
+                    return true
+                else
+                    input:ChatPrint("TAC-" .. output:GetNWString("PlayerName") .. ": " .. text)
+                    return false
+                end
+            else
+                return true, false
+            end
         end
     end)
 
-    hook.Add("HG_PlayerSay","CombineChatMessage",function(ply, txtTbl, text)
-        if ply.PlayerClassName == "Combine" and ply:Alive() and not ply.organism.otrub then
-            ply:EmitSound("npc/metropolice/vo/on1.wav")
+    hook.Add("StartVoice", "TAC-Radio OTA", function(output)
+        for i, input in player.Iterator() do
+            if CanListen(output, input, false) then
+                if output == input then
+                    RadioSoundOn(output, 100)
+                    continue
+                end
+
+                RadioSoundOn(input, 100)
+            end
+        end
+    end)
+
+    hook.Add("EndVoice", "TAC-Radio OTA", function(output)
+        for i, input in player.Iterator() do
+            if CanListen(output, input, false) then
+                if output == input then
+                    RadioSoundOff(output, 100)
+                    continue
+                end
+
+                RadioSoundOff(input, 100)
+            end
         end
     end)
 end
 
 
 if CLIENT then
-    local radio_end_sound = Sound("npc/metropolice/vo/off4.wav")
-    hook.Add("PlayerStartVoice","CombineRadioStart",function(ply)
-        if ply.PlayerClassName == "Combine" and ply:Alive() then
-            ply:EmitSound(radio_end_sound)
-        end
-    end)
-    hook.Add("PlayerEndVoice","CombineRadioEnd",function(ply)
-        if ply.PlayerClassName == "Combine" and ply:Alive() then
-            ply:EmitSound(radio_end_sound)
-        end
-    end)
-
     hook.Add("HG_NoSoundproof","CombineNoSoundproof",function(pPly, lply)
         if pPly.PlayerClassName == "Combine" and pPly:Alive() and lply.PlayerClassName == "Combine" and lply:Alive() then
             return true 

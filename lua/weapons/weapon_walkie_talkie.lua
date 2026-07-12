@@ -119,7 +119,7 @@ if SERVER then
 				if input:GetPos():DistToSqr(output:GetPos()) < 600000 and not output.organism.otrub and not input.organism.otrub then
 					return true
 				else
-                    input:ChatPrint("Walkie Talkie: " .. text)
+					input:ChatPrint(output:GetNWString("PlayerName") .. ": " .. text)
 
 					return false
 				end

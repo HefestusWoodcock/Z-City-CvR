@@ -1,5 +1,7 @@
-// v7 privet
 local hook_Run = hook.Run
+local maxCDistNormal= CreateConVar("hg_chat_dist_normal", 3000, {FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Maximum distance for listener to still be able to hear the speaker.")
+local maxCDistWhisper = CreateConVar("hg_chat_dist_whisper", 200, {FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Maximum distance for listener to still be able to hear the speaker whispering.")
+
 hook.Add( "OnPlayerChat", "HGPlayerChat", function( ply, strText, bTeam, bDead, bWhisper ) 
 	if bWhisper == nil then return true end
 
@@ -55,7 +57,7 @@ hook.Add("HG_OnPlayerChat", "TextModificationBasedOnStuff", function(ply, text, 
 
 		txt = table.concat(chars)
 	end
-	
+
 	text[1] = txt
 end)
 
