@@ -271,7 +271,7 @@ function CLASS.On(self, data)
     end
 
     if !(isDefenseMode and isCommander) then
-        local Appearance = self.CurAppearance or GetRandomAppearance(self)
+        local Appearance = self.CurAppearance --or GetRandomAppearance(self)
 
         self:SetPlayerColor(Color(0, 60, 10):ToVector())
         self:SetNetVar("Accessories", "")

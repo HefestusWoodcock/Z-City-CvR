@@ -3,7 +3,9 @@ local Player = FindMetaTable("Player")
 function Player:SetPlayerClass(value, subclass, data)
 	data = data or {}
 
+	print("Run")
 	value = value or "none"
+	print(value)
 	subclass = subclass or "default"
 	local old = self.PlayerClassName
 	self.PlayerClassNameOld = old

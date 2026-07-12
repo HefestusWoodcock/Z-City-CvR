@@ -289,25 +289,25 @@ if CLIENT then
 
 	end
 
-	local function MemberAssign(context, phrases) 
+	local function MemberAssign(context, phrases)
 	
 		local tbl = {}
 
 		local targeted = {}
 		local all = {}
-		for phrase, bool in pairs(phrases) do 
+		for phrase, bool in pairs(phrases) do
 		
-			if bool then 
-				table.ForceInsert(targeted, phrase) 
-			else 
-				table.ForceInsert(all, phrase) 
+			if bool then
+				table.ForceInsert(targeted, phrase)
+			else
+				table.ForceInsert(all, phrase)
 			end
 
-		end 
+		end
 
-		if not table.IsEmpty(all) then 
+		if not table.IsEmpty(all) then
 			tbl[1] = {
-			[1] = function() 
+			[1] = function()
 				RunConsoleCommand("hg_phrase_context", "Order: " .. context, SendRandomPhrase(all))
 			end,
 			[2] = "Order all."

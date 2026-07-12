@@ -448,7 +448,7 @@ hook.Add("Org Think", "WhatsSoFunny",function(owner, org, timeValue)
 
 		local muffed = owner.armors["face"] == "mask2"
 
-		owner:EmitSound(phrase, muffed and 90 or 100,owner.VoicePitch or 100,1 * math.min(2, org.berserk),CHAN_AUTO,0, pitch and 56 or muffed and 16 or 0)
+		owner:EmitSound(phrase, muffed and 90 or 100,owner.VoicePitch or 100,1 * math.min(2, org.berserk),CHAN_AUTO, 0, pitch and 56 or muffed and 16 or 0)
 
 		owner.lastBerserkLaughSoundCD = CurTime() + math.Rand(5, 15)
 		owner.lastPhr = phrase
@@ -566,7 +566,6 @@ hook.Add("HarmDone", "MateDead", function(attacker, victim, amt)
 		end
 	end
 end)
-
 
 hook.Add("HGReloading", "Perezaryad", function(wep)
 	if CLIENT then return end

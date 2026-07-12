@@ -1,5 +1,5 @@
-if(SERVER)then 
-	AddCSLuaFile() 
+if (SERVER) then
+	AddCSLuaFile()
 end
 
 SWEP.Base = "weapon_base"
@@ -46,10 +46,10 @@ SWEP.offsetAng = Angle(180, 160, 180)
 SWEP.Frequency = 88.6
 SWEP.Frequencies = {
 	88.6,
-    92.3,
-    97.5,
-    101.8,
-    107.8
+	92.3,
+	97.5,
+	101.8,
+	107.8
 }
 
 local ST_TYPE_LOCALFILE = 0
@@ -65,27 +65,28 @@ SWEP.FMStations = {
 }
 
 function SWEP:BippSound(ent, pitch)
-    ent:EmitSound("radio/voip_end_transmit_beep_0" .. math.random(1,8) .. ".wav", 35, pitch)
+	ent:EmitSound("radio/voip_end_transmit_beep_0" .. math.random(1,8) .. ".wav", 35, pitch)
 end
 
 if SERVER then
-    function SWEP:CanListen(output, input, isChat)
-		if !self.isOn or !input:GetWeapon("weapon_walkie_talkie").isOn then
-			return false
-		end
-		if(not IsValid(output) or not IsValid(input))then 
-			return
-		end
-
-        if(not output:Alive() or output.organism.otrub or not input:Alive() or input.organism.otrub)then 
+	function SWEP:CanListen(output, input, isChat)
+		if not self.isOn or not input:GetWeapon("weapon_walkie_talkie").isOn then
 			return false
 		end
 
-        if(not input:HasWeapon("weapon_walkie_talkie"))then 
+		if (not IsValid(output) or not IsValid(input)) then
 			return
 		end
 
-        if(output:GetActiveWeapon() ~= self)then 
+		if (not output:Alive() or output.organism.otrub or not input:Alive() or input.organism.otrub) then
+			return false
+		end
+
+		if (not input:HasWeapon("weapon_walkie_talkie")) then
+			return
+		end
+
+		if (output:GetActiveWeapon() ~= self) then
 			return
 		end
 
@@ -93,28 +94,29 @@ if SERVER then
 			return
 		end
 
-        if(output:GetWeapon("weapon_walkie_talkie").Frequency == input:GetWeapon("weapon_walkie_talkie").Frequency or output:Team() == 1002)then 
+		if (output:GetWeapon("weapon_walkie_talkie").Frequency == input:GetWeapon("weapon_walkie_talkie").Frequency
+			or output:Team() == 1002) then
 			return true
 		end
-    end
+	end
 
-    hook.Add("CanListenOthers", "radio", function(output, input, isChat, teamonly, text)
-        local wep = output:GetWeapon("weapon_walkie_talkie")
+	hook.Add("CanListenOthers", "radio", function(output, input, isChat, teamonly, text)
+		local wep = output:GetWeapon("weapon_walkie_talkie")
 
-		if not IsValid(wep) then 
+		if not IsValid(wep) then
 			return
 		end
 
-        if wep:CanListen(output, input, isChat) then
+		if wep:CanListen(output, input, isChat) then
 
-            if isChat then
+			if isChat then
 				wep:BippSound(output, 100)
 
-				if output == input then 
-					return 
+				if output == input then
+					return
 				end
-                
-                wep:BippSound(input, 100)
+
+				wep:BippSound(input, 100)
 
 				if input:GetPos():DistToSqr(output:GetPos()) < 600000 and not output.organism.otrub and not input.organism.otrub then
 					return true
@@ -125,49 +127,49 @@ if SERVER then
 				end
 			else
 				return true, false
-            end
-        end
-    end)
+			end
+		end
+	end)
 
 	hook.Add("StartVoice", "radio", function(output)
-        local wep = output:GetWeapon("weapon_walkie_talkie")
+		local wep = output:GetWeapon("weapon_walkie_talkie")
 
-		if(not IsValid(wep))then 
-			return 
+		if (not IsValid(wep)) then
+			return
 		end
 
 		for i, input in player.Iterator() do
 			if wep:CanListen(output, input, false) then
-				if output == input then 
+				if output == input then
 					wep:SetInUsing(true)
-					wep:BippSound(output, 100) 
-					continue 
+					wep:BippSound(output, 100)
+					continue
 				end
 
 				wep:BippSound(input, 100)
 			end
 		end
-    end)
+	end)
 
 	hook.Add("EndVoice", "radio", function(output)
-        local wep = output:GetWeapon("weapon_walkie_talkie")
+		local wep = output:GetWeapon("weapon_walkie_talkie")
 
-		if not IsValid(wep) then 
-			return 
+		if not IsValid(wep) then
+			return
 		end
 
 		for i, input in player.Iterator() do
 			if wep:CanListen(output, input, false) then
-				if output == input then 
-					wep:BippSound(output, 100) 
+				if output == input then
+					wep:BippSound(output, 100)
 					wep:SetInUsing(false)
-					continue 
+					continue
 				end
 
 				wep:BippSound(input, 100)
 			end
 		end
-    end)
+	end)
 
 	function SWEP:OnRemove() end
 

@@ -22,6 +22,7 @@ if SERVER then
 
     util.AddNetworkString("SquadNameRequest")
     util.AddNetworkString("SquadNameSent")
+    --[[
     net.Receive("SquadNameRequest", function(len, ply)
 
         local squad = CombineSquads.playerSquad[ply]
@@ -30,6 +31,7 @@ if SERVER then
         net.Send(ply)
 
     end)
+    ]]
 
     util.AddNetworkString("SquadInfoRequest")
     util.AddNetworkString("SquadInfoSent")
@@ -767,7 +769,7 @@ function CLASS.On(self, data)
     end
 
     if IsValid(self.FakeRagdoll) then
-        hg.FakeUp(self, nil, nil, true)
+        hg.FakeUp(self, nil, nil)
     end
 
     ApplyAppearance(self,nil,nil,nil,true)
@@ -966,8 +968,8 @@ function CLASS.GetContextPhrases(self)
     return contexts
 end
 
-function CLASS:GetContextPhrasesBySubclass(sub)
-    local sub = sub or "default"
+function CLASS:GetContextPhrasesBySubclass(subClass)
+    local sub = subClass or "default"
     local contexts = combine_subclasses[sub].context_phrases or cmb_context_phrases
 
     return contexts
@@ -1457,14 +1459,15 @@ if SERVER then
         if not IsValid(ply) then return end
         local nearPlayers = ents.FindInSphere(ply:GetPos(),300)
         for _,mate in ipairs(nearPlayers) do
-            if mate:IsPlayer() and mate ~= ply and mate:Alive() and mate.PlayerClassName == "Combine" then
-                if ply:Alive() and not ply.organism.otrub and ply.PlayerClassName == "Combine" and wep.ShellEject ~= "ShotgunShellEject" then
+            if (mate:IsPlayer() and mate ~= ply and mate:Alive() and mate.PlayerClassName == "Combine")
+                and (ply:Alive() and not ply.organism.otrub and ply.PlayerClassName == "Combine" and wep.ShellEject ~= "ShotgunShellEject") then
+
                     local phrase = (math.random(1,2) == 2) and "npc/combine_soldier/vo/coverme.wav" or "npc/combine_soldier/vo/coverhurt.wav"
                     ply:EmitSound(phrase,75,ply.VoicePitch)
                     ply.phrCld = CurTime() + (SoundDuration(phrase) or 0)
                     ply.lastPhr = phrase
                     return
-                end
+
             end
         end
     end)

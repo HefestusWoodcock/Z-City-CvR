@@ -1,15 +1,9 @@
 
 local CLASS = player.RegClass("CivPro")
 
-
-local combine_models = {
-    "models/player/police.mdl"
-}
-
-
 local callsigns = {
-    "Defender", "Hero", "Jury", "Line", "Patrol", "Quick", 
-    "Roller", "Stick", "Tap", "Union", "Victor", "Xray", 
+    "Defender", "Hero", "Jury", "Line", "Patrol", "Quick",
+    "Roller", "Stick", "Tap", "Union", "Victor", "Xray",
     "Yellow", "Vice"
 }
 
@@ -133,9 +127,9 @@ local rebels = {
 function CLASS.Off(self)
     if CLIENT then return end
 
-	if eightbit and eightbit.EnableEffect and self.UserID then
-		eightbit.EnableEffect(self:UserID(), 0)
-	end
+    if eightbit and eightbit.EnableEffect and self.UserID then
+        eightbit.EnableEffect(self:UserID(), 0)
+    end
 
     for k,v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(combines,v:GetClass()) then
@@ -145,10 +139,10 @@ function CLASS.Off(self)
         end
     end
 
-	self:SetNWString("PlayerRole", nil)
+    self:SetNWString("PlayerRole", nil)
     self.organism.CantCheckPulse = nil
-    self.leader = nil
-	hook.Remove("OnEntityCreated", "relation_shipdo" .. self:EntIndex())
+
+    hook.Remove("OnEntityCreated", "relation_shipdo" .. self:EntIndex())
 end
 
 
@@ -210,9 +204,9 @@ end
 function CLASS.On(self, data)
     if CLIENT then return end
 
-	if eightbit and eightbit.EnableEffect and self.UserID then
-		eightbit.EnableEffect(self:UserID(), eightbit.EFF_PROOT) --!! placeholder
-	end
+    if eightbit and eightbit.EnableEffect and self.UserID then
+        eightbit.EnableEffect(self:UserID(), eightbit.EFF_PROOT) --!! placeholder
+    end
 
     if IsValid(self.FakeRagdoll) then
         hg.FakeUp(self, nil, nil, true)
@@ -346,6 +340,8 @@ if SERVER then
 
     hook.Add("HG_ReplacePhrase", "metropolice_phrase", function(ply, phrase, muffed, pitch)
         if IsValid(ply) and ply.PlayerClassName == "CivPro" then
+            print(ply)
+            print(ply.PlayerClassName)
             return ply, mtcop_phrases[math.random(#mtcop_phrases)], muffed, pitch
         end
     end)
@@ -416,14 +412,11 @@ if CLIENT then
     hook.Add("PostDrawHUD","Metrocop_helmet",function()
         local lply = LocalPlayer()
         if lply:Alive() and lply.PlayerClassName == "Metrocop" then
-            local role = lply:GetNWString("PlayerRole")
-
             surface.SetDrawColor(150,190,190,255)
-
             surface.SetMaterial(cmb_mat)
             surface.DrawTexturedRectRotated(
-                (ScrW()/2) - 5,
-                (ScrH()/2) - 5,
+                (ScrW() / 2) - 5,
+                (ScrH() / 2) - 5,
                 ScrW() + 10,
                 ScrH() + 450,
                 180

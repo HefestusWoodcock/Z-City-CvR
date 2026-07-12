@@ -5,9 +5,9 @@ CLASS.CanEmitRNDSound = false
 CLASS.CanUseGestures = false
 
 hook.Add("HG_CanThoughts", "GamemasterCantDumat", function(ply)
-	if ply.PlayerClassName == "Gamemaster" then
-		return false
-	end
+    if ply.PlayerClassName == "Gamemaster" then
+    return false
+    end
 end)
 
 local subclass = {
@@ -47,12 +47,12 @@ function CLASS.Off(self)
     self:SetNWString("PlayerName",
         self.oldname or self:GetNWString("PlayerName"))
 
-    hook.Remove("OnEntityCreated", "relation_shipdo"..self:EntIndex())
+    hook.Remove("OnEntityCreated", "relation_shipdo" .. self:EntIndex())
 
 end
 
-local function GiveSubClassLoadout(ply, sub) 
-    local cfg = subclass[sub] or subclass["default"]
+local function GiveSubClassLoadout(ply, sub)
+    -- local cfg = subclass[sub] or subclass["default"]
 
     ply:StripWeapons()
     ply:RemoveAllAmmo()
@@ -62,7 +62,7 @@ local function GiveSubClassLoadout(ply, sub)
 
 end
 
-function CLASS.On(self, data) 
+function CLASS.On(self, data)
     if CLIENT then return end
 
     if IsValid(self.FakeRagdoll) then
@@ -118,7 +118,7 @@ end
 
 function CLASS.PlayerDeath(self)
 
-    for k,v in ipairs(ents.FindByClass("npc_*")) do
+    for k, v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(combines,v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
             v:ClearEnemyMemory()
@@ -128,7 +128,7 @@ function CLASS.PlayerDeath(self)
         end
     end
 
-    hook.Remove( "OnEntityCreated", "relation_shipdo"..self:EntIndex())
+    hook.Remove( "OnEntityCreated", "relation_shipdo" .. self:EntIndex())
 end
 
 --[[ Overwatch HUD
@@ -176,18 +176,18 @@ if CLIENT then
 
             for _, unit in ipairs(player.GetAll()) do
                 if unit.PlayerClassName ~= "Combine" and unit.PlayerClassName ~= "Gamemaster" then continue end
-                
+
                 net.Start("OW_NotifyUnit")
                     net.WriteEntity(unit)
                     net.WriteString("New Overwatch Directive: " .. msg)
                     net.WriteColor(Color(0, 190, 190))
                 net.SendToServer()
-                
+
             end
 
         end,
-        ["/objective"] = function(msg, ply) 
-            
+        ["/objective"] = function(msg, ply)
+
             net.Start("OW_NotifyUnit")
                 net.WriteEntity(ply)
                 net.WriteString("New Overwatch Directive: " .. msg)
@@ -200,8 +200,8 @@ if CLIENT then
             net.SendToServer()
 
         end,
-        ["/notify"] = function(msg, ply) 
-            
+        ["/notify"] = function(msg, ply)
+
             net.Start("OW_NotifyUnit")
                 net.WriteEntity(ply)
                 net.WriteString("Overwatch Directive to Unit " .. ply:GetNWString("PlayerName") .. ": " .. msg)
@@ -225,14 +225,14 @@ if CLIENT then
     end)
     ]]
 
-    function AttachFunctionToSquad( Directive ) 
-        
+    function AttachFunctionToSquad( Directive )
+
         tbl = {}
-        for _, unit in ipairs(player.GetAll()) do 
+        for _, unit in ipairs(player.GetAll()) do
             local role = unit:GetNWString("PlayerRole")
             if unit.PlayerClassName ~= "Combine" and role ~= "Leader" then continue end
 
-            net.Start("OW_SquadInfoRequest"); 
+            net.Start("OW_SquadInfoRequest")
                 net.WriteEntity(unit)
             net.SendToServer()
             net.Receive("OW_SquadInfoSent", function()
@@ -252,11 +252,11 @@ if CLIENT then
         hg.CreateRadialMenu(tbl)
 
         return tbl
-    
+
     end
 
     function AttachFunctionToUnit( Directive, GeneralDirective )
-    
+
         tbl = {}
         local active_units = {}
         for _, ply in ipairs(player.GetAll()) do
@@ -264,7 +264,7 @@ if CLIENT then
             table.insert(active_units, #active_units + 1, ply)
         end
 
-        if GeneralDirective then 
+        if GeneralDirective then
             tbl[#tbl + 1] = {
                 [1] = function()
                     GeneralDirective(active_units)
@@ -275,7 +275,7 @@ if CLIENT then
 
         for _, unit in ipairs(active_units) do
             tbl[#tbl + 1] = {
-                [1] = function() 
+                [1] = function()
                     Directive(unit)
                 end,
                 [2] = unit:GetNWString("PlayerName")
@@ -285,7 +285,7 @@ if CLIENT then
 
         return tbl
 
-    end 
+    end
 
     hook.Add("radialOptions", "Overwatch", function()
 
@@ -293,13 +293,13 @@ if CLIENT then
         local role = lply:GetNWString("PlayerRole")
         if lply:Alive() and lply.PlayerClassName ~= "Gamemaster" and role ~= "overwatch" then return end
 
-		if lply:Alive() and lply:GetNWString("PlayerRole") == "overwatch" then
-			hg.radialOptions[#hg.radialOptions + 1] = {
-				[1] = function(mouseClick)
+        if lply:Alive() and lply:GetNWString("PlayerRole") == "overwatch" then
+            hg.radialOptions[#hg.radialOptions + 1] = {
+                [1] = function(mouseClick)
 
-                    local tbl = { 
+                    local tbl = {
                         [1] = {
-                            [1] = function(mouseClick) 
+                            [1] = function(mouseClick)
                                 AttachFunctionToUnit( function(unit)
                                     RunConsoleCommand("ulx", "spectate", unit:Nick())
                                 end, nil )
@@ -308,51 +308,51 @@ if CLIENT then
                             end,
                             [2] = "Open Unit Camera"
                         },
-                        [2] = { 
+                        [2] = {
                             [1] = function(mouseClick)
-                                AttachFunctionToUnit( function(unit) 
+                                AttachFunctionToUnit( function(unit)
                                     Derma_StringRequest(
                                         "Overwatch Notify",
                                         "Write directive for unit " .. unit:GetNWString("PlayerName"),
                                         "",
-                                        function(text) 
+                                        function(text)
                                             overwatch_commands["/notify"](text, unit)
                                         end
-                                    ) 
-                                end, function(active_units) 
+                                    )
+                                end, function(active_units)
                                     Derma_StringRequest(
                                         "Overwatch Broadcast",
                                         "Write broadcast directive for all active units.",
                                         "",
-                                        function(text) 
-                                            for _, unit in ipairs(active_units) do 
+                                        function(text)
+                                            for _, unit in ipairs(active_units) do
                                                 overwatch_commands["/notify"](text, unit)
                                             end
                                         end
-                                    ) 
-                                end) 
+                                    )
+                                end)
 
                                 return -1
                             end,
                             [2] = "Notify Units"
                         },
                         [3] = {
-                            [1] = function(mouseClick) 
-                                AttachFunctionToSquad( function(squad, leader, members) 
+                            [1] = function(mouseClick)
+                                AttachFunctionToSquad( function(squad, leader, members)
                                     Derma_StringRequest(
                                         "Overwatch Objective",
                                         "Write objective for squad " .. squad,
                                         "",
                                         function(text)
                                             overwatch_commands["/objective"](text, leader)
-                                            for _, unit in ipairs(members) do 
+                                            for _, unit in ipairs(members) do
                                                 overwatch_commands["/objective"](text, unit)
                                             end
                                         end
-                                    ) 
+                                    )
                                 end )
 
-                                return -1 
+                                return -1
                             end,
                             [2] = "Assign New Objective"
                         }
@@ -361,12 +361,12 @@ if CLIENT then
 
                     return -1
 
-				end,
+                end,
                 [2] = "Overwatch Directives"
-			}
-		end
+            }
+        end
 
-	end)
+    end)
 else
     local function CanListen(output, input, isChat)
         if (not IsValid(output) or not IsValid(input)) then
@@ -443,7 +443,7 @@ else
     end)
 
     util.AddNetworkString("OW_AssignNewObjective")
-    net.Receive("OW_AssignNewObjective", function(len, ply) 
+    net.Receive("OW_AssignNewObjective", function(len, ply)
         if ply:GetNWString("PlayerRole") ~= "overwatch" then return end
 
         local ent = net.ReadEntity()
