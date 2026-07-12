@@ -1040,11 +1040,14 @@ if CLIENT then
         squad_name = net.ReadString()
     end)
     local members = {}
+
+    --[[
     net.Receive("SquadInfoSent", function()
         for i, member in ipairs(net.ReadTable()) do
             members[i] = member
         end
     end)
+    ]]
 
     surface.CreateFont("CMBFontDefault",{
         font = "Roboto Light",
@@ -1106,7 +1109,7 @@ if CLIENT then
         local lply = LocalPlayer()
         local frt = FrameTime() * 5
         local role = self:GetNWString("PlayerRole")
-        local is_red = (role == "Leader" or role == "Shotgunner" or role == "Elite")
+        local is_red = nil
         local is_lead = role == "Leader"
 
         --;; Squad Designation
@@ -1130,7 +1133,7 @@ if CLIENT then
             )
         end
 
-        -- Squad Info
+        --[[ Squad Info
         if is_lead then
             do
 
@@ -1162,6 +1165,7 @@ if CLIENT then
 
             end
         end
+        ]]
 
         --;; HP
         do
