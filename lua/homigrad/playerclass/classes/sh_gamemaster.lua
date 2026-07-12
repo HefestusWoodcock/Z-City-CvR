@@ -103,8 +103,8 @@ function CLASS.On(self, data)
     hook.Add( "OnEntityCreated", "relation_shipdo" .. index, function( ent )
         if not IsValid(self) then hook.Remove("OnEntityCreated", "relation_shipdo" .. index) return end
         if ( ent:IsNPC() ) then
-            v:AddEntityRelationship( self, D_NU, 0)
-            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            ent:AddEntityRelationship( self, D_NU, 0)
+            ent:AddEntityRelationship( self.bull, ent:Disposition(self) )
         end
     end )
 
@@ -131,9 +131,9 @@ function CLASS.PlayerDeath(self)
     hook.Remove( "OnEntityCreated", "relation_shipdo"..self:EntIndex())
 end
 
--- Overwatch HUD
-if CLIENT then 
-
+--[[ Overwatch HUD
+if CLIENT then
+    
     local cmb_mat = Material("sprites/mat_jack_helmoverlay_r")
     hook.Add("RenderScreenspaceEffects", "Overwatch_View", function()
         local lply = LocalPlayer()
@@ -144,21 +144,21 @@ if CLIENT then
             surface.SetDrawColor(25,190,190,255)
             surface.SetMaterial(cmb_mat)
             surface.DrawTexturedRectRotated(
-                (ScrW()/2) - 5,
-                (ScrH()/2) - 5,
+                (ScrW() / 2) - 5,
+                (ScrH() / 2) - 5,
                 ScrW() + 10,
                 ScrH() + 450,
                 180
             )
             render.PushFilterMag(TEXFILTER.ANISOTROPIC)
             render.PushFilterMin(TEXFILTER.ANISOTROPIC)
-                CLASS.HUDPaint(lply)
             render.PopFilterMag()
             render.PopFilterMin()
         end
     end)
 
 end
+]]
 
 -- Overwatch Commands
 local function RadioSoundOn(ent, pitch)

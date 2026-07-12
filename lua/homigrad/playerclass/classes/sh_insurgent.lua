@@ -61,13 +61,24 @@ local primary_weapons = {
     "weapon_ak74u",
     "weapon_m16a2",
     "weapon_mp7",
-    "weapon_sks"
+    "weapon_sks",
+    "weapon_m70"
 }
 
 local primary_attachments = {
     ["weapon_svd"] = function(ply, wep)
         if IsValid(wep) then
             hg.AddAttachmentForce(ply, wep, "optic11")
+        end
+    end,
+    ["weapon_svo98"] = function(ply, wep)
+        if IsValid(wep) then
+            hg.AddAttachmentForce(ply, wep, "optic6")
+        end
+    end,
+    ["weapon_kar98kriegsmod"] = function(ply, wep)
+        if IsValid(wep) then
+            hg.AddAttachmentForce(ply, wep, "optic12")
         end
     end,
 }
@@ -109,7 +120,17 @@ local subclasses = {
                 ammo_mult = 3
             },
             {
-                weapon = "weapon_hg_hl2nade_tpik",
+                weapon = "weapon_car"
+            },
+            {
+                weapon = {
+                    "weapon_hg_rgd_tpik",
+                    "weapon_hg_type59_tpik"
+                },
+                count = 3
+            },
+            {
+                weapon = "weapon_hg_m18_tpik",
                 count = 2
             }
         }
@@ -123,25 +144,32 @@ local subclasses = {
         loadout = {
             {
                 weapon = {
-                    "weapon_spas12",
+                    "weapon_ithaca37",
                     "weapon_m590a1",
-                    "weapon_saiga12",
-                    "weapon_remington870",
+                    "weapon_auto5",
+                    "weapon_winchestersupa3",
                     "weapon_ks23"
                 },
                 ammo_mult = 5
+            },
+            {
+                weapon = "weapon_rshg2",
+                count = 1
             },
             {
                 weapon = secondary_weapons,
                 ammo_mult = 3
             },
             {
-                weapon = "weapon_hg_hl2nade_tpik",
+                weapon = "weapon_car"
+            },
+            {
+                weapon = "weapon_hg_rgd_tpik",
                 count = 2
             },
             {
                 weapon = "weapon_hg_flashbang_tpik",
-                count = 1
+                count = 2
             },
             {
                 weapon = "weapon_breachcharge",
@@ -163,14 +191,21 @@ local subclasses = {
             {
                 weapon = {
                     "weapon_skorpion",
-                    "weapon_uzi",
-                    "weapon_mac11"
+                    "weapon_miniuzi",
+                    "weapon_microuzi"
                 },
                 ammo_mult = 5
             },
             {
-                weapon = "weapon_hg_hl2nade_tpik",
+                weapon = "weapon_car"
+            },
+            {
+                weapon = "weapon_hg_rgd_tpik",
                 count = 3
+            },
+            {
+                weapon = "weapon_hg_rpg40",
+                count = 1
             },
             {
                 weapon = "weapon_traitor_ied",
@@ -194,12 +229,23 @@ local subclasses = {
         body_groups = "0201",
         loadout = {
             {
-                weapon = "weapon_pkm",
+                weapon = {
+                    "weapon_pkm",
+                    "weapon_rpd",
+                    "weapon_dp27"
+                },
                 ammo_mult = 2
+            },
+            {
+                weapon = "weapon_medkit_sh"
             },
             {
                 weapon = "weapon_makarov",
                 ammo_mult = 1
+            },
+            {
+                weapon = "weapon_hg_m18_tpik",
+                ammo_mult = 2
             }
         }
     },
@@ -211,13 +257,20 @@ local subclasses = {
         body_groups = "0534",
         loadout = {
             {
-                weapon = "weapon_svd",
+                weapon = {
+                    "weapon_svd",
+                    "weapon_svo98",
+                    "weapon_kar98kriegsmod"
+                },
                 ammo_mult = 4
             },
             {
                 weapon = "weapon_makarov",
-                ammo_mult = 1
-            }
+                ammo_mult = 2
+            },
+            {
+                weapon = "weapon_medkit_sh"
+            },
         }
     },
     medic = {
@@ -229,26 +282,18 @@ local subclasses = {
         loadout = {
             {
                 weapon = {
-                    "weapon_ak74u",
                     "weapon_skorpion",
-                    "weapon_mp7"
+                    "weapon_miniuzi",
+                    "weapon_microuzi"
                 },
-                ammo_mult = 3
+                ammo_mult = 4
             },
             {
                 weapon = secondary_weapons,
                 ammo_mult = 2
             },
             {
-                weapon = "weapon_medkit_sh",
-                count = 1
-            },
-            {
-                weapon = "weapon_bandage_sh",
-                count = 1
-            },
-            {
-                weapon = "weapon_mannitol",
+                weapon = "weapon_grizzly",
                 count = 1
             },
             {
@@ -260,23 +305,7 @@ local subclasses = {
                 count = 1
             },
             {
-                weapon = "weapon_painkillers",
-                count = 1
-            },
-            {
-                weapon = "weapon_tourniquet",
-                count = 1
-            },
-            {
-                weapon = "weapon_needle",
-                count = 1
-            },
-            {
                 weapon = "weapon_betablock",
-                count = 1
-            },
-            {
-                weapon = "weapon_adrenaline",
                 count = 1
             }
         }
@@ -346,6 +375,8 @@ local function giveSubClassLoadout(ply, subClass)
     ply:Give("weapon_hands_sh")
     ply:Give("weapon_painkillers")
     ply:Give("weapon_bigbandage_sh")
+    local wep = ply:Give("hg_flashlight")
+    wep:Use(ply)
 
     for _, item in ipairs(cfg.loadout or {}) do
         if type(item.weapon) == "table" then
@@ -456,15 +487,6 @@ if SERVER then
             ply.lastPhr = snd
         end
     }
-
-    hook.Add("HomigradDamage", "Rebels_painsounds", function(ply, dmgInfo, hitgroup, ent)
-        if rebel_classes[ply.PlayerClassName] then
-            ply.painCD = ply.painCD or 0
-            if paintable[hitgroup] and (ply.painCD < CurTime()) and ply.organism and not ply.organism.otrub and ply:Alive() and not ply.organism.holdingbreath then 
-                --paintable[hitgroup](ply,ent)
-            end
-        end
-    end)
 
     hook.Add("HGReloading", "Rebels_reloadalert", function(wep)
         if CLIENT then return end

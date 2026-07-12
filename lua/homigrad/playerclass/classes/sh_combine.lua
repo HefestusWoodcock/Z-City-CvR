@@ -249,7 +249,15 @@ local combine_subclasses = {
                 count = 1
             },
             {
-                weapon = "weapon_medkit_sh",
+                weapon = "weapon_afak",
+                count = 1
+            },
+            {
+                weapon = "weapon_sj1",
+                count = 1
+            },
+            {
+                weapon = "weapon_propital",
                 count = 1
             },
             {
@@ -258,7 +266,6 @@ local combine_subclasses = {
             }
         },
     },
-
     watchdog = {
         color = Color(70, 100, 0),
         models = Model("models/player/beta_elite.mdl"),
@@ -277,7 +284,7 @@ local combine_subclasses = {
             {weapon = "weapon_melee"},
             {
                 weapon = "weapon_hg_slam",
-                count = 2
+                count = 1
 
             },
             {
@@ -299,9 +306,7 @@ local combine_subclasses = {
         },
         phrases = "grunt_phrases.json",
         context_phrases = "grunt_context_phrases.json"
-
     },
-
     elite = {
         color = Color(246,13,13),
         models = Model("models/nemez/combine_soldiers/combine_soldier_elite_pm.mdl"),
@@ -326,11 +331,23 @@ local combine_subclasses = {
                 extra_balls = 3
             },
             {
+                weapon = "weapon_afak",
+                count = 1
+            },
+            {
                 weapon = "weapon_bigbandage_sh",
                 count = 1
             },
             {
-                weapon = "weapon_medkit_sh",
+                weapon = "weapon_sj1",
+                count = 1
+            },
+            {
+                weapon = "weapon_propital",
+                count = 1
+            },
+            {
+                weapon = "weapon_etg",
                 count = 1
             },
             {
@@ -339,7 +356,6 @@ local combine_subclasses = {
             }
         }
     },
-
     sniper = {
         color = Color(0,220,220),
         models = Model("models/skipp/snipers/combine_urban_sniper.mdl"),
@@ -361,6 +377,14 @@ local combine_subclasses = {
             {
                 weapon = "weapon_combinesniper",
                 ammo_mult = 3
+            },
+                        {
+                weapon = "weapon_sj1",
+                count = 1
+            },
+            {
+                weapon = "weapon_propital",
+                count = 1
             }
         }
     },
@@ -377,7 +401,11 @@ local combine_subclasses = {
             {weapon = "weapon_melee"},
             {
                 weapon = "weapon_hg_flashbang_tpik",
-                count = 1
+                count = 2
+            },
+            {
+                weapon = "weapon_hg_hl2nade_tpik",
+                count = 2
             },
             {
                 weapon = "weapon_hk_usp",
@@ -396,7 +424,15 @@ local combine_subclasses = {
                 count = 1
             },
             {
-                weapon = "weapon_medkit_sh",
+                weapon = "weapon_afak",
+                count = 1
+            },
+            {
+                weapon = "weapon_sj1",
+                count = 1
+            },
+            {
+                weapon = "weapon_propital",
                 count = 1
             },
             {
@@ -418,14 +454,14 @@ local combine_subclasses = {
             {weapon = "weapon_melee"},
             {
                 weapon = "weapon_hg_hl2nade_tpik",
-                count = 1
+                count = 3
             },
             {
                 weapon = "weapon_hk_usp",
                 ammo_mult = 3
             },
             {
-                weapon = "weapon_osipr",
+                weapon = "weapon_hla_ordrifle",
                 ammo_mult = 3
             },
             {
@@ -433,19 +469,19 @@ local combine_subclasses = {
                 count = 1
             },
             {
-                weapon = "weapon_medkit_sh",
+                weapon = "weapon_afak",
                 count = 1
             },
             {
-                weapon = "weapon_morphine",
+                weapon = "weapon_bigbandage_sh",
                 count = 1
             },
             {
-                weapon = "weapon_mannitol",
+                weapon = "weapon_sj1",
                 count = 1
             },
             {
-                weapon = "weapon_adrenaline",
+                weapon = "weapon_propital",
                 count = 1
             }
         },
@@ -453,9 +489,7 @@ local combine_subclasses = {
         context_phrases = "ordinal_context_phrases.json"
 
     },
-
     grunt = {
-
         color = Color(210, 180, 140),
         models = Model("models/jq/hlvr/characters/combine/grunt/combine_grunt_hlvr_player.mdl"),
         bodyGroups = "0002000",
@@ -467,7 +501,7 @@ local combine_subclasses = {
             {weapon = "weapon_melee"},
             {
                 weapon = "weapon_hg_hl2nade_tpik",
-                count = 1
+                count = 2
             },
             {
                 weapon = "weapon_hk_usp",
@@ -475,7 +509,7 @@ local combine_subclasses = {
             },
 
             {
-                weapon = "weapon_mp5",
+                weapon = "weapon_hla_gruntsmg",
                 ammo_mult = 4
             },
             {
@@ -483,27 +517,25 @@ local combine_subclasses = {
                 count = 1
             },
             {
-                weapon = "weapon_medkit_sh",
+                weapon = "weapon_afak",
                 count = 1
             },
             {
-                weapon = "weapon_morphine",
+                weapon = "weapon_bigbandage_sh",
                 count = 1
             },
             {
-                weapon = "weapon_mannitol",
+                weapon = "weapon_sj1",
                 count = 1
             },
             {
-                weapon = "weapon_adrenaline",
+                weapon = "weapon_propital",
                 count = 1
             }
         },
         phrases = "grunt_phrases.json",
         context_phrases = "grunt_context_phrases.json"
-
     },
-
     wallhammer = {
         color = Color(0,220,220),
         models = Model("models/jq/hlvr/characters/combine/heavy/combine_heavy_hlvr_player.mdl"),
@@ -515,36 +547,39 @@ local combine_subclasses = {
         loadout = {
             {weapon = "weapon_melee"},
             {
+                weapon = "weapon_hg_flashbang_tpik",
+                count = 2
+            },
+            {
                 weapon = "weapon_hg_hl2nade_tpik",
-                count = 1
+                count = 2
             },
             {
                 weapon = "weapon_hk_usp",
                 ammo_mult = 4
             },
             {
-                weapon = "weapon_ks23",
-                ammo_type = 2,
-                ammo_mult = 10
+                weapon = "weapon_hla_wallhshot",
+                ammo_mult = 4
             },
             {
                 weapon = "weapon_bigbandage_sh",
                 count = 1
             },
             {
-                weapon = "weapon_medkit_sh",
+                weapon = "weapon_afak",
                 count = 1
             },
             {
-                weapon = "weapon_morphine",
+                weapon = "weapon_bigbandage_sh",
                 count = 1
             },
             {
-                weapon = "weapon_mannitol",
+                weapon = "weapon_sj1",
                 count = 1
             },
             {
-                weapon = "weapon_adrenaline",
+                weapon = "weapon_propital",
                 count = 1
             }
         },
@@ -563,35 +598,35 @@ local combine_subclasses = {
         loadout = {
             {weapon = "weapon_melee"},
             {
-                weapon = "weapon_hg_flashbang_tpik",
-                count = 1
+                weapon = "weapon_hg_m18_tpik",
+                count = 3
             },
             {
                 weapon = "weapon_hk_usp",
                 ammo_mult = 4
             },
             {
-                weapon = "weapon_m60",
-                ammo_mult = 1
+                weapon = "weapon_hla_suppmg",
+                ammo_mult = 2
             },
             {
                 weapon = "weapon_bigbandage_sh",
                 count = 1
             },
             {
-                weapon = "weapon_medkit_sh",
+                weapon = "weapon_afak",
                 count = 1
             },
             {
-                weapon = "weapon_morphine",
+                weapon = "weapon_bigbandage_sh",
                 count = 1
             },
             {
-                weapon = "weapon_mannitol",
+                weapon = "weapon_sj1",
                 count = 1
             },
             {
-                weapon = "weapon_adrenaline",
+                weapon = "weapon_propital",
                 count = 1
             }
         },
@@ -978,33 +1013,33 @@ if CLIENT then
     local color_hp = Color(0,255,255,220)
     local color_ar = Color(0,255,255,220)
     local color_glow = Color(15,165,165,0)
-    --local color_glow_ar = Color(15,165,165,0)
+    local color_glow_ar = Color(15,165,165,0)
     local color_glow_ammo = Color(15,165,165,0)
     local color_sight = Color(15,165,165,220)
-    --local color_pulse = Color(15,165,165,220)
+    local color_pulse = Color(15,165,165,220)
 
     local color_hp2 = Color(165,15,15)
     local color_ar2 = Color(165,15,15)
     local color_glow2 = Color(165,15,15)
-    -- local color_glow_ar2 = Color(165,15,15)
+    local color_glow_ar2 = Color(165,15,15)
     local color_glow_ammo2 = Color(165,15,15)
-    --local color_sight2 = Color(165,15,15)
-    --local color_pulse2 = Color(165,15,15)
+    local color_sight2 = Color(165,15,15)
+    local color_pulse2 = Color(165,15,15)
 
-    --local armor_txt, hp_txt, pulse_txt, stamina_txt, ammo_txt = 0,0,0,0,0
-    --local bloodlerp, ammolerp = 0,0
+    local armor_txt, hp_txt, pulse_txt, stamina_txt, ammo_txt = 0,0,0,0,0
+    local bloodlerp, ammolerp = 0,0
     local blood_old, old_hp_txt, old_ar_txt, old_ammo_txt = 5000,0,0,0
-    --local pos_sight = Vector(ScrW(),ScrH(),0)
+    local pos_sight = Vector(ScrW(),ScrH(),0)
     local bg_color = Color(0,0,0,150)
-    --local armorlerp = 0
+    local armorlerp = 0
 
     local squad_name = "none"
     net.Receive("SquadNameSent", function()
         squad_name = net.ReadString()
     end)
     local members = {}
-    net.Receive("SquadInfoSent", function() 
-        for i, member in ipairs(net.ReadTable()) do 
+    net.Receive("SquadInfoSent", function()
+        for i, member in ipairs(net.ReadTable()) do
             members[i] = member
         end
     end)
@@ -1069,7 +1104,7 @@ if CLIENT then
         local lply = LocalPlayer()
         local frt = FrameTime() * 5
         local role = self:GetNWString("PlayerRole")
-        -- local is_red = (role == "Leader" or role == "Shotgunner" or role == "Elite")
+        local is_red = (role == "Leader" or role == "Shotgunner" or role == "Elite")
         local is_lead = role == "Leader"
 
         --;; Squad Designation

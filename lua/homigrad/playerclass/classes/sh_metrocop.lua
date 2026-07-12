@@ -15,8 +15,8 @@ local callsigns = {
 
 
 local primary_weapons = {
-    "weapon_mp7", 
-    "weapon_remington870"
+    "weapon_mp7",
+    "weapon_ithaca37"
 }
 
 local primary_attachments = {
@@ -28,12 +28,6 @@ local primary_attachments = {
     ["weapon_remington870"] = function(ply, wep)
         if IsValid(wep) then
             hg.AddAttachmentForce(ply, wep, "holo2")
-        end
-    end,
-    ["weapon_sr25"] = function(ply, wep)
-        if IsValid(wep) then
-            hg.AddAttachmentForce(ply, wep, "holo8")
-            hg.AddAttachmentForce(ply, wep, "grip3")
         end
     end
 }
@@ -47,13 +41,9 @@ local combine_subclasses = {
             {weapon = "weapon_painkillers"},
             {weapon = "weapon_bandage_sh"},
             {weapon = "weapon_tourniquet"},
-            {weapon = "weapon_hg_stunstick"},
-            {weapon = "weapon_handcuffs"},
-            {weapon = "weapon_handcuffs_key"},
-            {weapon = "weapon_walkie_talkie"},
             {
                 weapon = "weapon_glock26",
-                ammo_mult = 1
+                ammo_mult = 2
             }
         },
     },
@@ -65,10 +55,6 @@ local combine_subclasses = {
             {weapon = "weapon_medkit_sh"},
             {weapon = "weapon_bigbandage_sh"},
             {weapon = "weapon_morphine"},
-            {weapon = "weapon_hg_stunstick"},
-            {weapon = "weapon_handcuffs"},
-            {weapon = "weapon_handcuffs_key"},
-            {weapon = "weapon_walkie_talkie"},
             {
                 weapon = "weapon_fn45",
                 ammo_mult = 2
@@ -80,13 +66,9 @@ local combine_subclasses = {
         models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
         body_groups = "000010000",
         loadout = {
-            {weapon = "weapon_medkit_sh"},
+            {weapon = "weapon_car"},
             {weapon = "weapon_bigbandage_sh"},
             {weapon = "weapon_morphine"},
-            {weapon = "weapon_hg_stunstick"},
-            {weapon = "weapon_handcuffs"},
-            {weapon = "weapon_handcuffs_key"},
-            {weapon = "weapon_walkie_talkie"},
             {
                 weapon = "weapon_hk_usp",
                 ammo_mult = 2
@@ -102,19 +84,15 @@ local combine_subclasses = {
         models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
         body_groups = "000010000",
         loadout = {
-            {weapon = "weapon_medkit_sh"},
+            {weapon = "weapon_salewa"},
             {weapon = "weapon_bigbandage_sh"},
             {weapon = "weapon_morphine"},
-            {weapon = "weapon_hg_stunstick"},
-            {weapon = "weapon_handcuffs"},
-            {weapon = "weapon_handcuffs_key"},
-            {weapon = "weapon_walkie_talkie"},
             {
                 weapon = "weapon_hk_usp",
                 ammo_mult = 2
             },
             {
-                weapon = "weapon_sr25",
+                weapon = "weapon_coltlec",
                 ammo_mult = 2
             }
         },
@@ -177,11 +155,26 @@ end
 CLASS.NoFreeze = true
 CLASS.CanEmitRNDSound = false
 
+local baseEquipment = {
+    {weapon = "weapon_hands_sh"},
+    {weapon = "weapon_hg_stunstick"},
+    {weapon = "weapon_handcuffs"},
+    {weapon = "weapon_handcuffs_key"},
+    {weapon = "hg_flashlight"}
+}
+
 local function giveSubClassLoadout(ply, subclass)
     local config = combine_subclasses[subclass] or combine_subclasses["default"]
     ply:StripWeapons()
     ply:RemoveAllAmmo()
-    ply:Give("weapon_hands_sh")
+    
+    for _, item in ipairs(baseEquipment) do
+        local wep = ply:Give(item.weapon)
+        if item.weapon == "hg_flashlight" then 
+            wep:Use(ply)
+        end
+    end
+
     for _, item in ipairs(config.loadout or {}) do
         if type(item.weapon) == "table" then
             local randWep = item.weapon[math.random(#item.weapon)]
