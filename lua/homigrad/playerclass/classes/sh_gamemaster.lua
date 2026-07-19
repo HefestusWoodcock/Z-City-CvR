@@ -94,7 +94,7 @@ function CLASS.On(self, data)
         dispositions[npc_class] = { d_enum, prio }
 
         v:AddEntityRelationship( self, D_NU, 0)
-        v:AddEntityRelationship( self.bull, v:Disposition(self) )
+        -- v:AddEntityRelationship( self.bull, v:Disposition(self) )
         v:ClearEnemyMemory()
 
     end
@@ -104,7 +104,7 @@ function CLASS.On(self, data)
         if not IsValid(self) then hook.Remove("OnEntityCreated", "relation_shipdo" .. index) return end
         if ( ent:IsNPC() ) then
             ent:AddEntityRelationship( self, D_NU, 0)
-            ent:AddEntityRelationship( self.bull, ent:Disposition(self) )
+            -- ent:AddEntityRelationship( self.bull, ent:Disposition(self) )
         end
     end )
 

@@ -27,6 +27,16 @@ local primary_attachments = {
 }
 
 local combine_subclasses = {
+    i5 = {
+        color = Color(0,140,155),
+        models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
+        body_groups = "000010000",
+        loadout = {
+            {weapon = "weapon_painkillers"},
+            {weapon = "weapon_bandage_sh"},
+            {weapon = "weapon_tourniquet"}
+        },
+    },
     default = {
         color = Color(0,140,155),
         models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
@@ -37,7 +47,7 @@ local combine_subclasses = {
             {weapon = "weapon_tourniquet"},
             {
                 weapon = "weapon_glock26",
-                ammo_mult = 2
+                ammo_mult = 1
             }
         },
     },
@@ -76,7 +86,7 @@ local combine_subclasses = {
     i1 = {
         color = Color(0,140,155),
         models = "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl",
-        body_groups = "000010000",
+        body_groups = "000270000",
         loadout = {
             {weapon = "weapon_salewa"},
             {weapon = "weapon_bigbandage_sh"},
@@ -291,11 +301,11 @@ function CLASS.PlayerDeath(self)
     for k,v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(combines,v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
-            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            -- v:AddEntityRelationship( self.bull, v:Disposition(self) )
             v:ClearEnemyMemory()
         elseif table.HasValue(rebels,v:GetClass()) then
             v:AddEntityRelationship( self, D_LI, 0 )
-            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            -- v:AddEntityRelationship( self.bull, v:Disposition(self) )
             v:ClearEnemyMemory()
         end
     end

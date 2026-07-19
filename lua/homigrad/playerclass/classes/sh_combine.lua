@@ -834,14 +834,14 @@ function CLASS.On(self, data)
     if zb.GiveRole then zb.GiveRole(self, self.leader and "Leader" or "Soldier", Color(89,230,255)) end
     self:SetNWString("PlayerName", callsign)
 
-    for k,v in ipairs(ents.FindByClass("npc_*")) do
+    for k, v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(combines,v:GetClass()) then
             v:AddEntityRelationship( self, D_LI, 0 )
-            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            -- v:AddEntityRelationship( self.bull, v:Disposition(self) )
             v:ClearEnemyMemory()
         elseif table.HasValue(rebels,v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
-            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            -- v:AddEntityRelationship( self.bull, v:Disposition(self) )
             v:ClearEnemyMemory()
         end
     end

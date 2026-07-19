@@ -344,11 +344,11 @@ function CLASS.On(self, data)
     for k,v in ipairs(ents.FindByClass("npc_*")) do
         if table.HasValue(npc_rebel, v:GetClass()) then
             v:AddEntityRelationship( self, D_NU, 0 )
-            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            -- v:AddEntityRelationship( self.bull, v:Disposition(self) )
             v:ClearEnemyMemory()
         elseif table.HasValue(npc_combine, v:GetClass()) then
             v:AddEntityRelationship( self, D_HT, 99 )
-            v:AddEntityRelationship( self.bull, v:Disposition(self) )
+            -- v:AddEntityRelationship( self.bull, v:Disposition(self) )
             v:ClearEnemyMemory()
         end
     end
