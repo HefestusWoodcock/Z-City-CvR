@@ -66,7 +66,7 @@ COMMANDS.playerclass = {
 			ply:ChatPrint(ply:Name())
 		elseif #args == 3 then
 			for i, ply2 in pairs(player.GetListByName(args[1])) do
-				ply2:SetPlayerClass(args[1], args[3])
+				ply2:SetPlayerClass(args[2], args[3])
 				ply:ChatPrint(ply2:Name())
 			end
 		else 
