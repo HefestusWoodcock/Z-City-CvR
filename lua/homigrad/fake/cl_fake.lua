@@ -17,14 +17,20 @@ local angle
 local hg_coolcamera = ConVarExists("hg_coolcamera") and GetConVar("hg_coolcamera") or CreateConVar("hg_coolcamera", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Cool camera movement", 0, 1)
 local hg_coolcameralerpmult = ConVarExists("hg_coolcameralerpmult") and GetConVar("hg_coolcameralerpmult") or CreateConVar("hg_coolcameralerpmult", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Cool camera movement lerp multiplier", 0, 5)
 function GetCoolCameraBool()
-	return hg_coolcamera:GetBool() and !lply:InVehicle()
+	return hg_coolcamera:GetBool() and !lply:InVehicle() and lply:Alive()
 end
+local vpangs
+
+hook.Add("CreateMove", "asdasdas22", function(cmd)
+	if hg.InGame() or !GetCoolCameraBool() then return end
+
+	hook.Run("InputMouseApply", cmd, 0, 0, (realanglelerp or Angle()) + (vpangs or Angle()))
+end)
 
 local diff = Angle()
 hook.Add("InputMouseApply", "fakeCameraAngles", function(cmd, x, y, angle)
 	local tbl = {}
 	local cc = GetCoolCameraBool()
-	local vpangs
 	if cc then
 		realanglelerp = realanglelerp or angle
 		vpangs = GetViewPunchAngles2() * 1 + GetViewPunchAngles() * 1 + GetViewPunchAngles3() * 1 + GetViewPunchAngles4() * 1
@@ -69,7 +75,7 @@ hook.Add("InputMouseApply", "fakeCameraAngles", function(cmd, x, y, angle)
 		angle = realanglelerp + vpangs
 		if !IsValid(lply.FakeRagdoll) then angle[1] = math.Clamp(angle[1], -89, 89) end
 		realangle = realangle + diff
-		diff = LerpAngleFT(0.01, diff, angle_zero)
+		diff = LerpAngleFT(0.02 / game.GetTimeScale(), diff, angle_zero)
 		cmd:SetViewAngles(angle)
 	else
 		cmd:SetViewAngles(angle)
@@ -122,7 +128,7 @@ hook.Add("HG.InputMouseApply", "fakeCameraAngles2", function(tbl)
 		follow = follow or lply
 	end]]
 
-	if lply:InVehicle() and not IsValid(follow) then
+	if lply:InVehicle() and not IsValid(follow) and !(hg.NoCameraInCar(lply:GetVehicle()) or hg.NoFakeInCar(lply:GetVehicle())) then
 		tbl.override_angle = true
 		tbl.angle = angle_zero
 		return true
@@ -206,6 +212,7 @@ local angleZero = Angle(0,0,0)
 local deathlerp = 0
 local tblfollow = {}
 local lerpasad = 0
+local hg_allow_gopro = GetConVar("hg_allow_gopro_pos")
 CalcView = function(ply, origin, angles, fov, znear, zfar)
 	if GetViewEntity() ~= (ply or LocalPlayer()) then return end
 	local oldorigin = -(-origin)
@@ -394,11 +401,16 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 	
 	if ply.organism and ply.organism.otrub then view.angles = att_Ang end
 
-	if hg_gopro:GetBool() then
-		return SpecCam(follow, origin, angles, fov, znear, zfar)
+	if hg_gopro:GetBool() and hg_allow_gopro:GetBool() then
+		return GoProCam(follow, origin, angles, fov, znear, zfar)
 	end
 
 	hook.Run("PostHGCalcView", ply, view)
+
+	result = hook.Run("PostPostHGCalcView", ply, view)
+	if result then
+		return result
+	end
 
 	return view
 end

@@ -55,7 +55,7 @@ local function OnlyGetAppearance()
 
     net.SendToServer()
 
-	if not tbl and not forced_random then lply:ChatPrint("[Appearance] file load failed - " .. reason) end
+	if not tbl and not forced_random and reason then lply:ChatPrint("[Appearance] file load failed - " .. reason) end
 end
 
 net.Receive("OnlyGet_Appearance", OnlyGetAppearance)
@@ -120,7 +120,7 @@ function RenderAccessories(ply, accessories, setup)
 			if not accessData then continue end
 			if accessData.needcoolRender then continue end
 
-			DrawAccesories(ply, ent, accessoriess, accessData, islply, nil, setup)
+			DrawAccesories(ply, ent, accessoriess, accessData, islply, nil, setup, accessories)
 		end
 	else
 		local accessData = hg.Accessories[accessories]
@@ -132,7 +132,7 @@ function RenderAccessories(ply, accessories, setup)
 end
 
 local huy_addvec = Vector(0.4,0,0.4)
-function DrawAccesories(ply, ent, accessories,accessData, islply, force, setup)
+function DrawAccesories(ply, ent, accessories,accessData, islply, force, setup, tAccessories)
 	if not accessories then return end
 	if not accessData then return end
 
@@ -184,6 +184,10 @@ function DrawAccesories(ply, ent, accessories,accessData, islply, force, setup)
 	if mdl and model:GetFlexIDByName(mdl) then
 		model:SetFlexWeight(model:GetFlexIDByName(mdl),1)
 	end
+
+	if accessData["modelPreRenderCallback"] then
+		accessData["modelPreRenderCallback"](ply,ent,model,tAccessories)
+	end
 	--if model:GetFlexIDByName(ThatPlyIsFemale(ply) and "F" or "M") then
 	--	model:SetFlexWeight(model:GetFlexIDByName(ThatPlyIsFemale(ply) and "F" or "M"),1)
 	--end
@@ -192,6 +196,11 @@ function DrawAccesories(ply, ent, accessories,accessData, islply, force, setup)
 	if not IsValid(model) then ply.modelAccess[accessories] = nil return end
 
 	if ply.armors and accessData["placement"] and ply.armors[accessData["placement"]] then
+
+		return
+	end
+
+	if accessData["placement"] and hg.EquipmentAppearanceSlots[accessData["placement"]] and IsValid(ply:GetEquipmentBySlot(hg.EquipmentAppearanceSlots[accessData["placement"]])) then
 
 		return
 	end

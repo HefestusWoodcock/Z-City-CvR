@@ -716,8 +716,10 @@ function ENTITY:FireLuaBullets(tInfo)
 					filter = Filter
 				})
 			
-			while (IsValid(tr.Entity) and tr.Entity.organism) do
+			local tries = 50
+			while (tries > 0 and IsValid(tr.Entity) and tr.Entity.organism) do
 				local ent = tr.Entity
+				tries = tries - 1
 
 				--table.insert(Filter, ent)
 
@@ -1290,5 +1292,6 @@ function PLAYER:FireCSSBullets(tInfo)
 	
 	if (bIsPlayer) then
 		self:LagCompensation(false)
+		self.bullet = nil
 	end
 end

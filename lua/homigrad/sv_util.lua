@@ -1,6 +1,8 @@
 local getBloodColor = FindMetaTable( "Entity" ).GetBloodColor
 local isBulletDamage = FindMetaTable( "CTakeDamageInfo" ).IsBulletDamage
 
+hg.ConVars = hg.ConVars or {}
+
 local hg_legacycam = ConVarExists("hg_legacycam") and GetConVar("hg_legacycam") or CreateConVar("hg_legacycam", 0, FCVAR_REPLICATED, "Toggle legacy first-person view camera", 0, 1)
 
 local host_timescale = game.GetTimeScale
@@ -423,7 +425,7 @@ end)
 util.AddNetworkString( "DoPlayerFlinch" )
 
 hook.Add( "ScalePlayerDamage", "FlinchPlayersOnHit", function(ply, grp)
-	if ply:IsPlayer() then
+	if IsValid(ply) and ply:Alive() then
 		--could maybe return end,
 		--but would that override other Scale hooks? -- no.
 		local group = nil
@@ -721,8 +723,12 @@ function hgWreckBuildings(blaster, pos, power, range, ignoreVisChecks) -- taken 
 					end
 
 					if proceed then
-						if mass <= myDestroyThreshold then
-							SafeRemoveEntity(prop)
+                        if mass <= myDestroyThreshold then
+                            if prop:GetClass() == "prop_ragdoll" or prop:IsNPC() then
+                                physObj:EnableMotion(true)
+                            else
+                                SafeRemoveEntity(prop)
+                            end
 						elseif mass <= myLoosenThreshold then
 							physObj:EnableMotion(true)
 							constraint.RemoveAll(prop)
@@ -867,6 +873,7 @@ hook.Add( "OnEntityCreated", "VechicleChairs", function( ent )
 			
 			ent:SetModel("models/props_junk/PopCan01a.mdl")
 			ent:SetAngles(ent:LocalToWorldAngles(UwU and Angle(0, -1, 0) or Angle(0,90,0)))
+			ent:SetPos(ent:GetPos() + vector_up * 1)
 		end
 	end)
 	
@@ -1070,6 +1077,10 @@ hook.Add( "Move", "hg_RagdollIntoWalls", function( ply, mv)
 end)
 
 if util.IsBinaryModuleInstalled("eightbit") then
+	if system.IsLinux() then
+		print("If the eightbit module doesn't work, you should update the 32-bit glibc library (and C/C++ related 32-bit libraries in general)")
+	end
+
 	require("eightbit")
 
 	if eightbit.SetDamp1 then
@@ -1553,7 +1564,7 @@ hook.Add( "KeyPress", "snowballs_pickup", function( ply, key )
 end )
 
 local warmingEnts = {
-	["env_sprite"] = 0.1,
+	["env_sprite"] = 0.0,
 	["env_fire"] = 0.5,
 	["vfire"] = function(ent) return ent:GetFireState() end,
 }
@@ -1770,14 +1781,23 @@ hook.Add("SetupMove", "bm_force_foosteps", function(ply, mv)
 end)
 
 local hg_fallonsideland = CreateConVar("hg_fallonsideland", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED},"Toggle fall from side landing (if player land direction != player eye direction)")
+
+local function IsLookingSide(ply, targetVec)
+	if !IsValid(ply) or !ply:IsPlayer() then return true end
+	local diff = targetVec - ply:GetShootPos()
+	local look = ply:EyeAngles()
+	look[1] = 0
+	return look:Forward():Dot(diff) / diff:Length() >= 0.8
+end
+
 hook.Add("Move", "CP_detectland", function(ply)
 	if !hg_fallonsideland:GetBool() then return end
 	local vel = ply:GetVelocity()
 	vel[3] = 0
 
-	if !ply.prev_on_ground and ply:OnGround() and vel:LengthSqr() > 100 * 100 and ply:GetMoveType() != MOVETYPE_NOCLIP then
+	if !ply.prev_on_ground and ply:OnGround() and vel:LengthSqr() > 200 * 200 and ply:GetMoveType() != MOVETYPE_NOCLIP then
 		local lookat = ply:GetPos() + vel * 5
-		if !IsLookingAt(ply, lookat, 0.2) then
+		if !IsLookingSide(ply, lookat, 0.4) then
 			hg.Fake(ply)
 		end
 	end

@@ -301,18 +301,21 @@ players : 1 humans, 0 bots (20 max)
 			local shooterdist = tr.StartPos:Distance(eyePos)
 			local mr = math.random(9)
 
-			if shooterdist < 200 and not IsLookingAt(self:GetOwner(),eyePos) then return end
+			if not IsLookingAt(self:GetOwner(),eyePos) then return end
 			local SND = subsonic and "weapons/bullets/fx/subsonic_0" .. mr .. ".wav"
 				or bullet.Damage >= 50 and "cracks/" .. "heavy/heav" .. "_crack_0" .. mr .. ".ogg"
 				or bullet.Damage >= 30 and "cracks/" .. "medium/med" .. "_crack_0" .. mr .. ".ogg"
 				or "cracks/" .. "light/light" .. "_crack_0" .. mr .. ".ogg"
 
 			if dist < 180 then
-				timer.Simple(0.05,function()
-					EmitSound("weapons/bullets/fx/subsonic_0" .. mr .. ".wav", pos - tr.Normal * 25, 0, CHAN_AUTO, 1, 55)
+				timer.Simple(0.02,function()
+					EmitSound("weapons/bullets/fx/subsonic_0" .. mr .. ".wav", pos - tr.Normal * 25, 0, CHAN_ITEM, 1, 155)
 				end)
 				if !subsonic then
-					EmitSound(SND, pos - tr.Normal * 25, 0, CHAN_AUTO, 1, 65)
+					EmitSound(SND, pos - tr.Normal * 25, 0, CHAN_ITEM, 1, 155)
+					EmitSound(SND, pos - tr.Normal * 25, 0, CHAN_WEAPON, 1, 155)
+					EmitSound(SND, pos - tr.Normal * 25, 0, CHAN_REPLACE, 1, 155)
+					EmitSound(SND, pos - tr.Normal * 25, 0, CHAN_BODY, 1, 155)
 				end
 			else return end
 			-- if dist > 120 then return end
@@ -332,8 +335,10 @@ players : 1 humans, 0 bots (20 max)
 
 			local badass = lply.organism and lply.organism.recoilmul or 1
 			local bulletdmg = math.max(bullet.Damage / 15,1)
-			ViewPunch(anguse * badass * bulletdmg)
-			ViewPunch2((anguse * badass * bulletdmg)/-2)
+			if hg_suppression_viewpunch and hg_suppression_viewpunch:GetBool() then
+				ViewPunch(anguse * badass * bulletdmg)
+				ViewPunch2((anguse * badass * bulletdmg)/-2)
+			end
 			Suppress((dist * 45) * badass * bulletdmg)
 		end)
 		-- SIB - Salatis Imersive Base
@@ -438,6 +443,14 @@ players : 1 humans, 0 bots (20 max)
 				hook_Run("Player-Ragdoll think", ply or ent, ent, time, dtime)
 			end
 		end
+	end)
+--//
+--\\ Flinching net (WHY THE HELL WE FORGOT TO ADD THIS :skull:)
+	net.Receive("DoPlayerFlinch", function(len)
+		local gest = net.ReadInt(32)
+		local ply = net.ReadEntity()
+		if !IsValid( ply ) or not gest then return end
+		ply:AnimRestartGesture( GESTURE_SLOT_FLINCH, gest, true )
 	end)
 --//
 --\\ Custom emitsound
@@ -891,8 +904,8 @@ players : 1 humans, 0 bots (20 max)
 
 --\\ CL Utils setting adjustments
 	if CLIENT then
-		RunConsoleCommand("mp_decals", "4096")  -- "4194304" - if you set this value you will get crashed :3
-		
+		--RunConsoleCommand("mp_decals", "4096")  -- "4194304" - if you set this value you will get crashed :3
+
 		hook.Add("Think","RemoveMe_001",function()
 			hook.Remove("PostPlayerDraw","BA2_GasmaskDraw")
 			hook.Remove("Think","RemoveMe_001")
@@ -1031,6 +1044,17 @@ players : 1 humans, 0 bots (20 max)
 			surface.DrawTexturedRect(flash.x - size / 2 + huy, flash.y - size / 2 + huy, size, size)
 			surface.SetMaterial(mat2)
 			surface.DrawTexturedRect(flash.x - size / 2 + huy, flash.y - size / 2 + huy, size, size)
+		end
+	end)
+--//
+
+--\\ Jump Gun viewpunch
+	hg_jump_gun_viewpunch = CreateConVar("hg_jump_gun_viewpunch", "1", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Jump viewpunch var", 0, 1)
+
+	hook.Add("OnPlayerJump", "hg.JumpGunViewpunch", function(ply)
+		if hg.IsLocal(ply) and hg_jump_gun_viewpunch:GetBool() and IsFirstTimePredicted() then
+			ViewPunch(Angle(-1,0,0))
+			ViewPunch2(Angle(math.random(3,5),math.Rand(-2,0.5),0))
 		end
 	end)
 --//

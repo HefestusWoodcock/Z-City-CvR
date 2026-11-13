@@ -293,7 +293,7 @@ hook.Add("Think", "Fake", function()
 				angl:RotateAroundAxis(angl:Up(), 90)
 				angl:RotateAroundAxis(angl:Forward(), ishgweapon(wep) and not wep:IsPistolHoldType() and 120 or 180)
 				angl:RotateAroundAxis(angl:Up(), ishgweapon(wep) and wep:IsResting() and 50 - ply:EyeAngles().p or 0)
-				shadowControl(ragdoll, 1, 0.1, angl, 250, 20)
+				shadowControl(ragdoll, 1, 0.1, angl, 80, 20)
 			end
 
 			if org.canmovehead then
@@ -321,7 +321,7 @@ hook.Add("Think", "Fake", function()
 		local back = ply:KeyDown(IN_BACK)
 		time = CurTime()
 		
-		if ply.organism and ply.organism.wounds and not table.IsEmpty(ply.organism.wounds) and org.canmove and (ply.fakecd and (ply.fakecd + 1) > CurTime()) then
+		if ply.organism and ply.organism.wounds and not table.IsEmpty(ply.organism.wounds) and org.canmove and (ply.fakecd and (ply.fakecd + 1.5) > CurTime()) then
 			local tr = {}
 			tr.start = ragdoll:GetPos()
 			tr.endpos = ragdoll:GetPos() - vector_up * 60
@@ -332,9 +332,30 @@ hook.Add("Think", "Fake", function()
 				local wounds = ply.organism.wounds
 				local wound = wounds[table.maxn(wounds) - 1] or wounds[table.maxn(wounds)]
 
+				--[[
+				
+				local defaultBones = {
+					[0] = "ValveBiped.Bip01_Pelvis",
+					[1] = "ValveBiped.Bip01_Spine2",
+					[2] = "ValveBiped.Bip01_R_UpperArm",
+					[3] = "ValveBiped.Bip01_L_UpperArm",
+					[4] = "ValveBiped.Bip01_L_Forearm",
+					[5] = "ValveBiped.Bip01_L_Hand",
+					[6] = "ValveBiped.Bip01_R_Forearm",
+					[7] = "ValveBiped.Bip01_R_Hand",
+					[8] = "ValveBiped.Bip01_R_Thigh",
+					[9] = "ValveBiped.Bip01_R_Calf",
+					[10] = "ValveBiped.Bip01_Head1",
+					[11] = "ValveBiped.Bip01_L_Thigh",
+					[12] = "ValveBiped.Bip01_L_Calf",
+					[13] = "ValveBiped.Bip01_L_Foot",
+					[14] = "ValveBiped.Bip01_R_Foot",
+				}
+				--]]
+
 				if ragdoll:LookupBone(wound[4]) then
 					local pos, ang = LocalToWorld(wound[2], wound[3], ragdoll:GetBonePosition(ragdoll:LookupBone(wound[4])))
-					
+					--ShadowControl(ragdoll, physNumber, ss, ang, maxang, maxangdamp, pos, maxspeed, maxspeeddamp)
 					if not ply:KeyDown(IN_ATTACK) and !left_arm[wound[4]] then
 						shadowControl(ragdoll, 3, 0.001, nil, nil, nil, spine:GetPos() + spine:GetAngles():Right() * -50, 25, 10)
 						shadowControl(ragdoll, 5, 0.001, nil, nil, nil, pos - (pos - lhand:GetPos()):GetNormalized() * 2, 100, 10)
@@ -345,13 +366,16 @@ hook.Add("Think", "Fake", function()
 						shadowControl(ragdoll, 7, 0.001, nil, nil, nil, pos - (pos - rhand:GetPos()):GetNormalized() * 2, 100, 10)
 					end
 
-					if not ply:KeyDown(IN_USE) then
-						shadowControl(ragdoll, 10, 0.001, nil, nil, nil, ragdoll:GetPhysicsObjectNum(realPhysNum(ragdoll,8)):GetPos(), 40, 10)
-						shadowControl(ragdoll, 1, 0.001, nil, nil, nil, ragdoll:GetPhysicsObjectNum(realPhysNum(ragdoll,8)):GetPos(), 00, 10)
-						shadowControl(ragdoll, 2, 0.001, nil, nil, nil, ragdoll:GetPhysicsObjectNum(realPhysNum(ragdoll,8)):GetPos(), 0, 10)
+					if not ply:KeyDown(IN_USE) and ply.fakecd + 0.1 < CurTime() then
+						--shadowControl(ragdoll, 10, 0.001, nil, nil, nil, ragdoll:GetPhysicsObjectNum(realPhysNum(ragdoll,8)):GetPos(), 40, 10)
+						shadowControl(ragdoll, 1, 0.001, nil, nil, nil, ragdoll:GetPhysicsObjectNum(realPhysNum(ragdoll,8)):GetPos(), 20, 25)
+						shadowControl(ragdoll, 2, 0.001, nil, nil, nil, ragdoll:GetPhysicsObjectNum(realPhysNum(ragdoll,8)):GetPos(), 20, 10)
 						shadowControl(ragdoll, 3, 0.001, nil, nil, nil, ragdoll:GetPhysicsObjectNum(realPhysNum(ragdoll,8)):GetPos(), 20, 10)
-						shadowControl(ragdoll, 11, 0.001, nil, nil, nil, spine:GetPos() + spine:GetAngles():Forward() * 50, 30, 10)
-						shadowControl(ragdoll, 8, 0.001, nil, nil, nil, spine:GetPos() + spine:GetAngles():Forward() * 50, 30, 10)
+						shadowControl(ragdoll, 11, 0.001, nil, nil, nil, spine:GetPos() + spine:GetAngles():Forward() * 50, 20, 10)
+						shadowControl(ragdoll, 8, 0.001, nil, nil, nil, spine:GetPos() + spine:GetAngles():Forward() * 50, 20, 10)
+
+						-- shadowControl(ragdoll, 12, 0.001, nil, nil, nil, spine:GetPos() + spine:GetAngles():Forward() * 50, 20, 10)
+						-- shadowControl(ragdoll, 9, 0.001, nil, nil, nil, spine:GetPos() + spine:GetAngles():Forward() * 50, 20, 10)
 					end
 				end
 			end
@@ -734,6 +758,10 @@ hook.Add("Think", "Fake", function()
 			local head = choking1:GetPhysicsObjectNum(realPhysNum(choking1, 10))
 			--lhand:SetPos(head:GetPos())
 			--rhand:SetPos(head:GetPos())
+			if not ragdoll.chokingSound then
+				ragdoll:EmitSound("physics/flesh/flesh_impact_hard"..math.random(3, 6)..".wav", 65, math.random(95, 105), 0.7)
+				ragdoll.chokingSound = true
+			end
 			local org = choking1.organism
 			if org then
 				org.choking = true
@@ -748,6 +776,8 @@ hook.Add("Think", "Fake", function()
 				end
 			end
 			--print("huy")
+		else
+			ragdoll.chokingSound = false
 		end
 
 		if ply:KeyDown(IN_MOVELEFT) and ragdoll:IsOnFire() and not inmove and !ply:InVehicle() then

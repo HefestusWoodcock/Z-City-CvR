@@ -195,7 +195,7 @@ properties.Add( "freeze", {
         ent = hg.RagdollOwner( ent ) or ent
         
 		ent:Freeze(not ent:IsFrozen())
-		print(tostring(ply:Nick() or ply) .. (not ent:IsFrozen() and " has frozen " or " has unfrozen ").. tostring(ent:Nick() or ent))
+		print(tostring(ply:Nick() or ply) .. (ent:IsFrozen() and " has frozen " or " has unfrozen ").. tostring(ent:Nick() or ent))
 	end 
 } )
 
@@ -375,6 +375,7 @@ properties.Add( "setplayerclass", {
 	end,
 	Receive = function( self, length, ply )
 		local ent = net.ReadEntity()
+		if not self:Filter(ent, ply) then return end -- this line was not here before
 		local class = net.ReadString( )
 
 		ent = hg.RagdollOwner(ent) or hg.GetCurrentCharacter(ent) or ent
@@ -626,7 +627,7 @@ properties.Add( "door_unlock", {
 local defaultinv = {
     Weapons = {},
     Ammo = {},
-    Armor = {},
+    --Armor = {}, -- not used anywhere right now, armor is in netvars "Armor" and "zc_equipment"
     Attachments = {}
 }
 local function Respawn(ply,body)
@@ -663,7 +664,7 @@ local function Respawn(ply,body)
             hg.Fake( ply, body )
             hg.LightStunPlayer( ply )
 
-            timer.Simple(0.1,function()
+            timer.Simple(0.1, function()
                 if body.CurAppearance then
                     local color = body:GetNWVector("PlayerColor", vector_origin)
                     body.CurAppearance.AColor = Color( color[1] * 255,color[2] * 255,color[3] * 255 )
@@ -675,6 +676,11 @@ local function Respawn(ply,body)
                     local Appearance = ply.CurAppearance or hg.Appearance.GetRandomAppearance()
                     Appearance.AColthes = ""
                     ply:SetNetVar("Accessories", "")
+					local bgs = {}
+					for k, v in ipairs(body:GetBodyGroups()) do
+						table.insert(bgs, body:GetBodygroup( k - 1 ))
+					end
+					ply:SetBodyGroups(table.concat(bgs))
                     ply:SetModel(body:GetModel())
                     ply:SetSubMaterial()
                     ply:SetPlayerColor(ply:GetNWVector("PlayerColor", vector_origin))

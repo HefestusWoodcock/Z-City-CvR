@@ -99,7 +99,7 @@ function SWEP:GetZoomPos(recoilZoomPos, view, eyePos)
 		if self:HasAttachment("sight","optic") then
 			posZoom = posZoom - recoilZoomPos * 0.25 - ang2:Forward() * (self.AdditionalPos2[1]) * 0.5 + ang2:Forward() * 1
 		else
-			local _, hitpos, dist = util.DistanceToLine(posZoom, posZoom + (self:GetOwner():EyeAngles()):Forward(), eyePos)
+			local _, hitpos, dist = util.DistanceToLine(posZoom, posZoom + (self:GetOwner():GetAimVector()), eyePos)
 			dist = dist - 1
 			posZoom = posZoom + ang2:Forward() * dist - recoilZoomPos * 0.5
 		end
@@ -148,6 +148,8 @@ local fov = hg_fov:GetFloat()
 local fov_mode_lerp = 0
 
 local hg_oldsights = CreateConVar("hg_oldsights", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "No camera wobble when aiming")
+local hg_wepbase_postshake_mul = CreateConVar("hg_wepbase_postshake_mul", "0.02", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Mul post shake after shoot, new default = 0.02, old default = 0.05", 0, 1)
+
 
 local angZero = Angle(0,0,0)
 
@@ -201,12 +203,12 @@ function SWEP:Camera(eyePos, eyeAng, view, vellen, ply)
 	if lastPosSelected + 0.1 * (inpain and 0.1 or 1) < CurTime() then
 		lastPosSelected = CurTime()
 		--randomPos = 0.75 * VectorRand(-0.75, 0.75)
-		randomPos = (inpain and 1.5 - (1 * painmul) or 1) * ((lastzoom - CurTime() + tta) < 0 and ply.organism and ply.organism.holdingbreath and 0.25 or 1) * 0.5 * Vector(math.random(2) == 1 and math.Rand(-0.75, -0.5) or math.Rand(0.5, 0.75), math.random(2) == 1 and math.Rand(-0.75, -0.5) or math.Rand(0.5, 0.75), math.random(2) == 1 and math.Rand(-0.75, -0.5) or math.Rand(0.5, 0.75))
+		randomPos = (inpain and 1.5 - (1 * painmul) or 1) * ((lastzoom - CurTime() + tta) < 0 and ply.organism and ply.organism.holdingbreath and 0.25 or 1) * 0.5 * Vector(math.random(2) == 1 and math.Rand(-0.25, -0.35) or math.Rand(0.25, 0.35), math.random(2) == 1 and math.Rand(-0.75, -0.5) or math.Rand(0.5, 0.75), math.Rand(-0.1, 0.45))
 	end
 
 	randomPosL = LerpFT(0.05 * (inpain and 25 - (24 * painmul) or 1), randomPosL, randomPos)
 	
-	scopedLerpAddvec = LerpVectorFT(((false or self.shot2 == 1) and 1 or 0.05) * (cocking and 0.25 or 1) * (inpain and 1 or 1), scopedLerpAddvec, (cocking and 1 or 1) * (justzoomed and 0.5 or 1) * (self.shot2 == 1 and 0.5 or 1) * 3 * randomPosL * slowlyZooming)
+	scopedLerpAddvec = LerpVectorFT(((self.shot2 == 1) and 0.6 or 0.06 - self.shot2 * 0.4) * (cocking and 0.25 or 1) * (inpain and 1 or 1), scopedLerpAddvec, (cocking and 1 or 1) * (justzoomed and 0.5 or 1) * (self.shot2 == 1 and 0.8 or 0.5) * 3 * randomPosL * slowlyZooming)
 	if !hg_oldsights:GetBool() then
 		if not (ply:IsSuperAdmin() and hg_setzoompos:GetBool()) then
 			posZoom:Add(scopedLerpAddvec)
@@ -252,7 +254,7 @@ function SWEP:Camera(eyePos, eyeAng, view, vellen, ply)
 	local shakeMul = (((larm > 0.75 and (larm - 0.75) * (ply.posture != 7 and ply.posture != 8 and 1 or 0)) or 0)
 		+ ((rarm > 0.1 and (rarm - 0.1)) or 0)) / 4
 
-	local addview = AngleRand(-shakeMul - 0.01, shakeMul + 0.01) * (organism.holdingbreath and 0.1 or 1)
+	local addview = AngleRand(-shakeMul - 0.02, shakeMul + 0.02) * ((organism.holdingbreath and 0.1 + (((rarm > 0.1 and (rarm - 0.1)) or 0)) / 4) or 1)
 	addview[3] = 0
 
 	if ply == LocalPlayer() then
@@ -282,7 +284,7 @@ function SWEP:Camera(eyePos, eyeAng, view, vellen, ply)
 	--local shootLerp = self.Anim_RecoilLerp
 	--view.fov = Lerp(shootLerp,view.fov,view.fov - 5 * self.Penetration / 15)
 	local outputPos, outputAng
-	local animpos = (self.AdditionalAng or Angle(0, 0, 0))[2] / 20 + (self.AdditionalAng2 or Angle(0, 0, 0))[2] / 20 --:GetAnimShoot2()
+	local animpos = (self.AdditionalAng or Angle(0, 0, 0))[2] / 20 + (self.AdditionalAng2 or Angle(0, 0, 0))[2] / 20 - self.AdditionalPos2[2] / 15 --:GetAnimShoot2()
 	local eyeSpray = -(-self.EyeSpray)
 	local mult = (hg.GunPositions[ply] and hg.GunPositions[ply][1] and (hg.GunPositions[ply][1] / 4 + 1) / 2 + 1 or 1) / 2
 	
@@ -293,7 +295,14 @@ function SWEP:Camera(eyePos, eyeAng, view, vellen, ply)
 	//angIdle:Add(-angle_difference*2)
 	//angZoom:Add(-angle_difference*1)
 
+	local mulhuy = (self:IsPistolHoldType() or self.PistolKinda) and 2 or (((ply.posture == 1 and not self:IsZoom()) or ply.posture == 7 or ply.posture == 8) and 2 or 0.75)
+	local shit = 0.2 * mulhuy / game.GetTimeScale()
+	local animpos3 = self:GetAnimShoot2(shit, true) / shit
+	local shit2 = (1 / self.weight) * (self.NumBullet or 3) / 3
+	
 	angZoom:Add(self.prankang or angle_zero)
+	local postshake_mul = hg_wepbase_postshake_mul:GetFloat()
+	posZoom:Add(VectorRand(-postshake_mul, postshake_mul) * animpos3 * shit2) -- Shot Shake
 
 	local fraction2 = math.ease.InCubic(self:GetAnimPos_Shoot2(self.lastShoot or 0, 1))
 	
@@ -354,10 +363,10 @@ function SWEP:Camera(eyePos, eyeAng, view, vellen, ply)
 	if isSettingZoom then
 		fov = -50
 	end
-	
+
 	view.origin = outputPos
 	view.angles = outputAng
-	
+
 	view.fov = math.max(40, view.fov + fov)
 
 	if LOW_RENDER then
