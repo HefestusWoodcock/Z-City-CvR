@@ -1,0 +1,96 @@
+{
+    "default": {
+        "alert": [
+            "npc/zombie/zombie_alert1.wav",
+            "npc/zombie/zombie_alert2.wav",
+            "npc/zombie/zombie_alert3.wav"
+        ],
+        "charge": [
+            "npc/zombie/zo_attack1.wav",
+            "npc/zombie/zo_attack2.wav"
+        ],
+        "footsteps": [
+            "npc/zombie/foot1.wav",
+            "npc/zombie/foot2.wav",
+            "npc/zombie/foot3.wav",
+            "npc/zombie/foot_slide1.wav",
+            "npc/zombie/foot_slide2.wav",
+            "npc/zombie/foot_slide3.wav"
+        ],
+        "phrase": [
+            "npc/zombie/zombie_voice_idle1.wav",
+            "npc/zombie/zombie_voice_idle2.wav",
+            "npc/zombie/zombie_voice_idle3.wav",
+            "npc/zombie/zombie_voice_idle4.wav",
+            "npc/zombie/zombie_voice_idle5.wav",
+            "npc/zombie/zombie_voice_idle6.wav",
+            "npc/zombie/zombie_voice_idle7.wav",
+            "npc/zombie/zombie_voice_idle8.wav",
+            "npc/zombie/zombie_voice_idle9.wav",
+            "npc/zombie/zombie_voice_idle10.wav",
+            "npc/zombie/zombie_voice_idle11.wav",
+            "npc/zombie/zombie_voice_idle12.wav",
+            "npc/zombie/zombie_voice_idle13.wav",
+            "npc/zombie/zombie_voice_idle14.wav"
+        ],
+        "pain": [
+            "npc/zombie/zombie_pain1.wav",
+            "npc/zombie/zombie_pain2.wav",
+            "npc/zombie/zombie_pain3.wav",
+            "npc/zombie/zombie_pain4.wav",
+            "npc/zombie/zombie_pain5.wav",
+            "npc/zombie/zombie_pain6.wav"
+        ]
+    },
+    "fast": {
+        "alert": [
+            "npc/fast_zombie/fz_alert_close1.wav"
+        ],
+        "charge": [
+            "npc/fast_zombie/fz_scream1.wav"
+        ],
+        "footsteps": [
+            "npc/fast_zombie/foot1.wav",
+            "npc/fast_zombie/foot2.wav",
+            "npc/fast_zombie/foot3.wav",
+            "npc/fast_zombie/foot4.wav"
+        ],
+        "phrase": [
+            "npc/fast_zombie/fz_alert_far1.wav"
+        ],
+        "pain": [
+            "npc/fast_zombie/fz_frenzy1.wav"
+        ]
+    },
+    "combine": {
+        "alert": [
+            "npc/zombine/zombine_alert1.wav",
+            "npc/zombine/zombine_alert2.wav",
+            "npc/zombine/zombine_alert3.wav",
+            "npc/zombine/zombine_alert4.wav",
+            "npc/zombine/zombine_alert5.wav",
+            "npc/zombine/zombine_alert6.wav",
+            "npc/zombine/zombine_alert7.wav"
+        ],
+        "charge": [
+            "npc/zombine/zombine_charge1.wav",
+            "npc/zombine/zombine_charge2.wav"
+        ],
+        "footsteps": [
+            "npc/zombine/gear1.wav",
+            "npc/zombine/gear2.wav",
+            "npc/zombine/gear3.wav"
+        ],
+        "phrase": [
+            "npc/zombine/zombine_idle1.wav",
+            "npc/zombine/zombine_idle2.wav",
+            "npc/zombine/zombine_idle3.wav"
+        ],
+        "pain": [
+            "npc/zombine/zombine_pain1.wav",
+            "npc/zombine/zombine_pain2.wav",
+            "npc/zombine/zombine_pain3.wav",
+            "npc/zombine/zombine_pain4.wav"
+        ]
+    }
+}

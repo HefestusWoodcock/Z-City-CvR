@@ -1,0 +1,32 @@
+{
+    "allies": [
+        "npc_barney",
+        "npc_citizen",
+        "npc_dog",
+        "npc_eli",
+        "npc_kleiner",
+        "npc_magnusson",
+        "npc_monk",
+        "npc_mossman",
+        "npc_odessa",
+        "npc_rollermine_hacked",
+        "npc_turret_floor_resistance",
+        "npc_vortigaunt",
+        "npc_alyx"
+    ],
+    "enemies": [
+       "npc_combine_s",
+        "npc_metropolice",
+        "npc_helicopter",
+        "npc_combinegunship",
+        "npc_combine",
+        "npc_stalker",
+        "npc_hunter",
+        "npc_strider",
+        "npc_turret_floor",
+        "npc_combine_camera",
+        "npc_manhack",
+        "npc_cscanner",
+        "npc_clawscanner"
+    ]
+}

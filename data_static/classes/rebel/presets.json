@@ -1,0 +1,202 @@
+{
+    "default": {
+        "armor": {
+            "head": "helmet7",
+            "torso": "vest4"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight"
+            ],
+            "primary": {
+                "weapon": "weapon_fnfnc",
+                "ammoType": 2,
+                "ammo": 3,
+                "attachments": [
+                    "holo4"
+                ]
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": 2,
+                "weapon_hg_m18_tpik": 1
+            },
+            "items": {
+                "weapon_painkillers": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_car": true,
+                "weapon_walkie_talkie": true
+            }
+        }
+    },
+    "breacher": {
+        "armor": {
+            "head": "helmet1",
+            "face": "mask1",
+            "torso": "vest5"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight"
+            ],
+            "primary": {
+                "weapon": "weapon_spas12",
+                "ammoType": 1,
+                "ammo": 4,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": 2,
+                "weapon_hg_flashbang": 1,
+                "weapon_at4t": 1
+            },
+            "items": {
+                "weapon_painkillers": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_car": true,
+                "weapon_walkie_talkie": true
+            }
+        }
+    },
+    "grenadier": {
+        "armor": {
+            "torso": "vest4"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight"
+            ],
+            "primary": {
+                "weapon": "weapon_carlgustaf",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_skorpion",
+                "ammoType": 1,
+                "ammo": 3,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": 3,
+                "weapon_hg_rpg40": 1,
+                "weapon_traitor_ied": 1,
+                "weapon_hg_slam": 1,
+                "weapon_claymore": 1
+            },
+            "items": {
+                "weapon_painkillers": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_car": true,
+                "weapon_walkie_talkie": true
+            }
+        }
+    },
+    "heavy": {
+        "armor": { },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight"
+            ],
+            "primary": {
+                "weapon": "weapon_minimi",
+                "ammoType": 1,
+                "ammo": 1,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_browninghp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_m18_tpik": 2
+            },
+            "items": {
+                "weapon_painkillers": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_medkit_sh": true,
+                "weapon_walkie_talkie": true
+            }
+        }
+    },
+    "sniper": {
+        "armor": { },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight"
+            ],
+            "primary": {
+                "weapon": "weapon_kar98kriegsmod",
+                "ammoType": 1,
+                "ammo": 4,
+                "attachments": [
+                    "optic12"
+                ]
+            },
+            "secondary": {
+                "weapon": "weapon_browninghp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "items": {
+                "weapon_painkillers": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_medkit_sh": true,
+                "weapon_walkie_talkie": true
+            }
+        }
+    },
+    "medic": {
+        "armor": {
+            "head": "helmet6",
+            "torso": "vest4"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight"
+            ],
+            "primary": {
+                "weapon": "weapon_microuzi",
+                "ammoType": 1,
+                "ammo": 3,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_browninghp",
+                "ammoType": 1,
+                "ammo": 3,
+                "attachments": []
+            },
+            "items": {
+                "weapon_painkillers": true,
+                "weapon_morphine": true,
+                "weapon_naloxone": true,
+                "weapon_betablock": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_grizzly": true,
+                "weapon_walkie_talkie": true
+            }
+        }
+    }
+}

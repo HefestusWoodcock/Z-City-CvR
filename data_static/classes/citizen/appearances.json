@@ -1,0 +1,33 @@
+{
+    "default": {
+        "models": {
+            "models/player/pandafishizens/male_": {
+                "count": 16,
+                "ignoreCount": { "13": true, "14": true},
+                "name": "Male",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/player/pandafishizens/female_": {
+                "count": 25,
+                "ignoreCount": {
+                    "5": true,
+                    "8": true,
+                    "9": true,
+                    "10": true,
+                    "12": true,
+                    "13": true,
+                    "14": true,
+                    "15": true,
+                    "16": true,
+                    "20": true,
+                    "21": true,
+                    "22": true,
+                    "23": true
+                },
+                "name": "Female",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 155, "b": 155 }
+    }
+}

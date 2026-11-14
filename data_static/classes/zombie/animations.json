@@ -1,0 +1,18 @@
+{
+    "default": {
+        "idle": 1703,
+        "walk": 1628,
+        "run": 1705,
+        "crouch": 1635,
+        "jump": 1894,
+        "leap": 1705
+    },
+    "fast": {
+        "idle": 1638,
+        "walk": 1647,
+        "run": 1646,
+        "crouch": 1647,
+        "jump": 1648,
+        "leap": 1649
+    }
+}

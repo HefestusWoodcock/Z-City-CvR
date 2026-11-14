@@ -1,0 +1,28 @@
+{
+    "default": {
+         "footsteps": [
+            "npc/metropolice/gear1.wav",
+            "npc/metropolice/gear2.wav",
+            "npc/metropolice/gear3.wav",
+            "npc/metropolice/gear4.wav",
+            "npc/metropolice/gear5.wav",
+            "npc/metropolice/gear6.wav"
+        ],
+        "pain": [
+            "npc/metropolice/pain1.wav",
+            "npc/metropolice/pain2.wav",
+            "npc/metropolice/pain3.wav",
+            "npc/metropolice/pain4.wav"
+        ],
+        "reload": [
+            "npc/combine_soldier/vo/coverhurt.wav",
+            "npc/combine_soldier/vo/coverme.wav"
+        ],
+        "death": [
+            "npc/metropolice/die1.wav",
+            "npc/metropolice/die2.wav",
+            "npc/metropolice/die3.wav",
+            "npc/metropolice/die4.wav"
+        ]
+    }
+}

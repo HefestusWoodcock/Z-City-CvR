@@ -1,0 +1,14 @@
+{
+    "default": {
+        "models": {
+            "models/chri/chechen/player/boevik_male_": {
+                "name": "Male",
+                "postFix": "_pm",
+                "count": 9,
+                "ignoreCount": { "1": true, "3": true, "5": true },
+                "bodygroups": [false, false, false]
+            }
+        },
+        "color": { "r": 15, "g": 100, "b": 5 }
+    }
+}

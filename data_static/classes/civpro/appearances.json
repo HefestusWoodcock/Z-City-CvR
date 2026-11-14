@@ -1,0 +1,57 @@
+{
+    "default": {
+        "models": {
+            "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl": {
+                "name": "Standard Issue Civil Protection Uniform",
+                "bodygroups": [0, 0, 0, 1, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 140, "b": 155 }
+    },
+    "i4": {
+        "models": {
+            "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl": {
+                "name": "Standard Issue Civil Protection Uniform",
+                "bodygroups": [0, 0, 0, 1, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 140, "b": 155 }
+    },
+    "i3": {
+        "models": {
+            "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl": {
+                "name": "Standard Issue Civil Protection Uniform",
+                "bodygroups": [0, 0, 0, 1, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 140, "b": 155 }
+    },
+    "i2": {
+        "models": {
+            "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl": {
+                "name": "Standard Issue Civil Protection Uniform",
+                "bodygroups": [0, 0, 0, 1, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 140, "b": 155 }
+    },
+    "i1": {
+        "models": {
+            "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl": {
+                "name": "Standard Issue Civil Protection Uniform",
+                "bodygroups": [0, 0, 0, 1, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 140, "b": 155 }
+    },
+    "rl": {
+        "models": {
+            "models/wststr/hlvr/metrocop/metrocop_update_pm.mdl": {
+                "name": "Elite Issue Civil Protection Uniform",
+                "skin": 5,
+                "bodygroups": [0, 0, 3, 9, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 140, "b": 155 }
+    }
+}
