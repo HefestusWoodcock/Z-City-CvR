@@ -1344,7 +1344,9 @@ local IsValid = IsValid
 			(ply:GetNWBool("TauntLeftHand", false) and ply:GetNWFloat("StartTaunt", 0) + 0.1 < CurTime()) or
 			IsValid(ply.flashlight)) and !ply:GetNetVar("handcuffed") and (wep and not wep.reload)) or
 			(deploying) or
-			(ent != ply and ent:LookupBone("ValveBiped.Bip01_L_Finger11") and math.abs(ent:GetManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_L_Finger11"))[2]) > 5 and !ply:InVehicle()) or
+			(ent != ply and ent:LookupBone("ValveBiped.Bip01_L_Finger11") 
+				and ent:LookupBone("ValveBiped.Bip01_L_Finger11") 
+				and math.abs(ent:GetManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_L_Finger11"))[2]) > 5 and !ply:InVehicle()) or
 			( ply:InVehicle() and (wep and not IsValid(wep)) and not wep.reload) and hg.isdriveablevehicle(ply:GetVehicle()) )) or ply.zmanipstart
 	end
 
@@ -1392,6 +1394,8 @@ local IsValid = IsValid
 		["npc_sniper"] = {multi = 3, AmmoType = "14.5x114mm BZTM", PenetrationMul = 4},
 		["npc_hunter"] = {multi = 4, AmmoType = "12/70 RIP", PenetrationMul = 1}, --;; не работает( потому что прожектайлами стреляет
 		["npc_turret_ceiling"] = {multi = 1.25, AmmoType = "9x19 mm QuakeMaker"},
+		["ent_mannable_ar3"] = {multi = 1.25, AmmoType = "Pulse", noricochet = true},
+		["func_tank"] = {multi = 1.25, AmmoType = "Pulse", noricochet = true}
 	}
 
 	hook.Add("EntityFireBullets", "NPC_Boolets", function(ent, bullet)

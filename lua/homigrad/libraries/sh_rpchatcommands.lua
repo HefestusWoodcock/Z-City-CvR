@@ -8,7 +8,7 @@ if engine.ActiveGamemode() == "sandbox" then
                 return ply:GetPlayerName().." " .. msg, Color(255, 255, 175) 
             end,
             ["/it"] = function(msg, ply)
-                return msg .. " - " .. ply:GetPlayerName(), Color(140, 140, 200) 
+                return msg, Color(140, 140, 200) 
             end,
             ["/try"] = function(msg, ply)
                 return ply:GetPlayerName().. " Trying " .. msg, Color(120, 200, 255) 

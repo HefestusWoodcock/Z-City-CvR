@@ -572,6 +572,7 @@ end
 
 local entmeta = FindMetaTable("Entity")
 
+---@return number id Returns `false` if found nothing.
 function entmeta:GetSubMaterialIdByName(strName)
 	local mats = self:GetMaterials()
 	local id = false

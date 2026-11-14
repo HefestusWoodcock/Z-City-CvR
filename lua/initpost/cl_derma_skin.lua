@@ -10,9 +10,11 @@ function hg.GetMainSkin()
 end
 --//
 
+--[[
 hook.Add("ForceDermaSkin", "ZCity", function()
 	return "ZCity" --; This will paint all Derma objects to new skin
 end)
+]]
 
 --; Adapted from Helix
 

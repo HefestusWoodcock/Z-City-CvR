@@ -205,11 +205,12 @@ function SWEP:Initialize()
 	
 	timer.Simple(0.1,function()
 		if IsValid(self) and self.PlayAnim then self:PlayAnim("idle", 0, not self.NoIdleLoop) end
-		if self.AmmoTypes and SERVER then
+		--[[if self.AmmoTypes and SERVER then
 			self:ApplyAmmoChanges(1)
-		end
+		end]]
 	end)
 
+	if SERVER then hg.SyncWeapons() end
 	self:InitializePost()
 end
 

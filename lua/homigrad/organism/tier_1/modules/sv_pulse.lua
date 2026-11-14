@@ -2,6 +2,8 @@ local min, max, Round, halfValue2 = math.min, math.max, math.Round, util.halfVal
 --local Organism = hg.organism
 hg.organism.module.pulse = {}
 local module = hg.organism.module.pulse
+
+---@param org Organism
 module[1] = function(org)
 	org.heart = 0
 	org.heartstop = false
@@ -120,8 +122,15 @@ module[2] = function(owner, org, timeValue)
 		org.heartstoptime = nil
 	end
 
-	if org.alive and org.heartstoptime and org.heartstoptime + 30 < CurTime() and (org.lastsoundtime or 0) < CurTime() and org.otrub then
-		org.owner:EmitSound("breathing/agonalbreathing_"..math.random(13)..".wav", 60)
+	if org.alive and org.heartstoptime and org.heartstoptime + 5 < CurTime() and (org.lastsoundtime or 0) < CurTime() and org.otrub then
+		local phrase = "breathing/agonalbreathing_" .. math.random(13) .. ".wav"
+		local overridePhrase = hook.Run("DeathRattle", org.owner)
+
+		if overridePhrase then 
+			phrase = overridePhrase
+		end
+
+		org.owner:EmitSound(phrase, 60)
 		--org.owner:EmitSound("breathing/agonalbreathing_"..math.random(13)..".wav", 50)
 		
 		org.lastsoundtime = CurTime() + math.random(25,35)

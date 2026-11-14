@@ -338,15 +338,10 @@ net.Receive("hg_phrase", function(len, ply)
 	local muffed = false
 	local pitch = nil
 
-	-- overrides
-	if ply.PlayerClassName == "Combine" then 
-		phrase = net.ReadString()
-	end
 	local override_ply, override_phrase, override_muffed, override_pitch = hook.Run("HG_ReplacePhrase", ply, phrase, muffed, pitch) -- pitch means pitched effect, not exact sound pitch
 	if override_ply ~= nil then
 		phrase, muffed, pitch = override_phrase, override_muffed, override_pitch
 	end
-
 
 	if ply.PlayerClassName == "bloodz" or ply.PlayerClassName == "groove" then
 		phrase = table.Random(hg.ghetto_phrases)
@@ -384,6 +379,22 @@ net.Receive("hg_phrase", function(len, ply)
 		ply.phrCld = CurTime() + (SoundDuration(phrase) or 0)
 	end
 	ply.lastPhr = phrase
+end)
+
+local braindeadphrase_male = {
+	"vo/episode_1/npc/male01/cit_behindyousfx01.wav",
+	"vo/episode_1/npc/male01/cit_behindyousfx02.wav",
+}
+local braindeadphrase_female = {
+	"vo/episode_1/npc/female01/cit_behindyousfx01.wav",
+	"vo/episode_1/npc/female01/cit_behindyousfx02.wav",
+}
+
+hook.Add("HG_ReplacePhrase", "BraindeadPhrase", function(ply, phrase, muffed, pitch)
+	if IsValid(ply) and ply.organism and ply.organism.brain >= 0.5 then
+		local phr = ThatPlyIsFemale(ply) and braindeadphrase_female[math.random(#braindeadphrase_female)] or braindeadphrase_male[math.random(#braindeadphrase_male)]
+		return ply, phr, muffed, pitch
+	end
 end)
 
 hook.Add("PlayerDeath", "StopPhrOnDeath",function(ply)
@@ -432,7 +443,7 @@ hook.Add("Org Think", "WhatsSoFunny",function(owner, org, timeValue)
 
 		local muffed = owner.armors["face"] == "mask2"
 
-		owner:EmitSound(phrase, muffed and 90 or 100,owner.VoicePitch or 100,1 * math.min(2, org.berserk),CHAN_AUTO,0, pitch and 56 or muffed and 16 or 0)
+		owner:EmitSound(phrase, muffed and 90 or 100, owner.VoicePitch or 100,1 * math.min(2, org.berserk),CHAN_AUTO, 0, pitch and 56 or muffed and 16 or 0)
 
 		owner.lastBerserkLaughSoundCD = CurTime() + math.Rand(5, 15)
 		owner.lastPhr = phrase
@@ -550,7 +561,6 @@ hook.Add("HarmDone", "MateDead", function(attacker, victim, amt)
 		end
 	end
 end)
-
 
 hook.Add("HGReloading", "Perezaryad", function(wep)
 	if CLIENT then return end
