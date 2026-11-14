@@ -2,8 +2,6 @@ local min, max, Round, halfValue2 = math.min, math.max, math.Round, util.halfVal
 --local Organism = hg.organism
 hg.organism.module.pulse = {}
 local module = hg.organism.module.pulse
-
----@param org Organism
 module[1] = function(org)
 	org.heart = 0
 	org.heartstop = false
