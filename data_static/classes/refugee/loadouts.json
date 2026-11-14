@@ -1,0 +1,111 @@
+{
+    "default": {
+        "armor": {
+            "head": {
+                "helmet7": {
+                    "name": "SSh-68 Helmet",
+                    "points": 3
+                }
+            },
+            "face": {
+                "mask2": {
+                    "name": "M40 Gas Mask",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "vest3": {
+                    "name": "Level IIIA Vest",
+                    "points": 4
+                }
+            }
+        },
+        "armorOptions": {
+            "render": true,
+            "selectable": true
+        },
+        "loadout": {
+            "base": [
+                "hg_flashlight"
+            ],
+            "primary": {
+                "weapon_mp40": {
+                    "name": "MP 40",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_mp34smg": {
+                    "name": "MP 34",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_mosin": {
+                    "name": "Mosin Nagant M38",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x54R",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_makarov": {
+                    "name": "Makarov",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x18mm",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_revolversw686": {
+                    "name": "S&W M686",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": ".38 Special",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_browninghp": {
+                    "name": "Browning Hi-Power",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 2
+                },
+                "weapon_painkillers": {
+                    "name": "Painkillers",
+                    "points": 1
+                },
+                "weapon_medkit_sh": {
+                    "name": "Medkit",
+                    "points": 4
+                }
+            }
+        }
+    }
+}

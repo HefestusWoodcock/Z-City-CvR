@@ -1,0 +1,201 @@
+{
+    "default": {
+        "footsteps": [
+            "npc/combine_soldier/gear1.wav",
+            "npc/combine_soldier/gear2.wav",
+            "npc/combine_soldier/gear3.wav",
+            "npc/combine_soldier/gear4.wav",
+            "npc/combine_soldier/gear5.wav",
+            "npc/combine_soldier/gear6.wav"
+        ],
+        "pain": [
+            "npc/combine_soldier/pain1.wav",
+            "npc/combine_soldier/pain2.wav",
+            "npc/combine_soldier/pain3.wav"
+        ],
+        "reload": [
+            "npc/combine_soldier/vo/coverhurt.wav",
+            "npc/combine_soldier/vo/coverme.wav"
+        ],
+        "death": [
+            "npc/combine_soldier/die1.wav",
+            "npc/combine_soldier/die2.wav",
+            "npc/combine_soldier/die3.wav"
+        ]
+    },
+    "ordinal": {
+        "footsteps": [
+            "npc/combine_soldier/gear1.wav",
+            "npc/combine_soldier/gear2.wav",
+            "npc/combine_soldier/gear3.wav",
+            "npc/combine_soldier/gear4.wav",
+            "npc/combine_soldier/gear5.wav",
+            "npc/combine_soldier/gear6.wav"
+        ],
+        "pain": [
+            "voice_replacement/hla_ordinal/pain_01.wav",
+            "voice_replacement/hla_ordinal/pain_02.wav",
+            "voice_replacement/hla_ordinal/pain_03.wav",
+            "voice_replacement/hla_ordinal/pain_04.wav",
+            "voice_replacement/hla_ordinal/pain_05.wav",
+            "voice_replacement/hla_ordinal/pain_06.wav",
+            "voice_replacement/hla_ordinal/pain_07.wav",
+            "voice_replacement/hla_ordinal/pain_08.wav",
+            "voice_replacement/hla_ordinal/pain_09.wav",
+            "voice_replacement/hla_ordinal/pain_10.wav"
+        ],
+        "reload": [
+            "voice_replacement/hla_ordinal/vo/reload_01.wav",
+            "voice_replacement/hla_ordinal/vo/reload_02.wav",
+            "voice_replacement/hla_ordinal/vo/reload_03.wav",
+            "voice_replacement/hla_ordinal/vo/reload_04.wav",
+            "voice_replacement/hla_ordinal/vo/reload_05.wav",
+            "voice_replacement/hla_ordinal/vo/reload_06.wav",
+            "voice_replacement/hla_ordinal/vo/reload_07.wav",
+            "voice_replacement/hla_ordinal/vo/reload_08.wav"
+        ],
+        "death": [
+            "voice_replacement/hla_ordinal/die_01.wav",
+            "voice_replacement/hla_ordinal/die_02.wav",
+            "voice_replacement/hla_ordinal/die_03.wav",
+            "voice_replacement/hla_ordinal/die_04.wav",
+            "voice_replacement/hla_ordinal/die_05.wav",
+            "voice_replacement/hla_ordinal/die_06.wav",
+            "voice_replacement/hla_ordinal/die_07.wav",
+            "voice_replacement/hla_ordinal/die_08.wav",
+            "voice_replacement/hla_ordinal/die_09.wav",
+            "voice_replacement/hla_ordinal/die_10.wav"
+        ]
+    },
+    "grunt": {
+        "footsteps": [
+            "npc/combine_soldier/gear1.wav",
+            "npc/combine_soldier/gear2.wav",
+            "npc/combine_soldier/gear3.wav",
+            "npc/combine_soldier/gear4.wav",
+            "npc/combine_soldier/gear5.wav",
+            "npc/combine_soldier/gear6.wav"
+        ],
+        "pain": [
+            "voice_replacement/hla_grunt/pain_01.wav",
+            "voice_replacement/hla_grunt/pain_02.wav",
+            "voice_replacement/hla_grunt/pain_03.wav",
+            "voice_replacement/hla_grunt/pain_04.wav",
+            "voice_replacement/hla_grunt/pain_05.wav",
+            "voice_replacement/hla_grunt/pain_06.wav",
+            "voice_replacement/hla_grunt/pain_07.wav",
+            "voice_replacement/hla_grunt/pain_08.wav",
+            "voice_replacement/hla_grunt/pain_09.wav",
+            "voice_replacement/hla_grunt/pain_10.wav"
+        ],
+        "reload": [
+            "voice_replacement/hla_grunt/vo/reload_01.wav",
+            "voice_replacement/hla_grunt/vo/reload_02.wav",
+            "voice_replacement/hla_grunt/vo/reload_03.wav",
+            "voice_replacement/hla_grunt/vo/reload_04.wav",
+            "voice_replacement/hla_grunt/vo/reload_05.wav",
+            "voice_replacement/hla_grunt/vo/reload_06.wav",
+            "voice_replacement/hla_grunt/vo/reload_07.wav",
+            "voice_replacement/hla_grunt/vo/reload_08.wav",
+            "voice_replacement/hla_grunt/vo/reload_09.wav"
+        ],
+        "death": [
+            "voice_replacement/hla_grunt/die_01.wav",
+            "voice_replacement/hla_grunt/die_02.wav",
+            "voice_replacement/hla_grunt/die_03.wav",
+            "voice_replacement/hla_grunt/die_04.wav",
+            "voice_replacement/hla_grunt/die_05.wav",
+            "voice_replacement/hla_grunt/die_06.wav",
+            "voice_replacement/hla_grunt/die_07.wav",
+            "voice_replacement/hla_grunt/die_08.wav",
+            "voice_replacement/hla_grunt/die_09.wav",
+            "voice_replacement/hla_grunt/die_10.wav"
+        ]
+    },
+    "wallhammer": {
+        "footsteps": [
+            "npc/combine_soldier/gear1.wav",
+            "npc/combine_soldier/gear2.wav",
+            "npc/combine_soldier/gear3.wav",
+            "npc/combine_soldier/gear4.wav",
+            "npc/combine_soldier/gear5.wav",
+            "npc/combine_soldier/gear6.wav"
+        ],
+        "pain": [
+            "voice_replacement/hla_charger/pain_01.wav",
+            "voice_replacement/hla_charger/pain_02.wav",
+            "voice_replacement/hla_charger/pain_03.wav",
+            "voice_replacement/hla_charger/pain_04.wav",
+            "voice_replacement/hla_charger/pain_05.wav",
+            "voice_replacement/hla_charger/pain_06.wav",
+            "voice_replacement/hla_charger/pain_07.wav",
+            "voice_replacement/hla_charger/pain_08.wav",
+            "voice_replacement/hla_charger/pain_09.wav",
+            "voice_replacement/hla_charger/pain_10.wav"
+        ],
+        "reload": [
+            "voice_replacement/hla_charger/vo/reload_01.wav",
+            "voice_replacement/hla_charger/vo/reload_02.wav",
+            "voice_replacement/hla_charger/vo/reload_03.wav",
+            "voice_replacement/hla_charger/vo/reload_05.wav",
+            "voice_replacement/hla_charger/vo/reload_06.wav",
+            "voice_replacement/hla_charger/vo/reload_07.wav",
+            "voice_replacement/hla_charger/vo/reload_08.wav",
+            "voice_replacement/hla_charger/vo/reload_09.wav"
+        ],
+        "death": [
+            "voice_replacement/hla_charger/die_01.wav",
+            "voice_replacement/hla_charger/die_02.wav",
+            "voice_replacement/hla_charger/die_03.wav",
+            "voice_replacement/hla_charger/die_04.wav",
+            "voice_replacement/hla_charger/die_05.wav",
+            "voice_replacement/hla_charger/die_06.wav",
+            "voice_replacement/hla_charger/die_07.wav",
+            "voice_replacement/hla_charger/die_08.wav",
+            "voice_replacement/hla_charger/die_09.wav",
+            "voice_replacement/hla_charger/die_10.wav"
+        ]
+    },
+    "suppressor": {
+        "footsteps": [
+            "npc/combine_soldier/gear1.wav",
+            "npc/combine_soldier/gear2.wav",
+            "npc/combine_soldier/gear3.wav",
+            "npc/combine_soldier/gear4.wav",
+            "npc/combine_soldier/gear5.wav",
+            "npc/combine_soldier/gear6.wav"
+        ],
+        "pain": [
+            "voice_replacement/hla_suppressor/pain_02.wav",
+            "voice_replacement/hla_suppressor/pain_03.wav",
+            "voice_replacement/hla_suppressor/pain_04.wav",
+            "voice_replacement/hla_suppressor/pain_05.wav",
+            "voice_replacement/hla_suppressor/pain_06.wav",
+            "voice_replacement/hla_suppressor/pain_07.wav",
+            "voice_replacement/hla_suppressor/pain_08.wav",
+            "voice_replacement/hla_suppressor/pain_09.wav",
+            "voice_replacement/hla_suppressor/pain_10.wav"
+        ],
+        "reload": [
+            "voice_replacement/hla_suppressor/vo/reload_01.wav",
+            "voice_replacement/hla_suppressor/vo/reload_02.wav",
+            "voice_replacement/hla_suppressor/vo/reload_03.wav",
+            "voice_replacement/hla_suppressor/vo/reload_05.wav",
+            "voice_replacement/hla_suppressor/vo/reload_06.wav",
+            "voice_replacement/hla_suppressor/vo/reload_07.wav",
+            "voice_replacement/hla_suppressor/vo/reload_08.wav",
+            "voice_replacement/hla_suppressor/vo/reload_09.wav"
+        ],
+        "death": [
+            "voice_replacement/hla_suppressor/die_01.wav",
+            "voice_replacement/hla_suppressor/die_02.wav",
+            "voice_replacement/hla_suppressor/die_03.wav",
+            "voice_replacement/hla_suppressor/die_04.wav",
+            "voice_replacement/hla_suppressor/die_05.wav",
+            "voice_replacement/hla_suppressor/die_06.wav",
+            "voice_replacement/hla_suppressor/die_07.wav",
+            "voice_replacement/hla_suppressor/die_08.wav",
+            "voice_replacement/hla_suppressor/die_09.wav"
+        ]
+    }
+}

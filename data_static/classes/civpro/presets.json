@@ -1,0 +1,156 @@
+{
+    "default": {
+        "armor": {
+            "head": "metrocop_helmet",
+            "torso": "metrocop_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "items": {
+                "weapon_painkillers": true,
+                "weapon_bandage_sh": true,
+                "weapon_tourniquet": true
+            }
+        }
+    },
+    "i4": {
+        "armor": {
+            "head": "metrocop_helmet",
+            "torso": "metrocop_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "secondary": {
+                "weapon": "weapon_glock26",
+                "ammoType": 1,
+                "ammo": 1
+            },
+            "items": {
+                "weapon_painkillers": true,
+                "weapon_bandage_sh": true,
+                "weapon_tourniquet": true
+            }
+        }
+    },
+    "i3": {
+        "armor": {
+            "head": "metrocop_helmet",
+            "torso": "metrocop_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "secondary": {
+                "weapon": "weapon_fn45",
+                "ammoType": 1,
+                "ammo": 2
+            },
+            "items": {
+                "weapon_medkit_sh": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_morphine": true
+            }
+        }
+    },
+    "i2": {
+        "armor": {
+            "head": "metrocop_helmet",
+            "torso": "metrocop_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "primary": {
+                "weapon": "weapon_ithaca37",
+                "ammoType": 1,
+                "ammo": 3
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2
+            },
+            "items": {
+                "weapon_medkit_sh": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_morphine": true
+            }
+        }
+    },
+    "i1": {
+        "armor": {
+            "head": "metrocop_helmet",
+            "torso": "metrocop_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "primary": {
+                "weapon": "weapon_mp7",
+                "ammoType": 1,
+                "ammo": 3,
+                "attachments": [
+                    "holo1"
+                ]
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2
+            },
+            "items": {
+                "weapon_car": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_morphine": true
+            }
+        }
+    },
+    "rl": {
+        "armor": {
+            "head": "metrocop_helmet",
+            "torso": "metrocop_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "primary": {
+                "weapon": "weapon_coltlec",
+                "ammoType": 2,
+                "ammo": 2,
+                "attachments": [
+                    "optic9"
+                ]
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2
+            },
+            "items": {
+                "weapon_salewa": true,
+                "weapon_bigbandage_sh": true,
+                "weapon_morphine": true
+            }
+        }
+    }
+}

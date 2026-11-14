@@ -1,0 +1,136 @@
+{
+    "default": {
+        "models": {
+            "models/nemez/combine_soldiers/combine_soldier_pm.mdl": {
+                "name": "Combine Soldier",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_urban_pm.mdl": {
+                "name": "Combine Soldier Urban",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_recon_pm.mdl": {
+                "name": "Combine Soldier Recon",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_nova_pm.mdl": {
+                "name": "Combine Soldier Nova Prospect",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_border_patrol_pm.mdl": {
+                "name": "Combine Soldier Border Patrol",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_beta_pm.mdl": {
+                "name": "Combine Soldier Special Op.",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            }
+        },
+        "leaderModels": {
+            "models/nemez/combine_soldiers/combine_soldier_coordinator_pm.mdl": {
+                "name": "Combine Soldier Coordinator",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 220, "b": 220 }
+    },
+    "shotgunner": {
+        "models": {
+            "models/nemez/combine_soldiers/combine_soldier_shotgunner_pm.mdl": {
+                "name": "Combine Soldier",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_urban_shotgunner_pm.mdl": {
+                "name": "Combine Soldier Urban",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_recon_pm.mdl": {
+                "name": "Combine Soldier Recon",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_nova_pm.mdl": {
+                "name": "Combine Soldier Nova Prospect",
+                "skin": 2,
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_border_patrol_pm.mdl": {
+                "name": "Combine Soldier Border Patrol",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_beta_pm.mdl": {
+                "name": "Combine Soldier Special Op.",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            }
+        },
+        "leaderModels": {
+            "models/nemez/combine_soldiers/combine_soldier_coordinator_pm.mdl": {
+                "name": "Combine Soldier Coordinator",
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 220, "g": 0, "b": 0 }
+    },
+    "elite": {
+        "models": {
+            "models/nemez/combine_soldiers/combine_soldier_elite_pm.mdl": {
+                "name": "Combine Elite",
+                "bodygroups": [0, 0, 0, 0, 0, 0]
+            },
+            "models/nemez/combine_soldiers/combine_soldier_elite_wpu_pm.mdl": {
+                "name": "Combine Elite W.P.U.",
+                "bodygroups": [0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 245, "g": 10, "b": 10 }
+    },
+    "sniper": {
+        "models": {
+            "models/skipp/snipers/combine_urban_sniper.mdl": {
+                "name": "Combine Soldier Marksman",
+                "bodygroups": [0, false, false, false, false, false, false, false],
+                "mats": {
+                    "skipp/models/sniper/bishop_cape_greenscreen": "models/props_combine/com_shield001a",
+                    "skipp/models/sniper/poncho_greenscreen": "models/props_combine/com_shield001a",
+                    "skipp/models/sniper/hood_greenscreen": "models/props_combine/com_shield001a"
+                }
+            }
+        },
+        "color": { "r": 0, "g": 220, "b": 220 }
+    },
+    "ordinal": {
+        "models": {
+            "models/jq/hlvr/characters/combine/combine_captain/combine_captain_hlvr_player.mdl": {
+                "name": "Combine Ordinal",
+                "bodygroups": [0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 220, "b": 220 }
+    },
+    "grunt": {
+        "models": {
+            "models/wststr/hlvr/cmb_grunt/cmb_grunt_pm.mdl": {
+                "name": "Combine Grunt",
+                "skin": 2,
+                "bodygroups": [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 220, "b": 220 }
+    },
+    "wallhammer": {
+        "models": {
+            "models/jq/hlvr/characters/combine/heavy/combine_heavy_hlvr_player.mdl": {
+                "name": "Combine Wallhammer",
+                "bodygroups": [0, 0]
+            }
+        },
+        "color": { "r": 0, "g": 220, "b": 220 }
+    },
+    "suppressor": {
+        "models": {
+            "models/jq/hlvr/characters/combine/suppressor/combine_suppressor_hlvr_player.mdl": {
+                "name": "Combine A.P.F."
+            }
+        },
+        "color": { "r": 0, "g": 220, "b": 220 }
+    }
+}

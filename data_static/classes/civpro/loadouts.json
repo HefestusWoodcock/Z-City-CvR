@@ -1,0 +1,472 @@
+{
+    "default": {
+        "armor": {
+            "head": {
+                "metrocop_helmet": {
+                    "name": "Civil Protection Standard Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "metrocop_armor": {
+                    "name": "Civil Protection Standard Soft-Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "items": {
+                "weapon_painkillers": {
+                    "name": "Painkillers",
+                    "points": 1
+                },
+                "weapon_tourniquet": {
+                    "name": "Tourniquet",
+                    "points": 1
+                },
+                "weapon_bandage_sh": {
+                    "name": "Bandages",
+                    "points": 1
+                },
+                "weapon_medkit_sh": {
+                    "name": "Medkit",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "i4": {
+        "armor": {
+            "head": {
+                "metrocop_helmet": {
+                    "name": "Civil Protection Standard Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "metrocop_armor": {
+                    "name": "Civil Protection Standard Soft-Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "secondary": {
+                "weapon_glock26": {
+                    "name": "Glock 26",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 3
+                        }
+                    }
+                },
+                "weapon_revolversw686": {
+                    "name": "S&W M686",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": ".38 Special",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "items": {
+                "weapon_painkillers": {
+                    "name": "Painkillers",
+                    "points": 1
+                },
+                "weapon_tourniquet": {
+                    "name": "Tourniquet",
+                    "points": 1
+                },
+                "weapon_bandage_sh": {
+                    "name": "Bandages",
+                    "points": 1
+                },
+                "weapon_medkit_sh": {
+                    "name": "Medkit",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "i3": {
+        "armor": {
+            "head": {
+                "metrocop_helmet": {
+                    "name": "Civil Protection Standard Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "metrocop_armor": {
+                    "name": "Civil Protection Standard Soft-Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 2,
+                    "ammoTypes": {
+                        "1": {
+                            "name": ".45 ACP",
+                            "points": 2
+                        }
+                    }
+                }
+            },
+            "items": {
+                "weapon_painkillers": {
+                    "name": "Painkillers",
+                    "points": 1
+                },
+                "weapon_tourniquet": {
+                    "name": "Tourniquet",
+                    "points": 1
+                },
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandages",
+                    "points": 1
+                },
+                "weapon_medkit_sh": {
+                    "name": "Medkit",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "i2": {
+        "armor": {
+            "head": {
+                "metrocop_helmet": {
+                    "name": "Civil Protection Standard Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "metrocop_armor": {
+                    "name": "Civil Protection Standard Soft-Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "primary": {
+                "weapon_ithaca37": {
+                    "name": "Ithaca Model 37",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "12/70 Gauge",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 2,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": ".45 ACP",
+                            "points": 2
+                        }
+                    }
+                }
+            },
+            "items": {
+                "weapon_morphine": {
+                    "name": "Tube of Morphine",
+                    "points": 1
+                },
+                "weapon_tourniquet": {
+                    "name": "Tourniquet",
+                    "points": 1
+                },
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandages",
+                    "points": 1
+                },
+                "weapon_medkit_sh": {
+                    "name": "Medkit",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "i1": {
+        "armor": {
+            "head": {
+                "metrocop_helmet": {
+                    "name": "Civil Protection Standard Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "metrocop_armor": {
+                    "name": "Civil Protection Standard Soft-Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "primary": {
+                "weapon_maverickshot": {
+                    "name": "Mossberg Maverick 88",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "12/70 Gauge",
+                            "points": 3
+                        }
+                    }
+                },
+                "weapon_mp7": {
+                    "name": "H&K MP7",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "4.6x30mm",
+                            "points": 3
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo1": {
+                                "name": "EOTech 552",
+                                "points": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": ".45 ACP",
+                            "points": 2
+                        }
+                    }
+                }
+            },
+            "items": {
+                "weapon_morphine": {
+                    "name": "Tube of Morphine",
+                    "points": 1
+                },
+                "weapon_tourniquet": {
+                    "name": "Tourniquet",
+                    "points": 1
+                },
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandages",
+                    "points": 1
+                },
+                "weapon_salewa": {
+                    "name": "Salewa",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "rl": {
+        "armor": {
+            "head": {
+                "metrocop_helmet": {
+                    "name": "Civil Protection Standard Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "metrocop_armor": {
+                    "name": "Civil Protection Standard Soft-Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_hg_stunstick",
+                "weapon_handcuffs",
+                "weapon_handcuffs_key"
+            ],
+            "primary": {
+                "weapon_coltlec": {
+                    "name": "HK53",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "5.56x45mm",
+                            "points": 2
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "optic9": {
+                                "name": "Trijicon ACOG 4x32",
+                                "points": 2
+                            }
+                        }
+                    }
+                },
+                "weapon_maverickshot": {
+                    "name": "Mossberg Maverick 88",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "12/70 Gauge",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_mp7": {
+                    "name": "H&K MP7",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "4.6x30mm",
+                            "points": 2
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo1": {
+                                "name": "EOTech 552",
+                                "points": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": ".45 ACP",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "items": {
+                "weapon_morphine": {
+                    "name": "Tube of Morphine",
+                    "points": 1
+                },
+                "weapon_tourniquet": {
+                    "name": "Tourniquet",
+                    "points": 1
+                },
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandages",
+                    "points": 1
+                },
+                "weapon_salewa": {
+                    "name": "Salewa",
+                    "points": 2
+                }
+            }
+        }
+    }
+}

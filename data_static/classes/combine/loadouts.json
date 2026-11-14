@@ -1,0 +1,994 @@
+{
+    "default": {
+        "armor": {
+            "head": {
+                "cmb_helmet": {
+                    "name": "Combine Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "cmb_armor": {
+                    "name": "Combine Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon_osipr": {
+                    "name": "O.S.I.P.R.",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_hla_ordrifle": {
+                    "name": "O.C.I.P.R.",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_g3a3": {
+                    "name": "G3A3",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x51mm",
+                            "points": 1
+                        },
+                        "2": {
+                            "name": "7.62x51 M993",
+                            "points": 3
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo8": {
+                                "name": "Holosun HS401G5 Red-Dot",
+                                "points": 1
+                            },
+                            "optic14": {
+                                "name": "ELCAN SpecterDR 1x/4x Sight",
+                                "points": 3
+                            }
+                        }
+                    }
+                },
+                "weapon_hk53": {
+                    "name": "HK53",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "5.56x45mm",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "5.56x45mm M855AI",
+                            "points": 2
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo8": {
+                                "name": "Holosun HS401G5 Red-Dot",
+                                "points": 1
+                            },
+                            "optic14": {
+                                "name": "ELCAN SpecterDR 1x/4x Sight",
+                                "points": 3
+                            }
+                        }
+                    }
+                },
+                "weapon_mp7": {
+                    "name": "H&K MP7",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "4.6x30mm",
+                            "points": 1
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo1": {
+                                "name": "EOTech 552",
+                                "points": 1
+                            }
+                        },
+                        "muzzle": {
+                            "supressor2": {
+                                "name": "SilencerCO Saker ACR",
+                                "points": 2
+                            }
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 2,
+                    "ammoTypes": {
+                        "2": {
+                            "name": ".45 ACP HydroShock",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": ".45 ACP +P",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": {
+                    "name": "Combine Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_hg_m18_tpik": {
+                    "name": "M18 Smoke Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 2
+                },
+                "weapon_sj1": {
+                    "name": "SJ1 Combat Stimulant Injector",
+                    "points": 3
+                },
+                "weapon_propital": {
+                    "name": "Propital Healing Stimulant Injector",
+                    "points": 3
+                }
+            }
+        }
+    },
+    "shotgunner": {
+        "armor": {
+            "head": {
+                "cmb_helmet": {
+                    "name": "Combine Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "cmb_armor": {
+                    "name": "Combine Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon_maverickshot": {
+                    "name": "Maverick",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "12/70 Gauge",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "12/70 Slug",
+                            "points": 1
+                        },
+                        "4": {
+                            "name": "12/70 RIP",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_spas12": {
+                    "name": "Franchi SPAS-12",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "12/70 Gauge",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "12/70 Slug",
+                            "points": 1
+                        },
+                        "4": {
+                            "name": "12/70 RIP",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_ks23": {
+                    "name": "KS-23",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "23/75 SH10",
+                            "points": 2
+                        },
+                        "2": {
+                            "name": "23/75 SH25",
+                            "points": 4
+                        },
+                        "3": {
+                            "name": "23/75 Barricade",
+                            "points": 4
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 2,
+                    "ammoTypes": {
+                        "2": {
+                            "name": ".45 ACP HydroShock",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": ".45 ACP +P",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": {
+                    "name": "Combine Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_hg_flashbang_tpik": {
+                    "name": "Flashbang Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_breachcharge": {
+                    "name": "Breaching Charge",
+                    "max": 1,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 2
+                },
+                "weapon_sj1": {
+                    "name": "SJ1 Combat Stimulant Injector",
+                    "points": 3
+                },
+                "weapon_propital": {
+                    "name": "Propital Healing Stimulant Injector",
+                    "points": 3
+                }
+            }
+        }
+    },
+    "elite": {
+        "armor": {
+            "head": {
+                "cmb_helmet": {
+                    "name": "Combine Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "cmb_armor": {
+                    "name": "Combine Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon_osipr": {
+                    "name": "O.S.I.P.R.",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_hla_ordrifle": {
+                    "name": "O.C.I.P.R.",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 2,
+                    "ammoTypes": {
+                        "2": {
+                            "name": ".45 ACP HydroShock",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": ".45 ACP +P",
+                            "points": 2
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": {
+                    "name": "Combine Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_hg_m18_tpik": {
+                    "name": "M18 Smoke Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 2
+                },
+                "weapon_sj1": {
+                    "name": "SJ1 Combat Stimulant Injector",
+                    "points": 3
+                },
+                "weapon_propital": {
+                    "name": "Propital Healing Stimulant Injector",
+                    "points": 3
+                }
+            }
+        }
+    },
+    "sniper": {
+        "armor": {
+            "head": {
+                "cmb_helmet": {
+                    "name": "Combine Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "cmb_armor": {
+                    "name": "Combine Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon_combinesniper": {
+                    "name": "Combine Sniper",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse",
+                            "points": 3
+                        }
+                    }
+                },
+                "weapon_psg1": {
+                    "name": "H&K PSG1",
+                    "points": 5,
+                    "ammoTypes": {
+                        "2": {
+                            "name": "7.62x51 M993",
+                            "points": 2
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 2,
+                    "ammoTypes": {
+                        "2": {
+                            "name": ".45 ACP HydroShock",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": ".45 ACP +P",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_m18_tpik": {
+                    "name": "M18 Smoke Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 2
+                },
+                "weapon_sj1": {
+                    "name": "SJ1 Combat Stimulant Injector",
+                    "points": 3
+                },
+                "weapon_propital": {
+                    "name": "Propital Healing Stimulant Injector",
+                    "points": 3
+                }
+            }
+        }
+    },
+    "ordinal": {
+        "armor": {
+            "head": {
+                "cmb_helmet": {
+                    "name": "Combine Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "cmb_armor": {
+                    "name": "Combine Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon_hla_ordrifle": {
+                    "name": "O.C.I.P.R.",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_mp7": {
+                    "name": "H&K MP7",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "4.6x30mm",
+                            "points": 1
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo1": {
+                                "name": "EOTech 552",
+                                "points": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                },
+                "weapon_mk23": {
+                    "name": "MK23",
+                    "points": 2,
+                    "ammoTypes": {
+                        "2": {
+                            "name": ".45 ACP HydroShock",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": ".45 ACP +P",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": {
+                    "name": "Combine Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_hg_m18_tpik": {
+                    "name": "M18 Smoke Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 2
+                },
+                "weapon_sj1": {
+                    "name": "SJ1 Combat Stimulant Injector",
+                    "points": 3
+                },
+                "weapon_propital": {
+                    "name": "Propital Healing Stimulant Injector",
+                    "points": 3
+                }
+            }
+        }
+    },
+    "grunt": {
+        "armor": {
+            "head": {
+                "metrocop_helmet": {
+                    "name": "Grunt Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "metrocop_armor": {
+                    "name": "Grunt Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon_hla_gruntsmg": {
+                    "name": "Grunt SMG",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_mp7": {
+                    "name": "H&K MP7",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "4.6x30mm",
+                            "points": 1
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo1": {
+                                "name": "EOTech 552",
+                                "points": 1
+                            }
+                        }
+                    }
+                },
+                "weapon_mp510mm": {
+                    "name": "H&K MP5/10",
+                    "points": 4,
+                    "ammoTypes": {
+                        "3":  {
+                            "name": ".45 ACP +P",
+                            "points": 1
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo15": {
+                                "name": "SIG Sauer ROMEO4",
+                                "points": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": {
+                    "name": "Combine Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 2
+                },
+                "weapon_sj1": {
+                    "name": "SJ1 Combat Stimulant Injector",
+                    "points": 3
+                },
+                "weapon_propital": {
+                    "name": "Propital Healing Stimulant Injector",
+                    "points": 3
+                }
+            }
+        }
+    },
+    "wallhammer": {
+        "armor": {
+            "head": {
+                "cmb_helmet": {
+                    "name": "Combine Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "cmb_armor": {
+                    "name": "Combine Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon_hla_wallhshot": {
+                    "name": "Wallhammer Pulse Shotgun",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse Shells",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": {
+                    "name": "Combine Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_hg_flashbang_tpik": {
+                    "name": "Flashbang Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 2
+                },
+                "weapon_sj1": {
+                    "name": "SJ1 Combat Stimulant Injector",
+                    "points": 3
+                },
+                "weapon_propital": {
+                    "name": "Propital Healing Stimulant Injector",
+                    "points": 3
+                }
+            }
+        }
+    },
+    "suppresssor": {
+        "armor": {
+            "head": {
+                "cmb_helmet": {
+                    "name": "Combine Helmet",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "cmb_armor": {
+                    "name": "Combine Armor",
+                    "points": 0
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": false
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon_hla_suppmg": {
+                    "name": "Pulse LMG",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "Pulse",
+                            "points": 4
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_hk_usp": {
+                    "name": "H&K USP",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": {
+                    "name": "Combine Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 2
+                },
+                "weapon_sj1": {
+                    "name": "SJ1 Combat Stimulant Injector",
+                    "points": 3
+                },
+                "weapon_propital": {
+                    "name": "Propital Healing Stimulant Injector",
+                    "points": 3
+                }
+            }
+        }
+    }
+}

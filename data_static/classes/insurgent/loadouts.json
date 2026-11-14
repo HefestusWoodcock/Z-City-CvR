@@ -1,0 +1,813 @@
+{
+    "default": {
+        "armor": {
+            "head": {
+                "helmet7": {
+                    "name": "SSh-68 Helmet",
+                    "points": 1
+                },
+                "helmet5": {
+                    "name": "ACHHC Helmet Level 3A",
+                    "points": 2
+                }
+            },
+            "face": {
+                "mask2": {
+                    "name": "M40 Gas Mask",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "vest3": {
+                    "name": "Level IIIA Vest",
+                    "points": 1
+                },
+                "vest4": {
+                    "name": "Level III Vest",
+                    "points": 2
+                },
+                "vest1": {
+                    "name": "Level IV Plate Armour",
+                    "points": 4
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": true
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight",
+                "weapon_walkie_talkie"
+            ],
+            "primary": {
+                "weapon_avtsvo": {
+                    "name": "AVT-40",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x54R",
+                            "points": 1
+                        },
+                        "2": {
+                            "name": "7.62x54R 7N26",
+                            "points": 3
+                        }
+                    }
+                },
+                "weapon_ak74": {
+                    "name": "AK-74",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "5.45x39mm",
+                            "points": 1
+                        },
+                        "2": {
+                            "name": "5.45x39mm BP 7N22",
+                            "points": 2
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo6": {
+                                "name": "OKP-7 Sight",
+                                "points": 1
+                            },
+                            "optic3": {
+                                "name": "Valday 1x/6x Sight",
+                                "points": 3
+                            }
+                        }
+                    }
+                },
+                "weapon_ak74u": {
+                    "name": "AKS-74U",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "5.45x39mm",
+                            "points": 1
+                        },
+                        "2": {
+                            "name": "5.45x39mm BP 7N22",
+                            "points": 2
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo6": {
+                                "name": "OKP-7 Sight",
+                                "points": 1
+                            }
+                        },
+                        "muzzle": {
+                            "supressor1": {
+                                "name": "PBS-1 Suppressor",
+                                "points": 2
+                            }
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_grach": {
+                    "name": "MP-443 Grach",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_rgd_tpik": {
+                    "name": "RGD-5 Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_hg_m18_tpik": {
+                    "name": "M18 Smoke Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 1
+                },
+                "weapon_car": {
+                    "name": "Car First Aid Kit",
+                    "points": 1
+                },
+                "weapon_cms": {
+                    "name": "CMS Surgical Kit.",
+                    "points": 2
+                },
+                "weapon_betablock": {
+                    "name": "Beta-Blocker",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "breacher": {
+        "armor": {
+            "head": {
+                "helmet7": {
+                    "name": "SSh-68 Helmet",
+                    "points": 1
+                },
+                "helmet3": {
+                    "name": "Riot Helmet",
+                    "points": 2
+                },
+                "helmet5": {
+                    "name": "ACHHC Helmet Level 3A",
+                    "points": 2
+                }
+            },
+            "face": {
+                "mask2": {
+                    "name": "M40 Gas Mask",
+                    "points": 0
+                },
+                "mask1": {
+                    "name": "Ballistic Mask",
+                    "points": 1
+                }
+            },
+            "torso": {
+                "vest3": {
+                    "name": "Level IIIA Vest",
+                    "points": 1
+                },
+                "vest4": {
+                    "name": "Level III Vest",
+                    "points": 2
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": true
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight",
+                "weapon_walkie_talkie"
+            ],
+            "primary": {
+                "weapon_ak74u": {
+                    "name": "AKS-74U",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "5.45x39mm",
+                            "points": 1
+                        },
+                        "2": {
+                            "name": "5.45x39mm BP 7N22",
+                            "points": 2
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo6": {
+                                "name": "OKP-7 Sight",
+                                "points": 1
+                            }
+                        }
+                    }
+                },
+                "weapon_mp41r": {
+                    "name": "MP-41 (PPSh-derivative)",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 2
+                        }
+                    }
+                },
+                "weapon_toz194": {
+                    "name": "TOZ-194",
+                    "points": 3,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "12/70 Gauge",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "12/70 Slug",
+                            "points": 1
+                        },
+                        "4": {
+                            "name": "12/70 RIP",
+                            "points": 1
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "holo2": {
+                                "name": "Kobra Sight",
+                                "points": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_grach": {
+                    "name": "MP-443 Grach",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        },
+                        "3": {
+                            "name": "9x19mm QuakeMaker",
+                            "points": 2
+                        },
+                        "4": {
+                            "name": "9x19mm PBP",
+                            "points": 3
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_rgd_tpik": {
+                    "name": "RGD-5 Frag Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_hg_flashbang": {
+                    "name": "Flashbang Grenade",
+                    "max": 3,
+                    "points": 2
+                },
+                "weapon_breachcharge": {
+                    "name": "Breaching Charge",
+                    "max": 1,
+                    "points": 2
+                },
+                "weapon_rshg2": {
+                    "name": "RShG-2",
+                    "max": 1,
+                    "points": 4
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 1
+                },
+                "weapon_car": {
+                    "name": "Car First Aid Kit",
+                    "points": 1
+                },
+                "weapon_cms": {
+                    "name": "CMS Surgical Kit.",
+                    "points": 2
+                },
+                "weapon_betablock": {
+                    "name": "Beta-Blocker",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "grenadier": {
+        "armor": {
+            "face": {
+                "mask2": {
+                    "name": "M40 Gas Mask",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "vest3": {
+                    "name": "Level IIIA Vest",
+                    "points": 1
+                },
+                "vest4": {
+                    "name": "Level III Vest",
+                    "points": 2
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": true
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight",
+                "weapon_walkie_talkie"
+            ],
+            "primary": {
+                "weapon_hg_rpg": {
+                    "name": "RPG-7",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "RPG-7 Rocket",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_tokarev": {
+                    "name": "TT-33",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x25mm",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_skorpion": {
+                    "name": "Scorpion vz. 61",
+                    "points": 2,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.65x17mm",
+                            "points": 1
+                        }
+                    }
+                },  
+                "weapon_grach": {
+                    "name": "MP-443 Grach",
+                    "points": 2,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x19mm Parabellum",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_rgd_tpik": {
+                    "name": "RGD-5 Frag Grenade",
+                    "max": 3,
+                    "points": 1
+                },
+                "weapon_hg_rpg40": {
+                    "name": "RPG-40 Anti-Tank Grenade",
+                    "max": 1,
+                    "points": 2
+                },
+                "weapon_traitor_ied": {
+                    "name": "Improvised Explosive Device",
+                    "max": 1,
+                    "points": 2
+                },
+                "weapon_hg_slam": {
+                    "name": "SLAM",
+                    "max": 1,
+                    "points": 3
+                },
+                "weapon_claymore": {
+                    "name": "Claymore",
+                    "max": 1,
+                    "points": 3
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 1
+                },
+                "weapon_car": {
+                    "name": "Car First Aid Kit",
+                    "points": 1
+                },
+                "weapon_cms": {
+                    "name": "CMS Surgical Kit.",
+                    "points": 2
+                },
+                "weapon_betablock": {
+                    "name": "Beta-Blocker",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "heavy": {
+        "armor": {
+            "face": {
+                "mask2": {
+                    "name": "M40 Gas Mask",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "vest3": {
+                    "name": "Level IIIA Vest",
+                    "points": 1
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": true
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight",
+                "weapon_walkie_talkie"
+            ],
+            "primary": {
+                "weapon_pkm": {
+                    "name": "RPD",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x54R",
+                            "points": 4
+                        }
+                    }
+                },
+                "weapon_rpd": {
+                    "name": "RPD",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x39mm",
+                            "points": 4
+                        }
+                    }
+                },
+                "weapon_rpk": {
+                    "name": "RPK-74",
+                    "points": 4,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "5.45x39mm",
+                            "points": 1
+                        },
+                        "2": {
+                            "name": "5.45x39mm PPBS 7N39",
+                            "points": 2
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_makarov": {
+                    "name": "Makarov PM",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x18mm",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_tokarev": {
+                    "name": "TT-33",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x25mm",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "utility": {
+                "weapon_hg_m18_tpik": {
+                    "name": "M18 Smoke Grenade",
+                    "max": 3,
+                    "points": 2
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 1
+                },
+                "weapon_car": {
+                    "name": "Car First Aid Kit",
+                    "points": 1
+                },
+                "weapon_cms": {
+                    "name": "CMS Surgical Kit.",
+                    "points": 2
+                },
+                "weapon_betablock": {
+                    "name": "Beta-Blocker",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "sniper": {
+        "armor": {
+            "face": {
+                "mask2": {
+                    "name": "M40 Gas Mask",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "vest3": {
+                    "name": "Level IIIA Vest",
+                    "points": 1
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": true
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight",
+                "weapon_walkie_talkie"
+            ],
+            "primary": {
+                "weapon_svd": {
+                    "name": "SVD",
+                    "points": 6,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x54R",
+                            "points": 3
+                        },
+                        "2": {
+                            "name": "7.62x54R 7N26",
+                            "points": 5
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "optic4": {
+                                "name": "PKO-1 Scope",
+                                "points": 1
+                            },
+                            "optic11": {
+                                "name": "PKO-1M2 Scope",
+                                "points": 1
+                            }
+                        }
+                    }
+                },
+                "weapon_mosinm9130": {
+                    "name": "Mosin-Nagant M91/30",
+                    "points": 5,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x54R",
+                            "points": 3
+                        },
+                        "2": {
+                            "name": "7.62x54R 7N26",
+                            "points": 5
+                        }
+                    },
+                    "attachments": {
+                        "sight": {
+                            "optic12": {
+                                "name": "PU Scope",
+                                "points": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_makarov": {
+                    "name": "Makarov PM",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x18mm",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_tokarev": {
+                    "name": "TT-33",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x25mm",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_morphine": {
+                    "name": "Morphine",
+                    "points": 1
+                },
+                "weapon_car": {
+                    "name": "Car First Aid Kit",
+                    "points": 1
+                },
+                "weapon_cms": {
+                    "name": "CMS Surgical Kit.",
+                    "points": 2
+                },
+                "weapon_betablock": {
+                    "name": "Beta-Blocker",
+                    "points": 2
+                }
+            }
+        }
+    },
+    "medic": {
+        "armor": {
+            "head": {
+                "helmet7": {
+                    "name": "SSh-68 Helmet",
+                    "points": 1
+                }
+            },
+            "face": {
+                "mask2": {
+                    "name": "M40 Gas Mask",
+                    "points": 0
+                }
+            },
+            "torso": {
+                "vest3": {
+                    "name": "Level IIIA Vest",
+                    "points": 1
+                },
+                "vest4": {
+                    "name": "Level III Vest",
+                    "points": 2
+                }
+            }
+        },
+        "armorOptions": {
+            "render": false,
+            "selectable": true
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight",
+                "weapon_walkie_talkie",
+                "weapon_medical_pda"
+            ],
+            "primary": {
+                "weapon_skorpion": {
+                    "name": "Scorpion vz. 61",
+                    "points": 2,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.65x17mm",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "secondary": {
+                "weapon_makarov": {
+                    "name": "Makarov PM",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "9x18mm",
+                            "points": 1
+                        }
+                    }
+                },
+                "weapon_tokarev": {
+                    "name": "TT-33",
+                    "points": 1,
+                    "ammoTypes": {
+                        "1": {
+                            "name": "7.62x25mm",
+                            "points": 1
+                        }
+                    }
+                }
+            },
+            "items": {
+                "weapon_bigbandage_sh": {
+                    "name": "Big Bandage",
+                    "points": 1
+                },
+                "weapon_salewa": {
+                    "name": "Salewa First Aid Kit",
+                    "points": 1
+                },
+                "weapon_betablock": {
+                    "name": "Beta-Blocker",
+                    "points": 1
+                },
+                "weapon_naloxone": {
+                    "name": "Naloxone",
+                    "points": 1
+                },
+                "weapon_afak": {
+                    "name": "A.F.A.K.",
+                    "points": 2
+                },
+                "weapon_surv12": {
+                    "name": "Surb12 Field Surgical Kit.",
+                    "points": 2
+                },
+                "weapon_fentanyl": {
+                    "name": "Fentanyl",
+                    "points": 2
+                },
+                "weapon_grizzly": {
+                    "name": "Grizzly Medical Kit.",
+                    "points": 4
+                }
+            }
+        }
+    }
+}

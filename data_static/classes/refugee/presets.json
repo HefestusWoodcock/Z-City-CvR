@@ -1,0 +1,16 @@
+{
+    "default": {
+        "loadout": {
+            "base": [
+                "weapon_melee",
+                "hg_flashlight"
+            ],
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            }
+        }
+    }
+}

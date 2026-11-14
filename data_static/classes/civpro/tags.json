@@ -1,0 +1,116 @@
+{
+    "default": {
+        "prefix": "C17:RCT",
+        "tags": [
+            "Defender", 
+            "Hero", 
+            "Jury", 
+            "Line", 
+            "Patrol", 
+            "Quick",
+            "Roller", 
+            "Stick", 
+            "Tap", 
+            "Union", 
+            "Victor", 
+            "Xray",
+            "Yellow", 
+            "Vice"
+        ]
+    },
+    "i4": {
+        "prefix": "C17:i4",
+        "tags": [
+            "Defender", 
+            "Hero", 
+            "Jury", 
+            "Line", 
+            "Patrol", 
+            "Quick",
+            "Roller", 
+            "Stick", 
+            "Tap", 
+            "Union", 
+            "Victor", 
+            "Xray",
+            "Yellow", 
+            "Vice"
+        ]
+    },
+    "i3": {
+        "prefix": "C17:i3",
+        "tags": [
+            "Defender", 
+            "Hero", 
+            "Jury", 
+            "Line", 
+            "Patrol", 
+            "Quick",
+            "Roller", 
+            "Stick", 
+            "Tap", 
+            "Union", 
+            "Victor", 
+            "Xray",
+            "Yellow", 
+            "Vice"
+        ]
+    },
+    "i2": {
+        "prefix": "C17:i2",
+        "tags": [
+            "Defender", 
+            "Hero", 
+            "Jury", 
+            "Line", 
+            "Patrol", 
+            "Quick",
+            "Roller", 
+            "Stick", 
+            "Tap", 
+            "Union", 
+            "Victor", 
+            "Xray",
+            "Yellow", 
+            "Vice"
+        ]
+    },
+    "i1": {
+        "prefix": "C17:i1",
+        "tags": [
+            "Defender", 
+            "Hero", 
+            "Jury", 
+            "Line", 
+            "Patrol", 
+            "Quick",
+            "Roller", 
+            "Stick", 
+            "Tap", 
+            "Union", 
+            "Victor", 
+            "Xray",
+            "Yellow", 
+            "Vice"
+        ]
+    },
+    "rl": {
+        "prefix": "C17:RL",
+        "tags": [
+            "Defender", 
+            "Hero", 
+            "Jury", 
+            "Line", 
+            "Patrol", 
+            "Quick",
+            "Roller", 
+            "Stick", 
+            "Tap", 
+            "Union", 
+            "Victor", 
+            "Xray",
+            "Yellow", 
+            "Vice"
+        ]
+    }
+}

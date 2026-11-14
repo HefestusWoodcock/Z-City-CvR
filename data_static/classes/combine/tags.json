@@ -1,0 +1,81 @@
+{
+    "default": {
+        "prefix": "OWS",
+        "tags": [
+            "Blade",
+            "Dagger",
+            "Slash",
+            "Spear",
+            "Stab",
+            "Striker",
+            "Sword"
+        ],
+        "leaderPrefix": "OWC",
+        "leaderTags": [
+            "Coordinator"
+        ]
+    },
+    "shotgunner": {
+        "prefix": "OWS",
+        "tags": [
+            "Fist",
+            "Hammer",
+            "Savage",
+            "Sweeper",
+            "Swift"
+        ],
+        "leaderPrefix": "OWC",
+        "leaderTags": [
+            "Coordinator"
+        ]
+    },
+    "elite": {
+        "prefix": "EOW",
+        "tags": [
+            "Overlord",
+            "Monarch"
+        ],
+        "leaderPrefix": "EOW",
+        "leaderTags": [
+            "Overlord",
+            "Monarch"
+        ]
+    },
+    "sniper": {
+        "prefix": "OWM",
+        "tags": [
+            "Hunter",
+            "Ranger",
+            "Razor",
+            "Tracker"
+        ]
+    },
+    "ordinal": {
+        "prefix": "OWS",
+        "tags": [
+            "Ordinal"
+        ],
+        "leaderPrefix": "OWC",
+        "leaderTags": [
+            "Ordinal"
+        ]
+    },
+    "grunt": {
+        "prefix": "OWP",
+        "tags": [
+            "Echo"
+        ]
+    },
+    "wallhammer": {
+        "prefix": "OWR",
+        "tags": [
+            "Wallhammer"
+        ]
+    },
+    "suppressor": {
+        "prefix": "OWR",
+        "tags": [
+            "APF"
+        ]
+    }
+}

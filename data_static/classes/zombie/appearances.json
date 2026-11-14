@@ -1,0 +1,27 @@
+{
+    "default": {
+        "models": {
+            "models/player/zombie_classic.mdl" : {
+                "name": "Headcrab Zombie",
+                "bodygroups": [1]
+            }
+        },
+        "color": { "r": 75, "g": 0, "b": 0 }
+    },
+    "fast": {
+        "models": {
+            "models/player/zombie_fast.mdl": {
+                "name": "Fast Zombie"
+            }
+        },
+        "color": { "r": 75, "g": 0, "b": 0 }
+    },
+    "combine": {
+        "models": {
+            "models/player/zombie_soldier.mdl": {
+                "name": "Combine Zombie"
+            }
+        },
+        "color": { "r": 75, "g": 0, "b": 0 }
+    }
+}

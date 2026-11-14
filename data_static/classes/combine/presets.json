@@ -1,0 +1,256 @@
+{
+    "default": {
+        "armor": {
+            "head": "cmb_helmet",
+            "torso": "cmb_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon": "weapon_hk53",
+                "ammoType": 3,
+                "ammo": 3,
+                "attachments": [
+                    "holo8"
+                ]
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": 3,
+                "weapon_hg_m18_tpik": 2
+            },
+            "items": {
+                "weapon_bigbandage_sh": true,
+                "weapon_car": true,
+                "weapon_propital": true
+            }
+        }
+    },
+    "shotgunner": {
+        "armor": {
+            "head": "cmb_helmet",
+            "torso": "cmb_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon": "weapon_spas12",
+                "ammoType": 1,
+                "ammo": 4,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": 2,
+                "weapon_hg_flashbang_tpik": 2
+            },
+            "items": {
+                "weapon_bigbandage_sh": true,
+                "weapon_afak": true,
+                "weapon_propital": true
+            }
+        }
+    },
+    "elite": {
+        "armor": {
+            "head": "cmb_helmet",
+            "torso": "cmb_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon": "weapon_osipr",
+                "ammoType": 1,
+                "ammo": 3,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": 2,
+                "weapon_hg_m18_tpik": 1
+            },
+            "items": {
+                "weapon_bigbandage_sh": true,
+                "weapon_afak": true,
+                "weapon_propital": true
+            }
+        }
+    },
+    "sniper": {
+        "armor": {
+            "head": "cmb_helmet",
+            "torso": "cmb_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon": "weapon_combinesniper",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_m18_tpik": 2
+            },
+            "items": {
+                "weapon_bigbandage_sh": true,
+                "weapon_afak": true,
+                "weapon_propital": true
+            }
+        }
+    },
+    "ordinal": {
+        "armor": {
+            "head": "cmb_helmet",
+            "torso": "cmb_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon": "weapon_hla_ordrifle",
+                "ammoType": 1,
+                "ammo": 3,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": 2,
+                "weapon_hg_m18_tpik": 1
+            },
+            "items": {
+                "weapon_bigbandage_sh": true,
+                "weapon_afak": true,
+                "weapon_propital": true
+            }
+        }
+    },
+    "grunt": {
+        "armor": {
+            "head": "metrocop_helmet",
+            "torso": "metrocop_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon": "weapon_hla_gruntsmg",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_hl2nade_tpik": 2
+            },
+            "items": {
+                "weapon_bigbandage_sh": true,
+                "weapon_afak": true,
+                "weapon_propital": true
+            }
+        }
+    },
+    "wallhammer": {
+        "armor": {
+            "head": "cmb_helmet",
+            "torso": "cmb_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon": "weapon_hla_wallhshot",
+                "ammoType": 1,
+                "ammo": 3,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_flashbang_tpik": 2
+            },
+            "items": {
+                "weapon_bigbandage_sh": true,
+                "weapon_afak": true,
+                "weapon_propital": true
+            }
+        }
+    },
+    "suppressor": {
+        "armor": {
+            "head": "cmb_helmet",
+            "torso": "cmb_armor"
+        },
+        "loadout": {
+            "base": [
+                "weapon_melee"
+            ],
+            "primary": {
+                "weapon": "weapon_hla_suppmg",
+                "ammoType": 1,
+                "ammo": 1,
+                "attachments": []
+            },
+            "secondary": {
+                "weapon": "weapon_hk_usp",
+                "ammoType": 1,
+                "ammo": 2,
+                "attachments": []
+            },
+            "utility": {
+                "weapon_hg_m18_tpik": 2
+            },
+            "items": {
+                "weapon_bigbandage_sh": true,
+                "weapon_afak": true,
+                "weapon_propital": true
+            }
+        }
+    }
+}
