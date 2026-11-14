@@ -1,0 +1,7 @@
+{
+  "workspace": {
+    "ignoreDir": [
+      "lua\\homigrad\\organism\\tier_1\\modules"
+    ]
+  }
+}

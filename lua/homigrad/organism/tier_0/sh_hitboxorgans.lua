@@ -135,6 +135,23 @@ hook.Add("PostDrawTranslucentRenderables", "homigrad-organism", function()
 			for i = 1, #boxs do
 				local box = boxs[i]
 				local organ = box[6] and organs[box[6]][box[7]]
+				--[[
+				local test = {
+					metrocop_armor = true,
+					metrocop_helmet = true
+				}
+				if organ ~= nil then 
+					if not test[organ[1] then
+						continue 
+					end
+				end
+				
+				for k, v in pairs(boxs) do 
+					print(tostring(k) .. " | " .. tostring(v))
+					for k, v in pairs(v) do 
+						print(tostring(k) .. " | " .. tostring(v))
+					end
+				end ]]
 				render_DrawWireframeBox(box[1], box[2], box[3], box[4], (organ and organ[6]) or black)
 			end
 		end

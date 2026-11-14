@@ -354,7 +354,10 @@ local math_random, math_Rand = math.random, math.Rand
 	end)
 --//
 
---\\ Fall damage for NPCs
+--[[ Fall damage for NPCs
+-- This is retarded, ngl. We are iterating over all loaded entities every tick for no reason.
+-- Source doesn't even handle NPCs falling as they sprint all the way back to the ground cause
+-- it ain't coded in for them to fall off ledges unless you are using stuff like the physgun.
 	local vecforce = Vector(5000, 5000, -30000)
 	hook.Add("Think", "NPCFallDamageTracker", function()
 		if hg_noorganismnpcs:GetBool() then return end
@@ -397,7 +400,7 @@ local math_random, math_Rand = math.random, math.Rand
 			end
 		end
 	end)
---//
+--]]//
 
 --\\ Give our guns to NPCs
 	local function addNPCweps()

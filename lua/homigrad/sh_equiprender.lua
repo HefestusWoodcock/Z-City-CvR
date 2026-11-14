@@ -132,7 +132,7 @@ if CLIENT then
 
 	end	
 
-	function DrawArmors(ply, armors, ent)
+	function DrawArmors(ply, armors, ent, hideArmor)
 		if not IsValid(ply) or not armors then return end
 		if blmodels[ply:GetModel()] then return end
 		local lply = LocalPlayer():Alive() and LocalPlayer() or LocalPlayer():GetNWEntity("spect")
@@ -140,6 +140,7 @@ if CLIENT then
 		
 		for placement, armor in pairs(armors) do
 			if placement == "torso" and blVestmodels[ply:GetModel()] then continue end
+			if placement == "torso" and ply:GetNetVar("PlayerHideVest", false) then continue end
 			local armorData = hg.armor[placement][armor]
 
 			if armorData["model"] == "" then continue end

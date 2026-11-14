@@ -2,6 +2,7 @@
 hg.organism.module = hg.organism.module or {}
 local module = hg.organism.module
 hg.organism.lastindex = hg.organism.lastindex or 1000000
+
 hook.Add("Org Clear", "Main", function(org)
 	org.alive = true
 	org.otrub = false

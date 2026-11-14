@@ -2,6 +2,7 @@ local max, min, Clamp, Approach = math.max, math.min, math.Clamp, math.Approach
 --local Organism = hg.organism
 hg.organism.module.pain = {}
 local module = hg.organism.module.pain
+---@param org Organism
 module[1] = function(org)
 	org.shock = 0
 	org.pain = 0

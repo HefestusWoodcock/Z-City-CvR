@@ -1968,7 +1968,7 @@ function SWEP:GetAdditionalValues()
 	
 	if not huypitch then
 		local torso = ply:LookupBone("ValveBiped.Bip01_Spine1")
-		local tmat = ent:GetBoneMatrix(torso)
+		local tmat = ent:GetBoneMatrix(torso) or nil
 		
 		if tmat then
 			local ang2 = tmat:GetAngles():Forward()

@@ -17,6 +17,7 @@ hg.organism.bloodtypes = {
 	["c-"] = {["c-"] = true,["o-"] = true,["o+"] = true,["a-"] = true,["a+"] = true,["b-"] = true,["b+"] = true,["ab-"] = true,["ab+"] = true},
 }
 
+---@param org Organism
 module[1] = function(org)
 	org.blood = 5000
 	org.bleed = 0

@@ -4,6 +4,8 @@ local hg_organism_stamina_sprint_mul = CreateConVar("hg_organism_stamina_sprint_
 --local Organism = hg.organism
 hg.organism.module.stamina = {}
 local module = hg.organism.module.stamina
+
+---@param org Organism
 module[1] = function(org)
 	org.adrenaline = 0
 	org.adrenalineAdd = 0

@@ -250,7 +250,7 @@ hg.armor.torso = {
 		"",
 		Vector(-9, 2.5, 0),
 		Angle(0, 92, 90),
-		protection = 22,
+		protection = 12,
 		bone = "ValveBiped.Bip01_Spine2",
 		model = "",
 		femPos = Vector(0, 0, 0),
@@ -837,6 +837,7 @@ function entityMeta:SyncArmor()
 		local rag = hg.GetCurrentCharacter(self)
 		if IsValid(rag) and rag:IsRagdoll() then
 			rag:SetNetVar("Armor", self.armors)
+			rag:SetNetVar("PlayerHideVest", self:GetNetVar("PlayerHideVest", false))
 			rag:SetNetVar("HideArmorRender", self:GetNetVar("HideArmorRender", false))
 		end
 	end

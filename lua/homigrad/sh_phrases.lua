@@ -283,7 +283,7 @@ contextPhrases = {
 
 if CLIENT then
 
-	local function SendRandomPhrase(phrases) 
+	local function SendRandomPhrase(phrases)
 	
 		return table.Random(phrases)
 
@@ -298,9 +298,9 @@ if CLIENT then
 		for phrase, bool in pairs(phrases) do
 		
 			if bool then
-				table.ForceInsert(targeted, phrase)
+				table.insert(targeted, phrase)
 			else
-				table.ForceInsert(all, phrase)
+				table.insert(all, phrase)
 			end
 
 		end
@@ -314,18 +314,16 @@ if CLIENT then
 		}
 		end
 		if not table.IsEmpty(targeted) then 
-			net.Start("SquadInfoRequest"); net.SendToServer()
-			net.Receive("SquadInfoSent", function()
-				local members = net.ReadTable(true)
-				for _, member in ipairs(members) do
-					tbl[#tbl + 1] = {
-						[1] = function() 
-							RunConsoleCommand("hg_phrase_context", member:GetNWString("PlayerName") .. ", " .. context, SendRandomPhrase(targeted))
-						end,
-						[2] = member:GetNWString("PlayerName")
-					}
-				end
-			end)
+			local members = lply.squad.members
+			for _, member in ipairs(members) do
+				if member == lply then continue end
+				tbl[#tbl + 1] = {
+					[1] = function() 
+						RunConsoleCommand("hg_phrase_context", member:GetNWString("PlayerName") .. ", " .. context, SendRandomPhrase(targeted))
+					end,
+					[2] = member:GetNWString("PlayerName")
+				}
+			end
 		end
 
 		hg.CreateRadialMenu(tbl)
@@ -333,52 +331,7 @@ if CLIENT then
 	
 	end
 
-	local function RecursiveAssign(tbl) 
-		
-		local new_tbl = {}
-		for key, value in pairs(tbl) do	
-			
-			local sub_val = table.Random(value)
-			local check = value["Order."] or value["Normal."] or nil
-			if type(sub_val) == "table" and not check then
-
-				new_tbl[#new_tbl + 1] = {
-					[1] = function(mouseClick)
-						RecursiveAssign(value)
-					end,
-					[2] = key
-				}
-				
-			else 
-				if check then 
-					new_tbl[#new_tbl + 1] = {
-						[1] = function(mouseClick)
-							if mouseClick == 1 then
-								RunConsoleCommand("hg_phrase_context", key, SendRandomPhrase(value["Normal."]))
-							else 
-								MemberAssign(key, value["Order."])
-							end
-						end,
-						[2] = key .. "\nRMB - Order Menu"
-					}
-					continue
-				end
-
-				new_tbl[#new_tbl + 1] = {
-					[1] = function()
-						RunConsoleCommand("hg_phrase_context", key, SendRandomPhrase(value))
-					end,
-					[2] = key
-				}
-
-			end
-		end
-		
-		hg.CreateRadialMenu(new_tbl)
-		return new_tbl
-
-    end
-
+	
 	local function randomPhrase()
 		RunConsoleCommand("hg_phrase")
 	end
@@ -391,16 +344,16 @@ if CLIENT then
 		if (#args < 2 and not #args == 0) then return end
  		local num = (#args > 1 and mClamp(tonumber(args[2]),phrases[gender][tonumber(i)][3],phrases[gender][tonumber(i)][4])) or mRandom(phrases[gender][tonumber(i)][3], phrases[gender][tonumber(i)][4])
 		net.Start("hg_phrase")
-		net.WriteInt(i, 8)
-		net.WriteInt(num, 8)
-		if lply.PlayerClassName == "Combine" then
-			net.WriteString(lply.subClass)
-		end
+			net.WriteInt(i, 8)
+			net.WriteInt(num, 8)
 		net.SendToServer()
 	end)
 
 	hook.Add("radialOptions", "4", function()
 		local organism = lply.organism or {}
+
+		local replace = hook.Run("HG_ReplacePhraseRadial")
+		if replace then return end
 
 		if lply:Alive() and not organism.otrub and lply.PlayerClassName ~= "Gordon" then
 			hg.radialOptions[#hg.radialOptions + 1] = {
@@ -419,13 +372,6 @@ if CLIENT then
 								end,
 								[2] = context
 							}
-						end
-						if lply.PlayerClassName == "Combine" then
-							tbl = {}
-
-							local cfgContextPhrases = lply:PlayerClassEvent("GetContextPhrases")
-							tbl = RecursiveAssign(cfgContextPhrases)
-							
 						end
 						hg.CreateRadialMenu(tbl)
 					end

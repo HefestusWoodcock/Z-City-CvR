@@ -20,7 +20,7 @@ hook.Add( "OnPlayerChat", "HGPlayerChat", function( ply, strText, bTeam, bDead, 
 			return Hook
 		end
 
-		chat.AddText( ply:GetPlayerColor():ToColor(), ply:GetPlayerName(), color_white, ": "..strText ) -- print Hello fuckyou to the console
+		chat.AddText( ply:GetPlayerColor():ToColor(), ply:GetPlayerName(), color_white, " says "..strText ) -- print Hello fuckyou to the console
 		
 		return true -- this suppresses the fcukyopu from being shown
 	end

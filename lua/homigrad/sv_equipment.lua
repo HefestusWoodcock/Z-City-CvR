@@ -227,7 +227,7 @@ local function protec(org, bone, dmg, dmgInfo, placement, armor, scale, scalepro
 	force = nil
 	
 	local prot = placement and hg.armor[placement] and armor and hg.armor[placement][armor] and (hg.armor[placement][armor].protection - (dmgInfo:GetInflictor().bullet and dmgInfo:GetInflictor().bullet.Penetration or 1)) or (10 - ( dmgInfo:GetInflictor().bullet and dmgInfo:GetInflictor().bullet.Penetration or 1))
-	
+
 	org.owner.armors_health = org.owner.armors_health or {}
 
 	prot = prot * (org.owner.armors_health[armor] or 1)
@@ -459,7 +459,7 @@ hg.organism.input_list.cmb_helmet = function(org, bone, dmg, dmgInfo, ...)
 end
 
 hg.organism.input_list.cmb_armor = function(org, bone, dmg, dmgInfo, ...)
-	force = true
+	--force = true
 	local protect = protec(org, bone, dmg, dmgInfo, "torso", "cmb_armor", 0.9, 0.7, false, ...)
 	return protect
 end

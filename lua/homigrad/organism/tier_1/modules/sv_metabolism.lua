@@ -4,6 +4,8 @@ local max, min, Round, Lerp, halfValue2 = math.max, math.min, math.Round, Lerp, 
 --local Organism = hg.organism
 hg.organism.module.metabolism = {}
 local module = hg.organism.module.metabolism
+
+---@param org Organism
 module[1] = function(org)
 	org.satiety = 0
     org.hungry = 0

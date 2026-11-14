@@ -235,6 +235,7 @@ function hg.TransferItems(ply,ragdoll)
 
 		ragdoll:SetNetVar("Armor",ply.armors)
 		ragdoll.armors = ragdoll:GetNetVar("Armor",{})
+        ragdoll:SetNetVar("PlayerHideVest", ply.oldHideVest or false)
 		ragdoll:SetNetVar("HideArmorRender", ply:GetNetVar("HideArmorRender", false))
 		
 		ply:SetNetVar("Armor",{})

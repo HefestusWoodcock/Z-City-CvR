@@ -665,6 +665,8 @@ hook.Add("Player_Death", "Fake", function(ply)
 	-- end)
 end)
 
+---This function is used to return either the Player entity, or their ragdoll.
+---@return Entity ply
 function hg.GetCurrentCharacter(ply)
 	if not IsValid(ply) then return end
 

@@ -2,6 +2,8 @@ local max, min, Round, Lerp, halfValue2 = math.max, math.min, math.Round, Lerp, 
 --local Organism = hg.organism
 hg.organism.module.lungs = {}
 local module = hg.organism.module.lungs
+
+---@param org Organism
 module[1] = function(org)
 	org.lungsL = {
 		0, --состояние,пневмотаракс
@@ -377,6 +379,15 @@ module[2] = function(owner, org, timeValue)
 		end
 
 		org.needotrub = true
+	end
+
+	local death_from_shock = false
+	local vitalOrganDeath 
+		= ( org.heart >= 0.9 or 
+			(org.lungsL[1] >= 0.9 and org.lungsR[1] >= 0.9) ) or false
+	if vitalOrganDeath and org.shock >= 70 and org.alive then 
+		death_from_shock = true
+		org.alive = false
 	end
 
 	local death_from_braindamage = false

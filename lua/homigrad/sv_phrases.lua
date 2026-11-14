@@ -338,15 +338,10 @@ net.Receive("hg_phrase", function(len, ply)
 	local muffed = false
 	local pitch = nil
 
-	-- overrides
-	if ply.PlayerClassName == "Combine" then 
-		phrase = net.ReadString()
-	end
 	local override_ply, override_phrase, override_muffed, override_pitch = hook.Run("HG_ReplacePhrase", ply, phrase, muffed, pitch) -- pitch means pitched effect, not exact sound pitch
 	if override_ply ~= nil then
 		phrase, muffed, pitch = override_phrase, override_muffed, override_pitch
 	end
-
 
 	if ply.PlayerClassName == "bloodz" or ply.PlayerClassName == "groove" then
 		phrase = table.Random(hg.ghetto_phrases)
@@ -448,7 +443,7 @@ hook.Add("Org Think", "WhatsSoFunny",function(owner, org, timeValue)
 
 		local muffed = owner.armors["face"] == "mask2"
 
-		owner:EmitSound(phrase, muffed and 90 or 100,owner.VoicePitch or 100,1 * math.min(2, org.berserk),CHAN_AUTO, 0, pitch and 56 or muffed and 16 or 0)
+		owner:EmitSound(phrase, muffed and 90 or 100, owner.VoicePitch or 100,1 * math.min(2, org.berserk),CHAN_AUTO, 0, pitch and 56 or muffed and 16 or 0)
 
 		owner.lastBerserkLaughSoundCD = CurTime() + math.Rand(5, 15)
 		owner.lastPhr = phrase
