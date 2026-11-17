@@ -93,7 +93,10 @@ local function BlockOverwatch(talker, listener)
 	return
 end
 
-util.AddNetworkString("DisableVolumeProximity")
+if SERVER then 
+	util.AddNetworkString("DisableVolumeProximity")
+end
+
 local function NoVolumeChange(talker, listener, result)
 	local result = result and true or false
 	net.Start("DisableVolumeProximity")

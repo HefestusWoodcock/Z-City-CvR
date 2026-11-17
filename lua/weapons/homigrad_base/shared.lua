@@ -210,7 +210,6 @@ function SWEP:Initialize()
 		end]]
 	end)
 
-	if SERVER then hg.SyncWeapons() end
 	self:InitializePost()
 end
 

@@ -26,7 +26,11 @@ function hg.organism.Remove(ent)
 end
 
 hook.Add("PlayerInitialSpawn", "homigrad-organism", function(ply) hg.organism.Add(ply) end)
-hook.Add("Player Spawn", "homigrad-organism", function(ply) hg.organism.Clear(ply.organism) end)
+hook.Add("Player Spawn", "homigrad-organism", function(ply) 
+	hg.organism.Clear(ply.organism) 
+
+	hook.Run("PostPlayerSpawn", ply)
+end)
 hook.Add("PlayerDisconnected", "homigrad-organism", function(ply) hg.organism.Remove(ply) end)
 hook.Add("PostPlayerDeath", "homigrad-organism", function(ply)
 	local ragdoll = ply:GetNWEntity("RagdollDeath")

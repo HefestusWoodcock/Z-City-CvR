@@ -140,7 +140,8 @@ if CLIENT then
 		
 		for placement, armor in pairs(armors) do
 			if placement == "torso" and blVestmodels[ply:GetModel()] then continue end
-			if placement == "torso" and ply:GetNetVar("PlayerHideVest", false) then continue end
+			local hideVest = ply:GetNetVar("PlayerHideVest", false) or ply.PredictedHideVest
+			if placement == "torso" and hideVest then continue end
 			local armorData = hg.armor[placement][armor]
 
 			if armorData["model"] == "" then continue end

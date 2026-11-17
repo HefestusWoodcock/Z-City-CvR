@@ -356,6 +356,7 @@ properties.Add("removeply", {
 	end 
 })
 
+--[[
 properties.Add( "setplayerclass", {
 	MenuLabel = "Set player class", -- Name to display on the context menu
 	Order = 15, -- The order to display this property relative to other properties
@@ -396,7 +397,7 @@ properties.Add( "setplayerclass", {
 			end	
 		end
 	end
-} )
+} )]]
 
 properties.Add( "break_limb", {
 	MenuLabel = "Break Limb",

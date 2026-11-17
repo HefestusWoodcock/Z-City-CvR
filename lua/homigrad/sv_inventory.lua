@@ -277,6 +277,7 @@ local VirtualItems = {
         ragdoll:SetNetVar("Armor", ply.armors)
         ragdoll.armors = ragdoll:GetNetVar("Armor", {})
         ragdoll:SetNetVar("HideArmorRender", ply:GetNetVar("HideArmorRender", false))
+        ragdoll:SetNetVar("PlayerHideVest", ply:GetNetVar("PlayerHideVest", false))
 
         ply:SetNetVar("Armor", {})
         ply.armors = ply:GetNetVar("Armor", {})

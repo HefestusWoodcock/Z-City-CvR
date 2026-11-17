@@ -465,6 +465,7 @@ hook.Add("NetworkEntityCreated", "HG_GiveRenderOverride", function(ragdoll)
 				ragdoll.PredictedAccessories = v:GetNetVar("Accessories","none")
 				ragdoll.PredictedArmor = v:GetNetVar("Armor",{})
 				ragdoll.PredictedHideArmorRender = v:GetNetVar("HideArmorRender", false)
+				ragdoll.PredictedHideVest = v:GetNetVar("PlayerHideVest", false)
 
 				hook.Run("RagdollPerdiction",ragdoll,v)
 				break

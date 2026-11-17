@@ -106,7 +106,7 @@ local math_random, math_Rand = math.random, math.Rand
 			end
 
 			rag.armors = ent.armors
-
+			
 			for k, wep in pairs(loot) do
 				local weapon = weapons.Get(wep)
 				if rag.inventory.Weapons and rag.inventory.Weapons[wep] then return end

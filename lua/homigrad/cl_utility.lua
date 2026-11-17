@@ -368,8 +368,18 @@ players : 1 humans, 0 bots (20 max)
 		hg.ConVars.potatopc = hg_potatopc
 
 		local vignetteMat = Material( "effects/shaders/zb_vignette" )
-		hook.Add("RenderScreenspaceEffects","SIB_Suppresss",function()
-			if not LocalPlayer():Alive() then return end
+
+		
+		hook.Add("RenderScreenspaceEffects", "SIB_Suppresss", function()
+			lply = LocalPlayer()
+			if not lply:Alive() then return end
+
+			local vignette_mult = 1
+			local color_mult = 1
+			if lply.PlayerClassName == "Combine" then 
+				vignette_mult = 0.2
+				color_mult = 0.3
+			end
 
 			local fraction = math.Clamp(SIB_suppress.Force / 5, 0, 1)
 
@@ -379,8 +389,8 @@ players : 1 humans, 0 bots (20 max)
 				render.UpdateScreenEffectTexture()
 
 				vignetteMat:SetFloat("$c2_x", CurTime() + 10000) //Time
-				vignetteMat:SetFloat("$c0_z", force / 3 ) //ColorIntensity
-				vignetteMat:SetFloat("$c1_y", force / 12 ) //Vignette
+				vignetteMat:SetFloat("$c0_z", force / 4 * color_mult) //ColorIntensity
+				vignetteMat:SetFloat("$c1_y", force / 12 * vignette_mult) //Vignette
 
 				render.SetMaterial(vignetteMat)
 				render.DrawScreenQuad()
@@ -402,6 +412,7 @@ players : 1 humans, 0 bots (20 max)
 		hook.Add("PlayerDeath","huyDeathRemoveSuppression",function()
 			SIB_suppress.Force = 0
 		end)
+
 	end
 --//
 
@@ -710,7 +721,7 @@ players : 1 humans, 0 bots (20 max)
 			
 			if ply:VoiceVolume() != 0 then
 				if (ply.timedupdate or 0) < CurTime() then
-					UpdateVoiceDSP(lply, ply)
+					-- UpdateVoiceDSP(lply, ply)
 					
 					ply.timedupdate = CurTime() + 0.5
 				end
@@ -903,9 +914,7 @@ players : 1 humans, 0 bots (20 max)
 --//
 
 --\\ CL Utils setting adjustments
-	if CLIENT then
-		--RunConsoleCommand("mp_decals", "4096")  -- "4194304" - if you set this value you will get crashed :3
-
+	if CLIENT then		
 		hook.Add("Think","RemoveMe_001",function()
 			hook.Remove("PostPlayerDraw","BA2_GasmaskDraw")
 			hook.Remove("Think","RemoveMe_001")
