@@ -667,11 +667,9 @@ local IsValid = IsValid
 		//hg.HomigradBones(self, CurTime(), FrameTime())
 
 		if IsValid(self.OldRagdoll) then DrawAppearance(ent, self, true) end
-		if !hg.converging[self] then
-			ent:DrawModel()
-		else
-			DrawConversion(ent, self)
-		end
+
+		ent:DrawModel()
+
 		if IsValid(self.OldRagdoll) then
 			DrawAppearance(ent, self)
 		else
